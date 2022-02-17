@@ -1,10 +1,13 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { Text } from 'react-native';
+import RootNav from './navigator/RootNav';
 
 function App() {
   return (
     <>
-      <Text>아맞땅 시작</Text>
+      <NavigationContainer>
+        <RootNav />
+      </NavigationContainer>
     </>
   );
 }
