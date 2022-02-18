@@ -1,7 +1,7 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CreateCustomCheckList from './CheckListStackNav/CreateCustomCheckList';
-import CreateFormalCheckList from './CheckListStackNav/CreateFormalCheckList';
+import CreateCustomCheckList from './CheckListStackNav/customCheckLIst/CreateCustomCheckList';
+import CreateFormalCheckList from './CheckListStackNav/formalCHeckList/CreateFormalCheckList';
 
 const NativeStack = createNativeStackNavigator();
 
