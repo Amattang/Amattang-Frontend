@@ -1,8 +1,21 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
+import BasicInfoOfCustomCheckList from './outsideOfCustomCheckListNavigation/BasicInfoOfCustomCheckList';
+import MoreInfoOfCustomCheckList from './outsideOfCustomCheckListNavigation/MoreInfoOfCustomCheckList';
+import MyItemsOfCustomCheckList from './outsideOfCustomCheckListNavigation/MyItemsOfCustomCheckList';
+
+const Tab = createMaterialTopTabNavigator();
 
 function CreateCustomCheckList() {
-  return <Text>나만의 체크리스트</Text>;
+  return (
+    <>
+      <Tab.Navigator>
+        <Tab.Screen name={'Basic'} component={BasicInfoOfCustomCheckList} />
+        <Tab.Screen name={'More'} component={MoreInfoOfCustomCheckList} />
+        <Tab.Screen name={'Item'} component={MyItemsOfCustomCheckList} />
+      </Tab.Navigator>
+    </>
+  );
 }
 
 export default CreateCustomCheckList;

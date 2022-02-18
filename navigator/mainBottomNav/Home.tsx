@@ -1,8 +1,12 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { Button, Pressable, Text } from 'react-native';
 
-function Home() {
-  return <Text>Home</Text>;
+function Home({ navigation: { navigate } }) {
+  return (
+    <Pressable onPress={() => navigate('Stacks', { screen: 'custom' })}>
+      <Text>Home</Text>
+    </Pressable>
+  );
 }
 
 export default Home;

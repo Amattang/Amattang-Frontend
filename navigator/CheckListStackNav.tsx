@@ -5,7 +5,7 @@ import CreateFormalCheckList from './CheckListStackNav/formalCHeckList/CreateFor
 
 const NativeStack = createNativeStackNavigator();
 
-function CheckListModal() {
+function CheckListStackNav() {
   return (
     <>
       <NativeStack.Navigator>
@@ -16,4 +16,4 @@ function CheckListModal() {
   );
 }
 
-export default CheckListModal;
+export default CheckListStackNav;
