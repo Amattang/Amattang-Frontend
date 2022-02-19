@@ -5,12 +5,11 @@ import { useNavigation } from '@react-navigation/native';
 
 function CheckListBtn() {
   const [onCheckList, setOnCheckList] = useState(false);
-  const navigation = useNavigation();
-
   const toggleModal = () => {
     setOnCheckList(!onCheckList);
   };
 
+  const navigation = useNavigation();
   const onCustomCheckListHandler = () => {
     navigation.navigate('Stacks', { screen: 'custom' });
     setOnCheckList(!onCheckList);

@@ -1,8 +1,10 @@
 import React, { useState } from 'react';
 import { Button, Pressable, ScrollView, Text, View } from 'react-native';
+import { useNavigation } from '@react-navigation/native';
 
 function UpperSlideListOfCustomCheckList() {
   const [selectedComponent, setSelectedComponent] = useState('test1');
+  const navgiation = useNavigation();
   const slidemockUp = [
     {
       name: 'test1',
