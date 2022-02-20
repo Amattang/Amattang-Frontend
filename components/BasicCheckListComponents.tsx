@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { Button, Pressable, ScrollView, Text, View } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
 
-function UpperSlideListOfCustomCheckList() {
+function BasicCheckListComponents() {
   const [selectedComponent, setSelectedComponent] = useState('test1');
-  const navgiation = useNavigation();
+
   const slidemockUp = [
     {
       name: 'test1',
@@ -169,4 +169,4 @@ function UpperSlideListOfCustomCheckList() {
   );
 }
 
-export default UpperSlideListOfCustomCheckList;
+export default BasicCheckListComponents;

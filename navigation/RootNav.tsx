@@ -1,14 +1,15 @@
 import React from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import MainBottomNav from './MainBottomNav';
-import CheckListStackNav from './CheckListStackNav';
+
+import BottomNavigation from './BottomNavigation/BottomNavigation';
+import CheckListStackNav from './StackNavigation/StackNavigationOfCheckList';
 
 const Nav = createNativeStackNavigator();
 
 const Root = () => (
   <Nav.Navigator screenOptions={{ presentation: 'fullScreenModal', headerShown: false }}>
-    <Nav.Screen name="Tabs" component={MainBottomNav} />
-    <Nav.Screen name="Stacks" component={CheckListStackNav} />
+    <Nav.Screen name="Tab" component={BottomNavigation} />
+    <Nav.Screen name="Stack" component={CheckListStackNav} />
   </Nav.Navigator>
 );
 export default Root;

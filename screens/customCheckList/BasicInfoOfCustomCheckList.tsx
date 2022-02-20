@@ -1,10 +1,10 @@
 import React from 'react';
-import UpperSlideListOfCustomCheckList from './UpperSlideListOfCustomCheckList';
+import BasicCheckListComponents from '../../components/BasicCheckListComponents';
 
 function BasicInfoOfCustomCheckList() {
   return (
     <>
-      <UpperSlideListOfCustomCheckList />
+      <BasicCheckListComponents />
     </>
   );
 }

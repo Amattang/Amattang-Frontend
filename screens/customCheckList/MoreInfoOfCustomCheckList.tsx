@@ -1,9 +1,9 @@
 import React from 'react';
 import { Pressable, Text } from 'react-native';
 
-function MoreInfoOfCustomCheckList({ navigation: { navigate } }) {
+function MoreInfoOfCustomCheckList() {
   return (
-    <Pressable onPress={() => navigate('FormalList')}>
+    <Pressable>
       <Text>세부 항목</Text>
     </Pressable>
   );

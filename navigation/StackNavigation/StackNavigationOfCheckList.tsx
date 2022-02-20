@@ -1,21 +1,22 @@
 import React from 'react';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import CreateCustomCheckList from './CheckListStackNav/customCheckLIst/CreateCustomCheckList';
-import CreateFormalCheckList from './CheckListStackNav/formalCHeckList/CreateFormalCheckList';
 import { useNavigation } from '@react-navigation/native';
 import { Pressable, Text } from 'react-native';
+import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-const NativeStack = createNativeStackNavigator();
+import CustomCheckList from './customCheckLIst/CustomCheckList';
+import BasicCheckList from './formalCHeckList/BasiclCheckList';
 
 function CheckListStackNav() {
+  const NativeStack = createNativeStackNavigator();
   const navigation = useNavigation();
   return (
     <>
       <NativeStack.Navigator>
         <NativeStack.Screen
           name="custom"
-          component={CreateCustomCheckList}
+          component={CustomCheckList}
           options={() => ({
+            title: '나만의 체크리스트',
             headerLeft: () => (
               <Pressable onPress={() => navigation.goBack()}>
                 <Text>go back</Text>
@@ -24,9 +25,10 @@ function CheckListStackNav() {
           })}
         />
         <NativeStack.Screen
-          name="formal"
-          component={CreateFormalCheckList}
+          name="basic"
+          component={BasicCheckList}
           options={() => ({
+            title: '기본 체크리스트',
             headerLeft: () => (
               <Pressable onPress={() => navigation.goBack()}>
                 <Text>go back</Text>

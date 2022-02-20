@@ -1,22 +1,23 @@
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
 import { Image, Pressable, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigatioç } from '@react-navigation/native';
 
 function CheckListBtn() {
   const [onCheckList, setOnCheckList] = useState(false);
+  const navigation = useNavigation();
+
   const toggleModal = () => {
     setOnCheckList(!onCheckList);
   };
 
-  const navigation = useNavigation();
   const onCustomCheckListHandler = () => {
-    navigation.navigate('Stacks', { screen: 'custom' });
+    navigation.navigate('Stack', { screen: 'custom' });
     setOnCheckList(!onCheckList);
   };
 
   const onFormalCheckListHandler = () => {
-    navigation.navigate('Stacks', { screen: 'formal' });
+    navigation.navigate('Stack', { screen: 'basic' });
     setOnCheckList(!onCheckList);
   };
 
@@ -62,7 +63,7 @@ function CheckListBtn() {
 
               <Image
                 style={{ width: 55, height: 55, zIndex: 9999 }}
-                source={require('../image/CheckLIstTabImgNegative.png')}
+                source={require('../assets/images/CheckLIstTabImgNegative.png')}
               />
             </Pressable>
           </Modal>
@@ -81,7 +82,7 @@ function CheckListBtn() {
           >
             <Image
               style={{ width: 55, height: 55 }}
-              source={require('../image/CheckListTabImgPositive.png')}
+              source={require('../assets/images/CheckListTabImgPositive.png')}
             />
           </Pressable>
         </>
