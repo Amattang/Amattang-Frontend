@@ -150,10 +150,11 @@ function UpperSlideListOfCustomCheckList() {
           })}
         </ScrollView>
       </View>
+
       {slidemockUp
         .filter((item) => item.name === selectedComponent)[0]
         .list.map((item, index) => (
-          <View key={index + 10}>
+          <View style={{ marginVertical: 30 }} key={index + 10}>
             {<Text>{item.MainTitle}</Text>}
             {<Text>{item.subTitle}</Text>}
 
