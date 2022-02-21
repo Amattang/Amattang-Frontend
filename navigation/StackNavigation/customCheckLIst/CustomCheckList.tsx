@@ -12,17 +12,17 @@ function CustomCheckList() {
     <>
       <Tab.Navigator screenOptions={{ swipeEnabled: false }}>
         <Tab.Screen
-          name={'Basic'}
+          name={'basic'}
           component={BasicInfoOfCustomCheckList}
           options={{ title: '기본 정보' }}
         />
         <Tab.Screen
-          name={'More'}
+          name={'more'}
           component={MoreInfoOfCustomCheckList}
           options={{ title: '상세 정보' }}
         />
         <Tab.Screen
-          name={'Item'}
+          name={'item'}
           component={MyItemOfCustomCheckList}
           options={{ title: '내 항목' }}
         />

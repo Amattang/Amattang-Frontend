@@ -1,23 +1,24 @@
 import React, { useState } from 'react';
 import Modal from 'react-native-modal';
 import { Image, Pressable, Text, View } from 'react-native';
-import { useNavigatioç } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
+import { NestedProps } from '../navigation/navigationTypes';
 
 function CheckListBtn() {
   const [onCheckList, setOnCheckList] = useState(false);
-  const navigation = useNavigation();
+  const navigation = useNavigation<NestedProps>();
 
   const toggleModal = () => {
     setOnCheckList(!onCheckList);
   };
 
   const onCustomCheckListHandler = () => {
-    navigation.navigate('Stack', { screen: 'custom' });
+    navigation.navigate('stack', { screen: 'custom' });
     setOnCheckList(!onCheckList);
   };
 
   const onFormalCheckListHandler = () => {
-    navigation.navigate('Stack', { screen: 'basic' });
+    navigation.navigate('stack', { screen: 'basic' });
     setOnCheckList(!onCheckList);
   };
 

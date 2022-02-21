@@ -13,7 +13,7 @@ function BasicCheckList() {
     <>
       <Tab.Navigator screenOptions={{ swipeEnabled: false }}>
         <Tab.Screen
-          name={'basicInfo'}
+          name="basic"
           component={BasicInfoOfBasicCheckList}
           options={{ title: '기본 정보' }}
         />

@@ -1,14 +1,14 @@
 import React from 'react';
-import { useNavigation } from '@react-navigation/native';
 import { Pressable, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import CustomCheckList from './customCheckLIst/CustomCheckList';
 import BasicCheckList from './formalCHeckList/BasiclCheckList';
+import { CheckListStackParamsList, CheckListStackProps } from '../navigationTypes';
 
-function CheckListStackNav() {
-  const NativeStack = createNativeStackNavigator();
-  const navigation = useNavigation();
+const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
+
+function CheckListStackNav({ navigation }: CheckListStackProps) {
   return (
     <>
       <NativeStack.Navigator>
