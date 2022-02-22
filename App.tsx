@@ -1,10 +1,14 @@
+import { NavigationContainer } from '@react-navigation/native';
 import React from 'react';
-import { Text } from 'react-native';
+import RootNav from './navigation/RootNav';
+import 'react-native-gesture-handler';
 
 function App() {
   return (
     <>
-      <Text>아맞땅 시작</Text>
+      <NavigationContainer>
+        <RootNav />
+      </NavigationContainer>
     </>
   );
 }
