@@ -1,9 +1,8 @@
 import React from 'react';
-import { Pressable, Text } from 'react-native';
+import { Image, Pressable, StyleSheet, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import CustomCheckList from './customCheckLIst/CustomCheckList';
-import BasicCheckList from './formalCHeckList/BasiclCheckList';
+import BasicCheckList from './BasicCheckList/BasiclCheckList';
 import { CheckListStackParamsList, CheckListStackProps } from '../navigationTypes';
 
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
@@ -13,25 +12,17 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
     <>
       <NativeStack.Navigator>
         <NativeStack.Screen
-          name="custom"
-          component={CustomCheckList}
-          options={() => ({
-            title: '나만의 체크리스트',
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()}>
-                <Text>go back</Text>
-              </Pressable>
-            ),
-          })}
-        />
-        <NativeStack.Screen
-          name="basic"
+          name="basicCheckList"
           component={BasicCheckList}
           options={() => ({
+            headerShadowVisible: false,
             title: '기본 체크리스트',
             headerLeft: () => (
               <Pressable onPress={() => navigation.goBack()}>
-                <Text>go back</Text>
+                <Image
+                  style={styles.leftArrowImg}
+                  source={require('../../assets/images/common/leftArrow.png')}
+                />
               </Pressable>
             ),
           })}
@@ -40,5 +31,12 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
     </>
   );
 }
+
+const styles = StyleSheet.create({
+  leftArrowImg: {
+    width: 11,
+    height: 19,
+  },
+});
 
 export default CheckListStackNav;

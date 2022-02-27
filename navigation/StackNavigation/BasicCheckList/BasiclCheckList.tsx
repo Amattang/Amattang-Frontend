@@ -1,10 +1,10 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import BasicInfoOfBasicCheckList from '../../../screens/formalCheckList/BasicInfoOfBasicCheckList';
-import OutsideOfBasicCheckList from '../../../screens/formalCheckList/OutsideOfBasicCheckList';
-import InsideOfBasicCheckList from '../../../screens/formalCheckList/InsideOfBasicCheckList';
-import OptionOfBasicCheckList from '../../../screens/formalCheckList/OptionOfBasicCheckList';
+import BasicInfoOfBasicCheckList from '../../../screens/BasicCheckList/BasicInfoOfBasicCheckList';
+import OutsideOfBasicCheckList from '../../../screens/BasicCheckList/OutsideOfBasicCheckList';
+import InsideOfBasicCheckList from '../../../screens/BasicCheckList/InsideOfBasicCheckList';
+import MyItemOfBasicCheckList from '../../../screens/BasicCheckList/MyItemOfBasicCheckList';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -29,8 +29,8 @@ function BasicCheckList() {
         />
         <Tab.Screen
           name={'option'}
-          component={OptionOfBasicCheckList}
-          options={{ title: '옵션' }}
+          component={MyItemOfBasicCheckList}
+          options={{ title: '내 항목' }}
         />
       </Tab.Navigator>
     </>

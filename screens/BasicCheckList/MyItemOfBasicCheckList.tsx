@@ -1,12 +1,12 @@
 import React from 'react';
 import { Pressable, Text } from 'react-native';
 
-function MoreInfoOfCustomCheckList() {
+function MyItemOfBasicCheckList() {
   return (
     <Pressable>
-      <Text>세부 항목</Text>
+      <Text>내 항목</Text>
     </Pressable>
   );
 }
 
-export default MoreInfoOfCustomCheckList;
+export default MyItemOfBasicCheckList;

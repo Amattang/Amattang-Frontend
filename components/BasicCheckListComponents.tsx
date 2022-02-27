@@ -1,6 +1,5 @@
 import React, { useState } from 'react';
-import { Button, Pressable, ScrollView, Text, View } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { Pressable, ScrollView, Text, View } from 'react-native';
 
 function BasicCheckListComponents() {
   const [selectedComponent, setSelectedComponent] = useState('test1');
@@ -129,11 +128,12 @@ function BasicCheckListComponents() {
   ];
   return (
     <>
-      <View style={{ height: 50 }}>
+      <View style={{ height: 60 }}>
         <ScrollView horizontal={true}>
           {slidemockUp.map((item, index) => {
             return (
-              <View
+              <Pressable
+                onPress={() => setSelectedComponent(item.name)}
                 style={{
                   borderRadius: 8,
                   backgroundColor: 'green',
@@ -142,10 +142,8 @@ function BasicCheckListComponents() {
                   height: 35,
                 }}
               >
-                <Pressable onPress={() => setSelectedComponent(item.name)}>
-                  <Text key={index}>{item.name}</Text>
-                </Pressable>
-              </View>
+                <Text key={index}>{item.name}</Text>
+              </Pressable>
             );
           })}
         </ScrollView>
@@ -165,6 +163,8 @@ function BasicCheckListComponents() {
             ))}
           </View>
         ))}
+
+      <View></View>
     </>
   );
 }
