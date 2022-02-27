@@ -5,16 +5,18 @@ import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 
 // checkListstack
 export type CheckListStackParamsList = {
-  custom: undefined;
-  basic: undefined;
+  basicCheckList: undefined;
 };
 
-export type CheckListStackProps = NativeStackScreenProps<CheckListStackParamsList, 'custom'>;
+export type CheckListStackProps = NativeStackScreenProps<
+  CheckListStackParamsList,
+  'basicCheckList'
+>;
 
 // bottomTab
 export type BottomTabParams = {
   home: undefined;
-  vote: undefined;
+  map: undefined;
 };
 
 export type BottomTabProps = BottomTabScreenProps<BottomTabParams, 'home'>; // 혹시 props 쓸일 있을까봐 만들어둠
@@ -31,14 +33,6 @@ export type NestedProps = CompositeNavigationProp<
   NativeStackNavigationProp<CheckListStackParamsList>
 >;
 
-// custom CheckList
-export type CustomCheckListParamsList = {
-  basic: undefined;
-  more: undefined;
-  item: undefined;
-};
-export type CustomCheckListProps = MaterialTopTabScreenProps<CustomCheckListParamsList, 'basic'>;
-
 // basic CheckList
 export type BasicCheckListParamsList = {
   basic: undefined;
@@ -46,4 +40,5 @@ export type BasicCheckListParamsList = {
   inside: undefined;
   option: undefined;
 };
+
 export type BasicCheckListProps = MaterialTopTabScreenProps<BasicCheckListParamsList, 'basic'>;
