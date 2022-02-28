@@ -16,6 +16,7 @@ export type CheckListStackProps = NativeStackScreenProps<
 // bottomTab
 export type BottomTabParams = {
   home: undefined;
+  checkList: any;
   map: undefined;
 };
 
