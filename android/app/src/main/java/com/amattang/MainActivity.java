@@ -3,6 +3,9 @@ package com.amattang;
 import com.facebook.react.ReactActivity;
 import android.os.Bundle;
 
+import android.os.Bundle; // here
+import org.devio.rn.splashscreen.SplashScreen; // here
+
 
 public class MainActivity extends ReactActivity {
 
@@ -17,6 +20,7 @@ public class MainActivity extends ReactActivity {
 
   @Override
   protected void onCreate(Bundle savedInstanceState) {
-    super.onCreate(null);
-  }
+    SplashScreen.show(this);
+    super.onCreate(savedInstanceState);
+    }
 }

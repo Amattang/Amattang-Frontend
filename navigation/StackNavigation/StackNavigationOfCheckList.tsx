@@ -15,6 +15,7 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
           name="basicCheckList"
           component={BasicCheckList}
           options={() => ({
+            headerTitleAlign: 'center',
             headerShadowVisible: false,
             title: '기본 체크리스트',
             headerLeft: () => (

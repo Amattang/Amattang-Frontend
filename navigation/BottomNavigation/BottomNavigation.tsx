@@ -1,86 +1,106 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { useNavigation } from '@react-navigation/native';
+import { Image, StyleSheet, Text, View } from 'react-native';
 
 import Home from '../../screens/bottomTab/Home';
 import Map from '../../screens/bottomTab/Map';
-import CheckListBtn from '../../components/CheckListBtn';
-import { BottomTabParams } from '../navigationTypes';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { BottomTabParams, NestedProps } from '../navigationTypes';
 import { mainBlue, mainGray } from '../../color';
 
 const Tab = createBottomTabNavigator<BottomTabParams>();
 
 function BottomNavigation() {
+  const navigation = useNavigation<NestedProps>();
+
   return (
-    <>
-      <CheckListBtn />
-      <Tab.Navigator screenOptions={{ headerShown: false }}>
-        <Tab.Screen
-          name={'home'}
-          component={Home}
-          options={{
-            tabBarLabel: ({ focused }) => (
-              <View style={styles.all}>
-                {focused ? (
-                  <Text style={[styles.title, styles.activeColor]}> ALL</Text>
-                ) : (
-                  <Text style={[styles.title, styles.inactiveColor]}> ALL</Text>
-                )}
-              </View>
-            ),
-            tabBarIcon: ({ focused }) =>
-              focused ? (
-                <Image
-                  style={[styles.tabBarIcon, styles.all]}
-                  source={require('../../assets/images/home/activeAll.png')}
-                />
+    <Tab.Navigator screenOptions={{ headerShown: false }}>
+      <Tab.Screen
+        name={'home'}
+        component={Home}
+        options={{
+          tabBarLabel: ({ focused }) => (
+            <View>
+              {focused ? (
+                <Text style={[styles.title, styles.activeColor]}> ALL</Text>
               ) : (
-                <Image
-                  style={[styles.tabBarIcon, styles.all]}
-                  source={require('../../assets/images/home/inactiveAll.png')}
-                />
-              ),
-          }}
-        />
-        <Tab.Screen
-          name={'map'}
-          component={Map}
-          options={{
-            tabBarLabel: ({ focused }) => (
-              <View style={styles.map}>
-                {focused ? (
-                  <Text style={[styles.title, styles.activeColor]}>지도</Text>
-                ) : (
-                  <Text style={[styles.title, styles.inactiveColor]}>지도</Text>
-                )}
-              </View>
+                <Text style={[styles.title, styles.inactiveColor]}> ALL</Text>
+              )}
+            </View>
+          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <Image source={require('../../assets/images/home/activeAll.png')} />
+            ) : (
+              <Image source={require('../../assets/images/home/inactiveAll.png')} />
             ),
-            tabBarIcon: ({ focused }) =>
-              focused ? (
-                <Image
-                  style={[styles.tabBarIcon, styles.map]}
-                  source={require('../../assets/images/home/activeMap.png')}
-                />
+        }}
+      />
+      <Tab.Screen
+        name={'checkList'}
+        children={() => null}
+        listeners={() => ({
+          tabPress: (e) => {
+            e.preventDefault();
+            navigation.navigate('stack', { screen: 'basicCheckList' });
+          },
+        })}
+        options={{
+          tabBarLabel: '',
+          tabBarIcon: () => (
+            <View style={[styles.btnWrapper]}>
+              <Text style={styles.BtnText}>+</Text>
+            </View>
+          ),
+        }}
+      />
+      <Tab.Screen
+        name={'map'}
+        component={Map}
+        options={{
+          tabBarLabel: ({ focused }) => (
+            <View>
+              {focused ? (
+                <Text style={[styles.title, styles.activeColor]}>지도</Text>
               ) : (
-                <Image
-                  style={[styles.tabBarIcon, styles.map]}
-                  source={require('../../assets/images/home/inactiveMap.png')}
-                />
-              ),
-          }}
-        />
-      </Tab.Navigator>
-    </>
+                <Text style={[styles.title, styles.inactiveColor]}>지도</Text>
+              )}
+            </View>
+          ),
+          tabBarIcon: ({ focused }) =>
+            focused ? (
+              <Image source={require('../../assets/images/home/activeMap.png')} />
+            ) : (
+              <Image source={require('../../assets/images/home/inactiveMap.png')} />
+            ),
+        }}
+      />
+    </Tab.Navigator>
   );
 }
 
 const styles = StyleSheet.create({
-  tabBarIcon: {},
   activeColor: { color: mainBlue },
   inactiveColor: { color: mainGray },
   title: { fontSize: 12, fontWeight: 'normal' },
-  all: { marginRight: 30 },
-  map: { marginLeft: 30 },
+  btnWrapper: {
+    position: 'absolute',
+    width: 55,
+    height: 55,
+    backgroundColor: mainBlue,
+    borderRadius: 50,
+    marginHorizontal: 170,
+    bottom: 5,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  BtnText: {
+    color: 'white',
+    fontSize: 35,
+    fontWeight: '300',
+    paddingBottom: 2.5,
+    paddingLeft: 2.5,
+  },
 });
 
 export default BottomNavigation;
