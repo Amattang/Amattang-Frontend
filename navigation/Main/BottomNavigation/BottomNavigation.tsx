@@ -1,13 +1,12 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import { Image, StyleSheet, Text, View } from 'react-native';
+import { Image, Text, View } from 'react-native';
 
-import Home from '../../screens/bottomTab/Home';
-import Map from '../../screens/bottomTab/Map';
-import { BottomTabParams, NestedProps } from '../navigationTypes';
-import { mainBlue, mainGray } from '../../color';
-
+import Home from '../../../screens/bottomTab/Home';
+import Map from '../../../screens/bottomTab/Map';
+import { BottomTabParams, NestedProps } from '../../../types/navigationTypes';
+import styles from './styles';
 const Tab = createBottomTabNavigator<BottomTabParams>();
 
 function BottomNavigation() {
@@ -30,9 +29,9 @@ function BottomNavigation() {
           ),
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Image source={require('../../assets/images/home/activeAll.png')} />
+              <Image source={require('../../../assets/images/home/activeAll.png')} />
             ) : (
-              <Image source={require('../../assets/images/home/inactiveAll.png')} />
+              <Image source={require('../../../assets/images/home/inactiveAll.png')} />
             ),
         }}
       />
@@ -69,38 +68,14 @@ function BottomNavigation() {
           ),
           tabBarIcon: ({ focused }) =>
             focused ? (
-              <Image source={require('../../assets/images/home/activeMap.png')} />
+              <Image source={require('../../../assets/images/home/activeMap.png')} />
             ) : (
-              <Image source={require('../../assets/images/home/inactiveMap.png')} />
+              <Image source={require('../../../assets/images/home/inactiveMap.png')} />
             ),
         }}
       />
     </Tab.Navigator>
   );
 }
-
-const styles = StyleSheet.create({
-  activeColor: { color: mainBlue },
-  inactiveColor: { color: mainGray },
-  title: { fontSize: 12, fontWeight: 'normal' },
-  btnWrapper: {
-    position: 'absolute',
-    width: 55,
-    height: 55,
-    backgroundColor: mainBlue,
-    borderRadius: 50,
-    marginHorizontal: 170,
-    bottom: 5,
-    justifyContent: 'center',
-    alignItems: 'center',
-  },
-  BtnText: {
-    color: 'white',
-    fontSize: 35,
-    fontWeight: '300',
-    paddingBottom: 2.5,
-    paddingLeft: 2.5,
-  },
-});
 
 export default BottomNavigation;

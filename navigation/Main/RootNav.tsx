@@ -3,7 +3,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import BottomNavigation from './BottomNavigation/BottomNavigation';
 import CheckListStackNav from './StackNavigation/StackNavigationOfCheckList';
-import { RootStackProps } from './navigationTypes';
+import { RootStackProps } from '../../types/navigationTypes';
 
 const RootNav = createNativeStackNavigator<RootStackProps>();
 

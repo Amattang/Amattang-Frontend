@@ -1,10 +1,10 @@
 import React from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
-import BasicInfoOfBasicCheckList from '../../../screens/BasicCheckList/BasicInfoOfBasicCheckList';
-import OutsideOfBasicCheckList from '../../../screens/BasicCheckList/OutsideOfBasicCheckList';
-import InsideOfBasicCheckList from '../../../screens/BasicCheckList/InsideOfBasicCheckList';
-import MyItemOfBasicCheckList from '../../../screens/BasicCheckList/MyItemOfBasicCheckList';
+import BasicInfoOfBasicCheckList from '../../../../screens/BasicCheckList/BasicInfoOfBasicCheckList';
+import OutsideOfBasicCheckList from '../../../../screens/BasicCheckList/OutsideOfBasicCheckList';
+import InsideOfBasicCheckList from '../../../../screens/BasicCheckList/InsideOfBasicCheckList';
+import MyItemOfBasicCheckList from '../../../../screens/BasicCheckList/MyItemOfBasicCheckList';
 
 const Tab = createMaterialTopTabNavigator();
 

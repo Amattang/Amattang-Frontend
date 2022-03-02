@@ -3,7 +3,16 @@ import { BottomTabNavigationProp, BottomTabScreenProps } from '@react-navigation
 import { CompositeNavigationProp, NavigatorScreenParams } from '@react-navigation/native';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 
-// checkListstack
+// onBoardingStack
+export type OnBoardingStackParamsList = {
+  landing: undefined;
+  login: undefined;
+  onBoarding: undefined;
+  goBack: (routeKey?: string | null) => boolean;
+};
+export type OnBoardingStackProps = NativeStackScreenProps<OnBoardingStackParamsList, 'landing'>;
+
+// checkListStack
 export type CheckListStackParamsList = {
   basicCheckList: undefined;
 };
