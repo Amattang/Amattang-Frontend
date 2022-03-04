@@ -8,7 +8,7 @@ export type OnBoardingStackParamsList = {
   landing: undefined;
   login: undefined;
   onBoarding: undefined;
-  goBack: (routeKey?: string | null) => boolean;
+  map: undefined;
 };
 export type OnBoardingStackProps = NativeStackScreenProps<OnBoardingStackParamsList, 'landing'>;
 

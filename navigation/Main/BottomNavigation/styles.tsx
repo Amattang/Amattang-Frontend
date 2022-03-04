@@ -1,9 +1,9 @@
 import { StyleSheet } from 'react-native';
-import { mainBlue, mainGray } from '../../../color';
+import { mainBlue, mainLightBlue } from '../../../color';
 
 const styles = StyleSheet.create({
   activeColor: { color: mainBlue },
-  inactiveColor: { color: mainGray },
+  inactiveColor: { color: mainLightBlue },
   title: { fontSize: 12, fontWeight: 'normal' },
   btnWrapper: {
     position: 'absolute',

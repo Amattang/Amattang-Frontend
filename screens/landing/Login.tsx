@@ -8,7 +8,7 @@ function Login() {
   const onKakaoLoginHandler = () => {};
 
   return (
-    <View style={styles.fullScreen}>
+    <View style={styles.landingPageFullScreen}>
       <View style={styles.upperElement}>
         <Text style={styles.mainText}>
           나만의 체크리스트를 위해

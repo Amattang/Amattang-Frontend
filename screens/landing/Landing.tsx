@@ -13,7 +13,7 @@ function Landing({ navigation }: OnBoardingStackProps) {
   };
 
   return (
-    <View style={styles.fullScreen}>
+    <View style={styles.landingPageFullScreen}>
       <View style={styles.upperElement}>
         <Text style={styles.mainText}>
           아맞땅과 함께 꼼꼼한 자취생활을

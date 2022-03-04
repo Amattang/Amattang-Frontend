@@ -7,6 +7,7 @@ import OnBoarding from '../../screens/landing/OnBoarding';
 import Landing from '../../screens/landing/Landing';
 import { Image, Pressable } from 'react-native';
 import { useNavigation } from '@react-navigation/native';
+import Map from '../../screens/landing/Map';
 
 const Stack = createNativeStackNavigator<OnBoardingStackParamsList>();
 
@@ -41,6 +42,19 @@ function OnBoardingStack() {
         options={{
           headerTransparent: true,
           headerTitle: '',
+          headerLeft: () => (
+            <Pressable onPress={() => navigation.goBack()}>
+              <Image source={require('../../assets/images/common/leftArrow.png')} />
+            </Pressable>
+          ),
+        }}
+      />
+      <Stack.Screen
+        name="map"
+        component={Map}
+        options={{
+          animation: 'slide_from_bottom',
+          headerTitle: '지도에서 위치 확인',
           headerLeft: () => (
             <Pressable onPress={() => navigation.goBack()}>
               <Image source={require('../../assets/images/common/leftArrow.png')} />
