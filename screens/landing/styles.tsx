@@ -39,7 +39,11 @@ const styles = StyleSheet.create({
     marginVertical: 12,
   },
   checkListMainTitle: { fontSize: 20 },
-  buttonsOfCheckList: { marginTop: 50, flexDirection: 'row' },
+  buttonsOfCheckList: {
+    marginTop: 50,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
   buttonOfCheckList: {
     backgroundColor: mainLightBlue,
     borderRadius: 5,
@@ -83,6 +87,17 @@ const styles = StyleSheet.create({
   },
 
   emoji: { lineHeight: 24, fontSize: 12 },
+
+  typeDBtnWrapper: {
+    flexDirection: 'row',
+    margin: 5,
+    borderRadius: 4,
+    paddingHorizontal: 15,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: mainLightBlue,
+  },
 });
 
 export default styles;

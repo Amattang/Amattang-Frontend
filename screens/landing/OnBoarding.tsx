@@ -88,27 +88,27 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
           ans: [
             {
               type: '병원',
-              val: 'false',
+              val: false,
             },
             {
               type: '편의점',
-              val: 'false',
+              val: false,
             },
             {
               type: '마트',
-              val: 'false',
+              val: false,
             },
             {
               type: '약국',
-              val: 'false',
-            },
-            {
-              type: '세탁소',
-              val: 'false',
+              val: false,
             },
             {
               type: '공원',
-              val: 'false',
+              val: false,
+            },
+            {
+              type: '세탁소',
+              val: false,
             },
           ],
         },
@@ -168,52 +168,84 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
               <View style={styles.buttonsOfCheckList}>
                 {data.type === 'A' &&
                   data.answer.ans.map((answer) => (
-                    <>
-                      <Pressable
-                        onPress={() =>
-                          setResponsedData(
-                            responsedData.map((questionItem) =>
-                              questionItem.questionId === data.questionId
-                                ? {
-                                    ...questionItem,
-                                    answer: {
-                                      ans: [
-                                        ...questionItem.answer.ans.map((answerItem) =>
-                                          answerItem.type === answer.type
-                                            ? { ...answerItem, val: true }
-                                            : { ...answerItem, val: false }
-                                        ),
-                                      ],
-                                    },
-                                  }
-                                : { ...questionItem }
-                            )
+                    <Pressable
+                      onPress={() =>
+                        setResponsedData(
+                          responsedData.map((questionItem) =>
+                            questionItem.questionId === data.questionId
+                              ? {
+                                  ...questionItem,
+                                  answer: {
+                                    ans: [
+                                      ...questionItem.answer.ans.map((answerItem) =>
+                                        answerItem.type === answer.type
+                                          ? { ...answerItem, val: true }
+                                          : { ...answerItem, val: false }
+                                      ),
+                                    ],
+                                  },
+                                }
+                              : { ...questionItem }
                           )
-                        }
-                        style={
-                          answer.val
-                            ? answer.redType
-                              ? [styles.typeABtnWrapper, styles.checkListFocusedOrange]
-                              : [styles.typeABtnWrapper, styles.checkListFocusedBlue]
-                            : [styles.typeABtnWrapper]
-                        }
-                      >
-                        <View>
-                          <Text
-                            style={
-                              answer.val ? styles.checkListWhiteText : styles.checkListGrayText
-                            }
-                          >
-                            {answer.type}
-                          </Text>
-                        </View>
-                      </Pressable>
-                    </>
+                        )
+                      }
+                      style={
+                        answer.val
+                          ? answer.redType
+                            ? [styles.typeABtnWrapper, styles.checkListFocusedOrange]
+                            : [styles.typeABtnWrapper, styles.checkListFocusedBlue]
+                          : [styles.typeABtnWrapper]
+                      }
+                    >
+                      <View>
+                        <Text
+                          style={answer.val ? styles.checkListWhiteText : styles.checkListGrayText}
+                        >
+                          {answer.type}
+                        </Text>
+                      </View>
+                    </Pressable>
                   ))}
                 {data.type === 'B' && <Text>b</Text>}
                 {data.type === 'C' && <Text>c</Text>}
-                {data.type === 'D' && <Text>d</Text>}
-                {data.type === 'E' && <Text>e</Text>}
+                {data.type === 'D' &&
+                  data.answer.ans.map((answer) => (
+                    <Pressable
+                      onPress={() =>
+                        setResponsedData(
+                          responsedData.map((questionItem) =>
+                            questionItem.questionId === data.questionId
+                              ? {
+                                  ...questionItem,
+                                  answer: {
+                                    ans: [
+                                      ...questionItem.answer.ans.map((answerItem) =>
+                                        answerItem.type === answer.type
+                                          ? { ...answerItem, val: !answerItem.val }
+                                          : { ...answerItem }
+                                      ),
+                                    ],
+                                  },
+                                }
+                              : { ...questionItem }
+                          )
+                        )
+                      }
+                      style={
+                        answer.val
+                          ? [styles.typeDBtnWrapper, styles.checkListFocusedBlue]
+                          : [styles.typeDBtnWrapper]
+                      }
+                    >
+                      <View>
+                        <Text
+                          style={answer.val ? styles.checkListWhiteText : styles.checkListGrayText}
+                        >
+                          {answer.type}
+                        </Text>
+                      </View>
+                    </Pressable>
+                  ))}
               </View>
             </View>
           ))}

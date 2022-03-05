@@ -24,7 +24,7 @@ function Login() {
           <View style={styles.bottomImg}>
             <Image source={require('../../assets/images/landing/apple.png')} />
           </View>
-          <Text style={styles.appleLoginText}>APPLE로 시작하기</Text>
+          <Text style={styles.appleLoginText}>Apple로 시작하기</Text>
         </Pressable>
         <Pressable onPress={onKakaoLoginHandler} style={[styles.kakaoLoginBtn, styles.bottomBtn]}>
           <View style={styles.bottomImg}>
