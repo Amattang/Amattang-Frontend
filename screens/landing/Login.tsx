@@ -2,10 +2,14 @@ import React from 'react';
 import { Image, Pressable, Text, View } from 'react-native';
 import styles from './styles';
 
-function Login() {
-  const onAppleLoginHandler = () => {};
+function Login({ setIsLogin }: any) {
+  const onAppleLoginHandler = () => {
+    setIsLogin(true);
+  };
 
-  const onKakaoLoginHandler = () => {};
+  const onKakaoLoginHandler = () => {
+    setIsLogin(true);
+  };
 
   return (
     <View style={styles.landingPageFullScreen}>

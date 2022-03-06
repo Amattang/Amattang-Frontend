@@ -20,7 +20,9 @@ function App() {
 
   return (
     <>
-      <NavigationContainer>{isLogin ? <RootNav /> : <OnBoardingStack />}</NavigationContainer>
+      <NavigationContainer>
+        {isLogin ? <RootNav /> : <OnBoardingStack setIsLogin={setIsLogin} />}
+      </NavigationContainer>
     </>
   );
 }

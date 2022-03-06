@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { OnBoardingStackParamsList, OnBoardingStackProps } from '../../types/navigationTypes';
@@ -11,7 +11,11 @@ import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator<OnBoardingStackParamsList>();
 
-function OnBoardingStack() {
+interface IProps {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+}
+
+function OnBoardingStack({ setIsLogin }: IProps) {
   const navigation = useNavigation();
 
   return (
@@ -25,7 +29,7 @@ function OnBoardingStack() {
       />
       <Stack.Screen
         name="login"
-        component={Login}
+        children={() => <Login setIsLogin={setIsLogin} />}
         options={{
           headerTransparent: true,
           headerTitle: '',
