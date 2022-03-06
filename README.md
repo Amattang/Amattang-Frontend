@@ -1,4 +1,4 @@
 # Amattang-Frontend
 
 
-amattang-frontend
+amattang-front-end
