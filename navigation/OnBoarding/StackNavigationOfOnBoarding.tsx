@@ -32,7 +32,7 @@ function OnBoardingStack({ setIsLogin }: IProps) {
         children={() => <Login setIsLogin={setIsLogin} />}
         options={{
           headerTransparent: true,
-          headerTitle: '',
+          title: '',
           headerLeft: () => (
             <Pressable onPress={() => navigation.goBack()}>
               <Image source={require('../../assets/images/common/leftArrow.png')} />
@@ -45,7 +45,7 @@ function OnBoardingStack({ setIsLogin }: IProps) {
         component={OnBoarding}
         options={{
           headerTransparent: true,
-          headerTitle: '',
+          title: '',
           headerLeft: () => (
             <Pressable onPress={() => navigation.goBack()}>
               <Image source={require('../../assets/images/common/leftArrow.png')} />

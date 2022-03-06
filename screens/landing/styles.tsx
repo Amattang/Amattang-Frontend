@@ -1,11 +1,21 @@
-import { StyleSheet } from 'react-native';
+import { StyleSheet, Platform } from 'react-native';
 import { mainBlack, mainBlue, mainLightBlue, mainOrange } from '../../color';
 
 const styles = StyleSheet.create({
-  landingPageFullScreen: { backgroundColor: 'white', flex: 1 },
-  onBoardingFullScreen: { backgroundColor: mainLightBlue, flex: 1 },
-  upperElement: { marginTop: 115, marginHorizontal: 17 },
-  lowerElement: { position: 'absolute', bottom: 60, marginHorizontal: '5%', width: '90%' },
+  landingPageFullScreen: { backgroundColor: 'white', flex: 1, fontFamily: 'AppleSDGothicNeoM' },
+  onBoardingFullScreen: {
+    backgroundColor: mainLightBlue,
+    flex: 1,
+    fontFamily: 'AppleSDGothicNeoM',
+  },
+  upperElement:
+    Platform.OS === 'ios'
+      ? { marginTop: 110, marginHorizontal: 17 }
+      : { marginTop: 50, marginHorizontal: 17 },
+  lowerElement:
+    Platform.OS === 'ios'
+      ? { position: 'absolute', bottom: 60, marginHorizontal: '5%', width: '90%' }
+      : { position: 'absolute', bottom: 40, marginHorizontal: '5%', width: '90%' },
   mainText: { fontSize: 24, lineHeight: 40, color: mainBlack },
   subText: { marginTop: 32, lineHeight: 30, color: mainBlack },
 
