@@ -6,13 +6,13 @@ import Login from '../../screens/landing/Login';
 import OnBoarding from '../../screens/landing/OnBoarding';
 import Landing from '../../screens/landing/Landing';
 import { Image, Pressable } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
 import Map from '../../screens/landing/Map';
+import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator<OnBoardingStackParamsList>();
 
 function OnBoardingStack() {
-  const navigation = useNavigation<OnBoardingStackProps>();
+  const navigation = useNavigation();
 
   return (
     <Stack.Navigator>
