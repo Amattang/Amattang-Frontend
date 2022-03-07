@@ -1,7 +1,8 @@
 import React from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import styles from './styles';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
+import { DefaultText } from '../../CustomText';
 
 function Landing({ navigation }: OnBoardingStackProps) {
   const onLoginHandler = () => {
@@ -15,24 +16,24 @@ function Landing({ navigation }: OnBoardingStackProps) {
   return (
     <View style={styles.landingPageFullScreen}>
       <View style={styles.upperElement}>
-        <Text style={styles.mainText}>
+        <DefaultText style={styles.mainText}>
           아맞땅과 함께 꼼꼼한 자취생활을
           {'\n'}시작해볼까요?
-        </Text>
-        <Text style={styles.subText}>
+        </DefaultText>
+        <DefaultText style={styles.subText}>
           50여가지의 체크리스트 항목으로
           {'\n'}꿈꾸던 집을 만날 수 있어요
-        </Text>
+        </DefaultText>
       </View>
       <View style={styles.mainImage}>
         <Image source={require('../../assets/images/landing/landingImage.png')} />
       </View>
       <View style={styles.lowerElement}>
         <Pressable onPress={onLoginHandler} style={[styles.loginBtn, styles.bottomBtn]}>
-          <Text style={styles.loginText}>시작하기</Text>
+          <DefaultText style={styles.loginText}>시작하기</DefaultText>
         </Pressable>
         <Pressable onPress={onOnBoardingHandler} style={[styles.onBoardingBtn, styles.bottomBtn]}>
-          <Text style={styles.onBoardingText}>아맞땅 맛보기</Text>
+          <DefaultText style={styles.onBoardingText}>아맞땅 맛보기</DefaultText>
         </Pressable>
       </View>
     </View>

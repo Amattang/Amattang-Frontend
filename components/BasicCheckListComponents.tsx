@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
-import { Pressable, ScrollView, Text, View } from 'react-native';
+import { Pressable, ScrollView, View } from 'react-native';
+import { DefaultText } from '../CustomText';
 
 function BasicCheckListComponents() {
   const [selectedComponent, setSelectedComponent] = useState('test1');
@@ -142,7 +143,7 @@ function BasicCheckListComponents() {
                   height: 35,
                 }}
               >
-                <Text key={index}>{item.name}</Text>
+                <DefaultText key={index}>{item.name}</DefaultText>
               </Pressable>
             );
           })}
@@ -153,12 +154,12 @@ function BasicCheckListComponents() {
         .filter((item) => item.name === selectedComponent)[0]
         .list.map((item, index) => (
           <View style={{ marginVertical: 30 }} key={index + 10}>
-            {<Text>{item.MainTitle}</Text>}
-            {<Text>{item.subTitle}</Text>}
+            {<DefaultText>{item.MainTitle}</DefaultText>}
+            {<DefaultText>{item.subTitle}</DefaultText>}
 
             {item.button.map((button, index) => (
               <Pressable key={index + 10000}>
-                <Text>{button}</Text>
+                <DefaultText>{button}</DefaultText>
               </Pressable>
             ))}
           </View>

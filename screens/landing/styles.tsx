@@ -6,7 +6,6 @@ const styles = StyleSheet.create({
   onBoardingFullScreen: {
     backgroundColor: mainLightBlue,
     flex: 1,
-    fontFamily: 'AppleSDGothicNeoM',
   },
   upperElement:
     Platform.OS === 'ios'

@@ -1,6 +1,7 @@
 import React from 'react';
-import { Image, Pressable, Text, View } from 'react-native';
+import { Image, Pressable, View } from 'react-native';
 import styles from './styles';
+import { DefaultText } from '../../CustomText';
 
 function Login({ setIsLogin }: any) {
   const onAppleLoginHandler = () => {
@@ -14,11 +15,13 @@ function Login({ setIsLogin }: any) {
   return (
     <View style={styles.landingPageFullScreen}>
       <View style={styles.upperElement}>
-        <Text style={styles.mainText}>
+        <DefaultText style={styles.mainText}>
           나만의 체크리스트를 위해
           {'\n'}계정이 필요해요
-        </Text>
-        <Text style={styles.subText}>로그인 하고 더 많은 체크리스트를 받아보세요</Text>
+        </DefaultText>
+        <DefaultText style={styles.subText}>
+          로그인 하고 더 많은 체크리스트를 받아보세요
+        </DefaultText>
       </View>
       <View style={styles.loginImage}>
         <Image source={require('../../assets/images/landing/loginImage.png')} />
@@ -28,13 +31,13 @@ function Login({ setIsLogin }: any) {
           <View style={styles.bottomImg}>
             <Image source={require('../../assets/images/landing/apple.png')} />
           </View>
-          <Text style={styles.appleLoginText}>Apple로 시작하기</Text>
+          <DefaultText style={styles.appleLoginText}>Apple로 시작하기</DefaultText>
         </Pressable>
         <Pressable onPress={onKakaoLoginHandler} style={[styles.kakaoLoginBtn, styles.bottomBtn]}>
           <View style={styles.bottomImg}>
             <Image source={require('../../assets/images/landing/kakao.png')} />
           </View>
-          <Text style={styles.kakaoLoginText}>카카오톡으로 시작하기</Text>
+          <DefaultText style={styles.kakaoLoginText}>카카오톡으로 시작하기</DefaultText>
         </Pressable>
       </View>
     </View>

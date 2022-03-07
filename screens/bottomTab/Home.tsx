@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { DefaultText } from '../../CustomText';
 
 function Home() {
-  return <Text>home</Text>;
+  return <DefaultText>home</DefaultText>;
 }
 
 export default Home;
