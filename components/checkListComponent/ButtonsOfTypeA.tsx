@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Pressable, Text, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { checkList } from '../../types/checkListTypes';
 import styles from './style';
+import { DefaultText } from '../../CustomText';
 
 interface IProps {
   mainQuestionItem: checkList;
@@ -43,9 +44,9 @@ function ButtonsOfTypeA({ mainQuestionItem, setCheckLists, checkLists }: IProps)
           }
         >
           <View>
-            <Text style={answer.val ? styles.checkListWhiteText : styles.checkListGrayText}>
+            <DefaultText style={answer.val ? styles.checkListWhiteText : styles.checkListGrayText}>
               {answer.type}
-            </Text>
+            </DefaultText>
           </View>
         </Pressable>
       ))}

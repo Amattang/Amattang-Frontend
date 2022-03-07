@@ -1,10 +1,11 @@
 import React from 'react';
-import { Pressable, Text } from 'react-native';
+import { Pressable } from 'react-native';
+import { DefaultText } from '../../CustomText';
 
 function InsideOfBasicCheckList() {
   return (
     <Pressable>
-      <Text>내부항목</Text>
+      <DefaultText>내부항목</DefaultText>
     </Pressable>
   );
 }

@@ -1,10 +1,11 @@
 import React, { useState } from 'react';
-import { Image, Pressable, ScrollView, Text, View } from 'react-native';
+import { Image, Pressable, ScrollView, View } from 'react-native';
 import styles from './styles';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { checkList } from '../../types/checkListTypes';
 import { response } from './onBoardingMockUpData';
 import CheckListComponent from '../../components/checkListComponent/CheckListComponent';
+import { DefaultText } from '../../CustomText';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
   const [checkLists, setCheckLists] = useState<checkList[]>(response);
@@ -16,17 +17,19 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
     <>
       <View style={styles.onBoardingFullScreen}>
         <View style={styles.upperElement}>
-          <Text style={styles.mainText}>우리집을 체크하며 {'\n'}아맞땅을 미리 경험해보세요</Text>
+          <DefaultText style={styles.mainText}>
+            우리집을 체크하며 {'\n'}아맞땅을 미리 경험해보세요
+          </DefaultText>
         </View>
         <ScrollView style={styles.checkListCards}>
           <View style={styles.whiteCard}>
-            <Text style={styles.checkListMainTitle}>주소를 입력하세요</Text>
+            <DefaultText style={styles.checkListMainTitle}>주소를 입력하세요</DefaultText>
             <View style={styles.buttonsOfCheckList}>
               <Pressable
                 onPress={() => console.log('여기에 누르면 이제 지도 검색 궈궈')}
                 style={[styles.directInputOfAddress, styles.buttonOfCheckList]}
               >
-                <Text style={styles.directInputTextOfAddress}>직접 입력</Text>
+                <DefaultText style={styles.directInputTextOfAddress}>직접 입력</DefaultText>
               </Pressable>
               <Pressable
                 onPress={onMapHandler}
@@ -36,7 +39,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
                   style={styles.mapInputImageOfAddress}
                   source={require('../../assets/images/landing/map.png')}
                 />
-                <Text>현위치</Text>
+                <DefaultText>현위치</DefaultText>
               </Pressable>
             </View>
           </View>

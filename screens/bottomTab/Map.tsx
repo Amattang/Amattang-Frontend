@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text } from 'react-native';
+import { DefaultText } from '../../CustomText';
 
 function Map() {
-  return <Text>이제는 지도가 나와야할 시간~</Text>;
+  return <DefaultText>이제는 지도가 나와야할 시간~</DefaultText>;
 }
 
 export default Map;
