@@ -5,6 +5,7 @@ import 'react-native-gesture-handler';
 
 import RootNav from './navigation/Main/RootNav';
 import OnBoardingStack from './navigation/OnBoarding/StackNavigationOfOnBoarding';
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -21,7 +22,9 @@ function App() {
   return (
     <>
       <NavigationContainer>
-        {isLogin ? <RootNav /> : <OnBoardingStack setIsLogin={setIsLogin} />}
+        <GestureHandlerRootView style={{ flex: 1 }}>
+          {isLogin ? <RootNav /> : <OnBoardingStack setIsLogin={setIsLogin} />}
+        </GestureHandlerRootView>
       </NavigationContainer>
     </>
   );
