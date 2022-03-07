@@ -1,5 +1,5 @@
 import React from 'react';
-import { Image, Pressable } from 'react-native';
+import { Image, Pressable, Share, Text } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
@@ -8,6 +8,24 @@ import styles from './styles';
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
 function CheckListStackNav({ navigation }: CheckListStackProps) {
+  const onShare = async () => {
+    try {
+      const result = await Share.share({
+        message: 'https://www.naver.com',
+      });
+      if (result.action === Share.sharedAction) {
+        if (result.activityType) {
+          // shared with activity type of result.activityType
+        } else {
+          // shared
+        }
+      } else if (result.action === Share.dismissedAction) {
+        // dismissed
+      }
+    } catch (error: any) {
+      throw new Error(error);
+    }
+  };
   return (
     <>
       <NativeStack.Navigator>
@@ -18,6 +36,11 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
             headerTitleAlign: 'center',
             headerShadowVisible: false,
             title: '기본 체크리스트',
+            headerRight: () => (
+              <Pressable onPress={onShare}>
+                <Text>공유</Text>
+              </Pressable>
+            ),
             headerLeft: () => (
               <Pressable onPress={() => navigation.goBack()}>
                 <Image
