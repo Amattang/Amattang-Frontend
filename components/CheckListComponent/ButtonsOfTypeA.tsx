@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Pressable, View } from 'react-native';
 import { checkList } from '../../types/checkListTypes';
-import styles from './style';
+import styles from './styles';
 import { DefaultText } from '../../CustomText';
 
 interface IProps {

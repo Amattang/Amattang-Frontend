@@ -2,11 +2,11 @@ import React, { Dispatch, SetStateAction } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import { OnBoardingStackParamsList, OnBoardingStackProps } from '../../types/navigationTypes';
-import Login from '../../screens/landing/Login';
-import OnBoarding from '../../screens/landing/OnBoarding';
-import Landing from '../../screens/landing/Landing';
+import Login from '../../screens/Landing/Login';
+import OnBoarding from '../../screens/Landing/OnBoarding';
+import Landing from '../../screens/Landing/Landing';
 import { Image, Pressable } from 'react-native';
-import Map from '../../screens/landing/Map';
+import Map from '../../screens/Landing/Map';
 import { useNavigation } from '@react-navigation/native';
 
 const Stack = createNativeStackNavigator<OnBoardingStackParamsList>();

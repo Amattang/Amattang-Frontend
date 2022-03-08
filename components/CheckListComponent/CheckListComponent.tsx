@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { View } from 'react-native';
 import { checkList } from '../../types/checkListTypes';
-import styles from './style';
+import styles from './styles';
 import ButtonsOfTypeA from './ButtonsOfTypeA';
 import ButtonsOfTypeD from './ButtonsOfTypeD';
 import { DefaultText } from '../../CustomText';
