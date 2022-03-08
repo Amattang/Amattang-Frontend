@@ -3,7 +3,7 @@ import { Image, Pressable, ScrollView, View } from 'react-native';
 import styles from './styles';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { checkList } from '../../types/checkListTypes';
-import { response } from './onBoardingMockUpData';
+import { response } from '../../mockData/onBoardingMockUpData';
 import CheckListComponent from '../../components/CheckListComponent/CheckListComponent';
 import { DefaultText } from '../../CustomText';
 

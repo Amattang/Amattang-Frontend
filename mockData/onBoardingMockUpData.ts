@@ -1,4 +1,4 @@
-import { checkList } from '../../types/checkListTypes';
+import { checkList } from '../types/checkListTypes';
 
 export const response: checkList[] = [
   {

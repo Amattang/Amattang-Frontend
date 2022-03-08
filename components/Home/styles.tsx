@@ -3,28 +3,18 @@ import { mainBlue, mainLightBlue } from '../../color';
 
 const styles = StyleSheet.create({
   fullScreenWrapper: { flex: 1, backgroundColor: 'white' },
-
-  upperElement:
+  welcomeTitle:
     Platform.OS === 'ios'
-      ? { marginTop: 110, marginHorizontal: 17 }
-      : { marginTop: 50, marginHorizontal: 17 },
+      ? { marginTop: 55, marginLeft: 17, fontFamily: 'AppleSDGothicNeoB00', fontSize: 24 }
+      : { marginTop: 40, marginLeft: 17, fontFamily: 'AppleSDGothicNeoB00', fontSize: 24 },
 
-  pinnedText:
-    Platform.OS === 'ios'
-      ? {
-          marginTop: 70,
-          marginBottom: 15,
-          marginLeft: 17,
-          fontWeight: '700',
-          fontSize: 18,
-        }
-      : {
-          marginTop: 40,
-          marginBottom: 15,
-          marginLeft: 17,
-          fontWeight: '700',
-          fontSize: 18,
-        },
+  pinnedText: {
+    marginTop: 20,
+    marginBottom: 15,
+    marginLeft: 17,
+    fontWeight: '700',
+    fontSize: 18,
+  },
 
   emptyHomeMainImg: {
     marginTop: 220,
@@ -40,8 +30,8 @@ const styles = StyleSheet.create({
 
   blueText: { color: mainBlue },
 
-  pinnedChecklistWrapper: { height: 255 },
-  pinnedChecklistCard: { marginHorizontal: 16 },
+  pinnedChecklistWrapper: { height: 260, marginLeft: 17 },
+  pinnedChecklistCard: { marginRight: 14 },
   pinnedChecklistImg: { width: 240, height: 180, borderRadius: 10 },
   pinnedChecklistSummaryCard: {
     width: 240,
@@ -66,7 +56,7 @@ const styles = StyleSheet.create({
   distanceWrapper: { marginLeft: 20 },
 
   unpinnedChecklistWrapper: { flex: 3, marginLeft: 17 },
-  unpinnedChecklistCard: { flexDirection: 'row', marginVertical: 16, height: 100 },
+  unpinnedChecklistCard: { flexDirection: 'row', marginVertical: 8, height: 100 },
   unpinnedChecklistImg: { width: 136, height: 100, borderRadius: 6 },
   unpinnedChecklistSummaryCard: {
     padding: 7,
