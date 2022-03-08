@@ -6,7 +6,7 @@ const styles = StyleSheet.create({
   welcomeTitle:
     Platform.OS === 'ios'
       ? { marginTop: 55, marginLeft: 17, fontFamily: 'AppleSDGothicNeoB00', fontSize: 24 }
-      : { marginTop: 40, marginLeft: 17, fontFamily: 'AppleSDGothicNeoB00', fontSize: 24 },
+      : { marginTop: 15, marginLeft: 17, fontFamily: 'AppleSDGothicNeoB00', fontSize: 24 },
 
   pinnedText: {
     marginTop: 20,
