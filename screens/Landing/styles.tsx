@@ -83,7 +83,7 @@ const styles = StyleSheet.create({
   checkListFocusedBlue: { backgroundColor: mainBlue },
   checkListFocusedOrange: { backgroundColor: mainOrange },
 
-  rightArrowWrapper: {
+  floatingBtnWrapper: {
     width: 55,
     height: 55,
     justifyContent: 'center',

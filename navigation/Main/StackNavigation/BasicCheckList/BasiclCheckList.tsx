@@ -1,17 +1,34 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import BasicInfoOfBasicCheckList from '../../../../screens/BasicCheckList/BasicInfoOfBasicCheckList';
 import OutsideOfBasicCheckList from '../../../../screens/BasicCheckList/OutsideOfBasicCheckList';
 import InsideOfBasicCheckList from '../../../../screens/BasicCheckList/InsideOfBasicCheckList';
 import MyItemOfBasicCheckList from '../../../../screens/BasicCheckList/MyItemOfBasicCheckList';
+import { mainLightBlue } from '../../../../color';
+import FloatingBtn from '../../../../components/CheckListComponent/FloatingBtn';
 
 const Tab = createMaterialTopTabNavigator();
 
-function BasicCheckList() {
+interface IProps {
+  setIsEdit: Dispatch<SetStateAction<boolean>>;
+  isEdit: boolean;
+}
+
+function BasicCheckList({ setIsEdit, isEdit }: IProps) {
+  const onEditHandler = () => {
+    setIsEdit(true);
+  };
+
+  const onCameraHandler = () => {
+    console.log('camera');
+  };
+
   return (
     <>
-      <Tab.Navigator screenOptions={{ swipeEnabled: false }}>
+      <Tab.Navigator
+        screenOptions={{ swipeEnabled: false, tabBarStyle: { backgroundColor: mainLightBlue } }}
+      >
         <Tab.Screen
           name="basic"
           component={BasicInfoOfBasicCheckList}
@@ -33,6 +50,11 @@ function BasicCheckList() {
           options={{ title: '내 항목' }}
         />
       </Tab.Navigator>
+      {isEdit ? (
+        <FloatingBtn floatingFunction={onCameraHandler} image={'camera'} />
+      ) : (
+        <FloatingBtn floatingFunction={onEditHandler} image={'edit'} />
+      )}
     </>
   );
 }

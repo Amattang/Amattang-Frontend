@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Image, Pressable, ScrollView, View } from 'react-native';
+
 import styles from './styles';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { checkList } from '../../types/checkListTypes';
 import { response } from '../../mockData/onBoardingMockUpData';
 import CheckListComponent from '../../components/CheckListComponent/CheckListComponent';
 import { DefaultText } from '../../CustomText';
+import FloatingBtn from '../../components/CheckListComponent/FloatingBtn';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
   const [checkLists, setCheckLists] = useState<checkList[]>(response);
   const onMapHandler = () => {
     navigation.navigate('map');
+  };
+
+  const floatingFunction = () => {
+    navigation.navigate('login');
   };
 
   return (
@@ -46,9 +52,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
           <CheckListComponent checkLists={checkLists} setCheckLists={setCheckLists} />
         </ScrollView>
       </View>
-      <Pressable onPress={() => navigation.navigate('login')} style={styles.rightArrowWrapper}>
-        <Image source={require('../../assets/images/common/rightArrow.png')} />
-      </Pressable>
+      <FloatingBtn floatingFunction={floatingFunction} image={'rightArrow'} />
     </>
   );
 }

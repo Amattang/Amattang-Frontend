@@ -15,9 +15,10 @@ export interface checkList extends answerOfType {
   subCategory: string | null;
   questionId: string;
   question: string;
+  deleted?: boolean;
   emoji: string;
   mainCategory: string | null;
   rule: string | null;
-  description: string;
-  type: 'A' | 'B' | 'C' | 'D';
+  description: string | null;
+  type: 'A' | 'B' | 'C' | 'D' | 'M';
 }

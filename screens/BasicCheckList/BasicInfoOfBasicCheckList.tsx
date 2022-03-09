@@ -1,11 +1,10 @@
 import React from 'react';
-
-import BasicCheckListComponents from '../../components/BasicCheckListComponents';
+import { Text } from 'react-native';
 
 function BasicInfoOfBasicCheckList() {
   return (
     <>
-      <BasicCheckListComponents />
+      <Text>test</Text>
     </>
   );
 }
