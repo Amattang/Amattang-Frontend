@@ -31,7 +31,7 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
       >
         <Tab.Screen
           name="basic"
-          component={BasicInfoOfBasicCheckList}
+          children={() => <BasicInfoOfBasicCheckList isEdit={isEdit} />}
           options={{ title: '기본 정보' }}
         />
         <Tab.Screen

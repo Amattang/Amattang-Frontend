@@ -2,9 +2,9 @@ import { checkList } from '../types/checkListTypes';
 
 export const response: checkList[] = [
   {
-    questionId: 'question11',
-    question: '체크리스트의 이름을 정하세요',
-    mainCategory: '기본 정보',
+    questionId: 'question21',
+    question: '주차 공간이 있나요?',
+    mainCategory: '외부 시설',
     subCategory: '주황색 건물, 편의점 앞집 등 스스로 기억에 남을 만한 단어로 적어보세요',
     rule: null,
     description: null,
@@ -18,7 +18,7 @@ export const response: checkList[] = [
   {
     questionId: 'question12',
     question: '주소를 작성하세요',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: null,
     rule: null,
     description: '계약 전 시간대를 달리하여 재 방문하고 집 주변을 둘러볼 수 있어요\n',
@@ -32,7 +32,7 @@ export const response: checkList[] = [
   {
     questionId: 'question13',
     question: '사진을 찍어 기록하세요',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: '세면대 물을 틀어 놓은 상태로 변기 물을 내려보세요요요요요요 ',
     rule: null,
     description: '오래된 건물의 고층이라면 특히 주의해주세요',
@@ -50,7 +50,7 @@ export const response: checkList[] = [
   {
     questionId: 'question14',
     question: '집의 종류가 무엇인가요?',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: null,
     rule: null,
     description: null,
@@ -68,7 +68,7 @@ export const response: checkList[] = [
   {
     questionId: 'question5',
     question: '집의 구조가 어떠한가요?',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: null,
     rule: '',
     description: null,
@@ -86,7 +86,7 @@ export const response: checkList[] = [
   {
     questionId: 'question16',
     question: '집의 평수는 얼마인가요?',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: null,
     rule: null,
     description: null,
@@ -100,7 +100,7 @@ export const response: checkList[] = [
   {
     questionId: 'question17',
     question: '계약의 형태가 어떠한가요?',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: null,
     rule: null,
     description: null,
@@ -117,7 +117,7 @@ export const response: checkList[] = [
   {
     questionId: 'question18',
     question: '보증금과 월세를 확인하세요',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: null,
     rule: null,
     description: null,
@@ -131,7 +131,7 @@ export const response: checkList[] = [
   {
     questionId: 'question19',
     question: '관리비는 얼마인가요?',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: null,
     rule: null,
     description: null,
@@ -145,7 +145,7 @@ export const response: checkList[] = [
   {
     questionId: 'question110',
     question: '관리비에 포함되는 항목에는 어떤 것이 있나요?',
-    mainCategory: '기본 정보',
+    mainCategory: '외부 시설',
     subCategory: null,
     rule: null,
     description: null,

@@ -1,10 +1,26 @@
-import React from 'react';
-import { Text } from 'react-native';
+import React, { useState } from 'react';
+import { ScrollView, View } from 'react-native';
+import styles from '../Landing/styles';
+import CheckListComponent from '../../components/CheckListComponent/CheckListComponent';
+import { response } from '../../mockData/checkListOfBasicInfo';
 
-function BasicInfoOfBasicCheckList() {
+interface IProps {
+  isEdit: boolean;
+}
+
+function BasicInfoOfBasicCheckList({ isEdit }: IProps) {
+  const [checkLists, setCheckLists] = useState(response);
   return (
     <>
-      <Text>test</Text>
+      <View style={styles.onBoardingFullScreen}>
+        <ScrollView style={styles.checkListCards}>
+          <CheckListComponent
+            isEdit={isEdit}
+            checkLists={checkLists}
+            setCheckLists={setCheckLists}
+          />
+        </ScrollView>
+      </View>
     </>
   );
 }

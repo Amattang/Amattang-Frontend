@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   checkListMainTitle: { fontSize: 20 },
   buttonsOfCheckList: {
-    marginTop: 50,
+    marginTop: 35,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  subTitles: { marginTop: 19 },
+  subTitles: { marginTop: 10 },
   checkListSubTitle: { flexDirection: 'row' },
   checkListGrayText: { color: '#7C7C7C', lineHeight: 24 },
   checkListWhiteText: { color: 'white', lineHeight: 24 },
@@ -35,8 +35,19 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: mainLightBlue,
   },
+  typeAExtendedBtnWrapper: {
+    marginRight: 19,
+    borderRadius: 4,
+    paddingHorizontal: 14,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: mainLightBlue,
+  },
   checkListFocusedBlue: { backgroundColor: mainBlue },
   checkListFocusedOrange: { backgroundColor: mainOrange },
+
+  typeBBtnWrapper: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
 
   floatingBtnWrapper: {
     width: 55,

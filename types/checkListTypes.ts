@@ -1,6 +1,7 @@
 export interface answerButtonOfType {
-  val: boolean;
+  val?: boolean;
   redType?: boolean;
+  description?: string;
   type: string;
 }
 
