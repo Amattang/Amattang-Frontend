@@ -41,7 +41,7 @@ function ButtonsOfTypeA({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
         <Pressable
           onPress={() => onPressHandler(answer)}
           style={
-            mainQuestionItem.answer.ans.length < 2
+            mainQuestionItem.answer.ans.length < 3
               ? answer.val
                 ? answer.redType
                   ? [styles.typeABtnWrapper, styles.checkListFocusedOrange]

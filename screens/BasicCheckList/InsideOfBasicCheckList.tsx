@@ -2,7 +2,11 @@ import React from 'react';
 import { Pressable } from 'react-native';
 import BasicCheckListComponents from '../../components/BasicCheckListComponents';
 
-function InsideOfBasicCheckList() {
+interface IProps {
+  isEdit: boolean;
+}
+
+function InsideOfBasicCheckList({ isEdit }: IProps) {
   return (
     <Pressable>
       <BasicCheckListComponents />

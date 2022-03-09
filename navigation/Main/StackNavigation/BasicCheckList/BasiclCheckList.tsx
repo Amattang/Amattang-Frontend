@@ -36,17 +36,17 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
         />
         <Tab.Screen
           name={'outside'}
-          component={OutsideOfBasicCheckList}
+          children={() => <OutsideOfBasicCheckList isEdit={isEdit} />}
           options={{ title: '외부 시설' }}
         />
         <Tab.Screen
           name={'inside'}
-          component={InsideOfBasicCheckList}
+          children={() => <InsideOfBasicCheckList isEdit={isEdit} />}
           options={{ title: '내부 시설' }}
         />
         <Tab.Screen
           name={'option'}
-          component={MyItemOfBasicCheckList}
+          children={() => <MyItemOfBasicCheckList isEdit={isEdit} />}
           options={{ title: '내 항목' }}
         />
       </Tab.Navigator>

@@ -11,7 +11,7 @@ const styles = StyleSheet.create({
   },
   checkListMainTitle: { fontSize: 20 },
   buttonsOfCheckList: {
-    marginTop: 35,
+    marginTop: 40,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -22,7 +22,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  subTitles: { marginTop: 10 },
+  subTitles: { marginTop: 14 },
   checkListSubTitle: { flexDirection: 'row' },
   checkListGrayText: { color: '#7C7C7C', lineHeight: 24 },
   checkListWhiteText: { color: 'white', lineHeight: 24 },

@@ -32,7 +32,6 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
   };
 
   const onSubmitHandler = () => {
-    console.log('test');
     setIsEdit(false);
   };
   return (
