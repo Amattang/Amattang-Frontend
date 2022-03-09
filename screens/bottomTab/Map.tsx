@@ -19,6 +19,7 @@ interface ILocations {
   center: boolean;
 }
 
+//  변경 예정
 const SLIDER_WIDTH = Dimensions.get('window').width;
 const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.6);
 
@@ -43,6 +44,7 @@ const Map = () => {
     longitude: 127.035192,
   });
 
+  // mockup data
   const [locations, setLocations] = useState<ILocations[]>([
     {
       id: 0,
@@ -102,6 +104,7 @@ const Map = () => {
     });
   }, []);
 
+  // 현재 위치로 가기 -> 필요하면 살려두고 필요 없으면 삭제 예정
   const goCurrentPosition = (): void => {
     goGeoLocation();
   };
@@ -121,15 +124,12 @@ const Map = () => {
     );
   };
 
-  // useEffect(() => {
-  //   console.log(active, locations);
-  // }, [active, locations]);
-
   return (
     <View style={{ flex: 1 }}>
       {here && (
         <MapView
           style={{ flex: 1 }}
+          provider={PROVIDER_GOOGLE}
           initialRegion={{
             latitude: here.latitude,
             longitude: here.longitude,
@@ -170,7 +170,6 @@ const Map = () => {
       {/* <Button onPress={goCurrentPosition} title={'현재 위치로 가기'} /> */}
       <View style={styles.carContainer}>
         <Carousel
-          // ref={carouselRef}
           data={locations}
           renderItem={renderItem}
           itemWidth={ITEM_WIDTH}
