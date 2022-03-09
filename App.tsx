@@ -21,11 +21,9 @@ function App() {
 
   return (
     <>
-      <GestureHandlerRootView style={{ flex: 1 }}>
-        <NavigationContainer>
-          {isLogin ? <RootNav /> : <OnBoardingStack setIsLogin={setIsLogin} />}
-        </NavigationContainer>
-      </GestureHandlerRootView>
+      <NavigationContainer>
+        {isLogin ? <RootNav /> : <OnBoardingStack setIsLogin={setIsLogin} />}
+      </NavigationContainer>
     </>
   );
 }

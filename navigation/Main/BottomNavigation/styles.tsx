@@ -16,12 +16,15 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
   },
-  BtnText: {
+  btnText: {
     color: 'white',
     fontSize: 35,
     fontWeight: '300',
     paddingBottom: 2.5,
     paddingLeft: 2.5,
+  },
+  setting: {
+    marginRight: 20,
   },
 });
 

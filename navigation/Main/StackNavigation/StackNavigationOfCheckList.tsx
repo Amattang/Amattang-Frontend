@@ -5,6 +5,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
 import { CheckListStackParamsList, CheckListStackProps } from '../../../types/navigationTypes';
 import styles from './styles';
+import ProfileSetting from '../../../screens/ProfileSetting/ProfileSetting';
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
 function CheckListStackNav({ navigation }: CheckListStackProps) {
@@ -41,6 +42,21 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
                 <Text>공유</Text>
               </Pressable>
             ),
+            headerLeft: () => (
+              <Pressable onPress={() => navigation.goBack()}>
+                <Image
+                  style={styles.leftArrowImg}
+                  source={require('../../../assets/images/common/leftArrow.png')}
+                />
+              </Pressable>
+            ),
+          })}
+        />
+        <NativeStack.Screen
+          name={'profileSetting'}
+          component={ProfileSetting}
+          options={() => ({
+            title: '프로필 설정',
             headerLeft: () => (
               <Pressable onPress={() => navigation.goBack()}>
                 <Image

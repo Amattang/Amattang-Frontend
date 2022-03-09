@@ -1,7 +1,7 @@
 import React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
-import { Image, Text, View } from 'react-native';
+import { Image, Pressable, Text, View } from 'react-native';
 
 import Home from '../../../screens/bottomTab/Home';
 import Map from '../../../screens/bottomTab/Map';
@@ -13,11 +13,25 @@ function BottomNavigation() {
   const navigation = useNavigation<NestedProps>();
 
   return (
-    <Tab.Navigator screenOptions={{ headerShown: false }}>
+    <Tab.Navigator>
       <Tab.Screen
         name={'home'}
         component={Home}
         options={{
+          headerTransparent: true,
+          title: '',
+          headerRight: () => (
+            <Pressable
+              onPress={() => {
+                navigation.navigate('stack', { screen: 'profileSetting' });
+              }}
+            >
+              <Image
+                style={styles.setting}
+                source={require('../../../assets/images/home/setting.png')}
+              />
+            </Pressable>
+          ),
           tabBarLabel: ({ focused }) => (
             <View>
               {focused ? (
@@ -48,7 +62,7 @@ function BottomNavigation() {
           tabBarLabel: '',
           tabBarIcon: () => (
             <View style={[styles.btnWrapper]}>
-              <Text style={styles.BtnText}>+</Text>
+              <Text style={styles.btnText}>+</Text>
             </View>
           ),
         }}
@@ -57,6 +71,8 @@ function BottomNavigation() {
         name={'map'}
         component={Map}
         options={{
+          headerTransparent: true,
+          title: '',
           tabBarLabel: ({ focused }) => (
             <View>
               {focused ? (
