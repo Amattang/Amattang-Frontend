@@ -4,6 +4,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import Carousel from 'react-native-snap-carousel';
 import { styles } from './Map.style';
+import { DefaultText } from '../../CustomText';
 
 interface IHere {
   latitude: number;
@@ -116,8 +117,8 @@ const Map = () => {
         <View style={styles.carText}>
           <Text style={styles.carTitle}>{item.title}</Text>
           <View style={styles.carSubtext}>
-            <Text>{item.text}</Text>
-            <Text>{item.description}</Text>
+            <DefaultText>{item.text}</DefaultText>
+            <DefaultText>{item.description}</DefaultText>
           </View>
         </View>
       </View>

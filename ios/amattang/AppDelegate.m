@@ -1,5 +1,5 @@
 #import "AppDelegate.h"
-#import <GoogleMaps/GoogleMaps.h> // 추가
+#import <GoogleMaps/GoogleMaps.h>
 
 #if RCT_DEV
 #import <React/RCTDevLoadingView.h>
@@ -34,9 +34,7 @@ static void InitializeFlipper(UIApplication *application) {
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions
 {
-// 	NSString* mapsApiKey = [[NSProcessInfo processInfo] environment[@"GOOGLE_MAP_API_KEY"];
-// 	[GMSServices provideAPIKey:mapsApiKey];
-  [GMSServices provideAPIKey:@"${GOOGLE_MAP_API_KEY}"]; // 추가
+  [GMSServices provideAPIKey:@"${GOOGLE_MAP_API_KEY}"];
 #ifdef FB_SONARKIT_ENABLED
   InitializeFlipper(application);
 #endif
