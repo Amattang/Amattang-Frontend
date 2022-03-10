@@ -2,12 +2,17 @@ import { StyleSheet } from 'react-native';
 import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 
 const styles = StyleSheet.create({
-  checkListCards: { marginVertical: 30, marginHorizontal: 17 },
+  FullScreen: {
+    backgroundColor: mainLightBlue,
+    flex: 1,
+  },
+
   whiteCard: {
     backgroundColor: 'white',
     padding: 30,
     borderRadius: 14,
     marginVertical: 12,
+    marginHorizontal: 17,
   },
   checkListMainTitle: { fontSize: 20 },
   buttonsOfCheckList: {
@@ -72,6 +77,25 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: mainLightBlue,
+  },
+
+  container: {
+    height: 110,
+    padding: 24,
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+  },
+  contentContainer: {
+    height: 110,
+    alignItems: 'center',
+  },
+  buttonOfbottomSheet: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
+  },
+  blueText: {
+    color: mainBlue,
   },
 });
 

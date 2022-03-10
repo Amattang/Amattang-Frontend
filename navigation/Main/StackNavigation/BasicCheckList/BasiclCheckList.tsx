@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import BasicInfoOfBasicCheckList from '../../../../screens/BasicCheckList/BasicInfoOfBasicCheckList';
@@ -16,6 +16,7 @@ interface IProps {
 }
 
 function BasicCheckList({ setIsEdit, isEdit }: IProps) {
+  const [isBottomSheet, setIsBottomSheet] = useState(true);
   const onEditHandler = () => {
     setIsEdit(true);
   };
@@ -31,30 +32,44 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
       >
         <Tab.Screen
           name="basic"
-          children={() => <BasicInfoOfBasicCheckList isEdit={isEdit} />}
+          children={() => (
+            <BasicInfoOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+          )}
           options={{ title: '기본 정보' }}
         />
         <Tab.Screen
           name={'outside'}
-          children={() => <OutsideOfBasicCheckList isEdit={isEdit} />}
+          children={() => (
+            <OutsideOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+          )}
           options={{ title: '외부 시설' }}
         />
         <Tab.Screen
           name={'inside'}
-          children={() => <InsideOfBasicCheckList isEdit={isEdit} />}
+          children={() => (
+            <InsideOfBasicCheckList
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+              isBottomSheet={isBottomSheet}
+            />
+          )}
           options={{ title: '내부 시설' }}
         />
         <Tab.Screen
           name={'option'}
-          children={() => <MyItemOfBasicCheckList isEdit={isEdit} />}
+          children={() => (
+            <MyItemOfBasicCheckList
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+              isBottomSheet={isBottomSheet}
+            />
+          )}
           options={{ title: '내 항목' }}
         />
       </Tab.Navigator>
-      {isEdit ? (
-        <FloatingBtn floatingFunction={onCameraHandler} image={'camera'} />
-      ) : (
-        <FloatingBtn floatingFunction={onEditHandler} image={'edit'} />
-      )}
+      {isEdit
+        ? isBottomSheet && <FloatingBtn floatingFunction={onCameraHandler} image={'camera'} />
+        : isBottomSheet && <FloatingBtn floatingFunction={onEditHandler} image={'edit'} />}
     </>
   );
 }

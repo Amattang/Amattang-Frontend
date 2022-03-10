@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
   kakaoLoginBtn: { backgroundColor: '#FEE500', marginTop: 12 },
   kakaoLoginText: {},
 
-  checkListCards: { marginVertical: 30, marginHorizontal: 17 },
   whiteCard: {
     backgroundColor: 'white',
     padding: 30,
     borderRadius: 14,
     marginVertical: 12,
+    marginHorizontal: 17,
   },
   checkListMainTitle: { fontSize: 20 },
   buttonsOfCheckList: {

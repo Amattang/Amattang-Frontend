@@ -27,7 +27,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
             우리집을 체크하며 {'\n'}아맞땅을 미리 경험해보세요
           </DefaultText>
         </View>
-        <ScrollView style={styles.checkListCards}>
+        <ScrollView>
           <View style={styles.whiteCard}>
             <DefaultText style={styles.checkListMainTitle}>주소를 입력하세요</DefaultText>
             <View style={styles.buttonsOfCheckList}>
@@ -49,7 +49,11 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
               </Pressable>
             </View>
           </View>
-          <CheckListComponent checkLists={checkLists} setCheckLists={setCheckLists} />
+          <CheckListComponent
+            isEdit={false}
+            checkLists={checkLists}
+            setCheckLists={setCheckLists}
+          />
         </ScrollView>
       </View>
       <FloatingBtn floatingFunction={floatingFunction} image={'rightArrow'} />
