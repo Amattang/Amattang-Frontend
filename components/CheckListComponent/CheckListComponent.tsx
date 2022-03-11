@@ -8,8 +8,7 @@ import { DefaultText } from '../../CustomText';
 import ButtonsOfTypeB from './ButtonsOfTypeB';
 
 interface IProps {
-  handlePresentModalPress: () => void;
-  setIsBottomSheet: Dispatch<SetStateAction<boolean>>;
+  handlePresentModalPress?: () => void;
   isEdit: boolean;
   checkLists: checkList[];
   setCheckLists: Dispatch<SetStateAction<checkList[]>>;
@@ -78,12 +77,14 @@ function CheckListComponent({
           </View>
         ))}
 
-      <Pressable
-        onPress={handlePresentModalPress}
-        style={[styles.whiteCard, styles.buttonOfbottomSheet]}
-      >
-        <DefaultText style={styles.blueText}>+ 추가하기</DefaultText>
-      </Pressable>
+      {handlePresentModalPress && (
+        <Pressable
+          onPress={handlePresentModalPress}
+          style={[styles.whiteCard, styles.buttonOfbottomSheet]}
+        >
+          <DefaultText style={styles.blueText}>+ 추가하기</DefaultText>
+        </Pressable>
+      )}
     </>
   );
 }

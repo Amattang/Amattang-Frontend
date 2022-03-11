@@ -49,11 +49,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
               </Pressable>
             </View>
           </View>
-          <CheckListComponent
-            isEdit={false}
-            checkLists={checkLists}
-            setCheckLists={setCheckLists}
-          />
+          <CheckListComponent isEdit={true} checkLists={checkLists} setCheckLists={setCheckLists} />
         </ScrollView>
       </View>
       <FloatingBtn floatingFunction={floatingFunction} image={'rightArrow'} />
