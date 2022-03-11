@@ -6,7 +6,7 @@ export const response: checkList[] = [
     question: '체크리스트의 이름을 정하세요',
     mainCategory: '기본 정보',
     subCategory: '주황색 건물, 편의점 앞집 등 스스로 기억에 남을 만한 단어로 적어보세요',
-    deleted: true,
+    deleted: false,
     rule: null,
     description: null,
     emoji: ':)',

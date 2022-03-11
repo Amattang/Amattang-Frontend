@@ -1,26 +1,28 @@
-import React, { Dispatch, Ref, SetStateAction } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import { Button, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
-import { mainBlue } from '../../color';
 import { checkList } from '../../types/checkListTypes';
 import { SharedValue } from 'react-native-reanimated';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
+import styles from './styles';
 
 interface IProps {
+  setCheckLists: Dispatch<SetStateAction<checkList[]>>;
   onAnimateHandler: () => void;
   onDismissHandler: () => void;
   renderBackdrop: React.FC<BottomSheetBackgroundProps>;
-  bottomSheetModalRef: Ref<BottomSheetModalMethods> | undefined;
+  bottomSheetModalRef: RefObject<BottomSheetModalMethods> | undefined;
   snapPoints: (string | number)[] | SharedValue<(string | number)[]>;
   checkLists: checkList[];
 }
 
 function BottomSheetsOfDeletedCheckList({
+  setCheckLists,
   onAnimateHandler,
   onDismissHandler,
   renderBackdrop,
@@ -28,6 +30,29 @@ function BottomSheetsOfDeletedCheckList({
   snapPoints,
   checkLists,
 }: IProps) {
+  const [deletedCheckLists, setDeletedCheckLists] = useState(
+    checkLists.filter((CheckLists: checkList) => CheckLists.deleted)
+  );
+
+  const onUpdateCheckListHandler = () => {
+    bottomSheetModalRef?.current?.dismiss();
+    // 애니매이션 지속시간에  상태변경이 일어나면 애니매이션이 취소됨
+    setTimeout(() => {
+      setDeletedCheckLists(deletedCheckLists.filter((CheckLists: checkList) => CheckLists.deleted));
+      setCheckLists([...checkLists, ...deletedCheckLists]);
+    }, 500);
+  };
+
+  const onUpdateCheckList = (deletedCheckList: checkList) => {
+    setDeletedCheckLists(
+      deletedCheckLists.map((item) =>
+        item.questionId === deletedCheckList.questionId
+          ? { ...item, deleted: !item.deleted }
+          : { ...item }
+      )
+    );
+  };
+
   return (
     <>
       <BottomSheetModal
@@ -40,16 +65,34 @@ function BottomSheetsOfDeletedCheckList({
         onDismiss={onDismissHandler}
       >
         <BottomSheetScrollView>
-          {checkLists
-            .filter((CheckLists) => CheckLists.deleted)
-            .map((deletedCheckList) => (
-              <Pressable>
-                <DefaultText>{deletedCheckList.question}</DefaultText>
-              </Pressable>
-            ))}
+          {deletedCheckLists.map((deletedCheckList: checkList) => (
+            <Pressable
+              onPress={() => onUpdateCheckList(deletedCheckList)}
+              style={
+                deletedCheckList.deleted
+                  ? styles.deletedCheckListBtnWrapper
+                  : [styles.deletedCheckListBtnWrapper, styles.checkListFocusedBlue]
+              }
+            >
+              <DefaultText
+                style={
+                  deletedCheckList.deleted
+                    ? styles.deletedCheckListText
+                    : styles.deletedCheckListWhiteText
+                }
+              >
+                {deletedCheckList.emoji} {deletedCheckList.question}
+              </DefaultText>
+            </Pressable>
+          ))}
         </BottomSheetScrollView>
-        <View style={{ width: 150, marginBottom: 30 }}>
-          <Button title={'모두 선택'} color={mainBlue} />
+        <View style={styles.bottomButtonOfBottomSheet}>
+          <Pressable style={[styles.selectAllBtn]}>
+            <DefaultText style={styles.blueText}>모두 선택</DefaultText>
+          </Pressable>
+          <Pressable onPress={onUpdateCheckListHandler} style={styles.updateCheckListButton}>
+            <DefaultText style={styles.checkListGrayText}>+ 추가하기</DefaultText>
+          </Pressable>
         </View>
       </BottomSheetModal>
     </>

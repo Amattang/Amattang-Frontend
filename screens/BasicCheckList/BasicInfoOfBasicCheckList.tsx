@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
-import { View } from 'react-native';
+import { Alert, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import styles from '../../components/CheckListComponent/styles';
@@ -20,6 +20,7 @@ interface IProps {
 
 function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const [checkLists, setCheckLists] = useState(response);
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
@@ -38,9 +39,11 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   };
 
   // callbacks
-  const handlePresentModalPress = useCallback(() => {
-    bottomSheetModalRef.current?.present();
-  }, []);
+  const handlePresentModalPress = () => {
+    isEdit
+      ? bottomSheetModalRef.current?.present()
+      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+  };
 
   return (
     <>
@@ -57,6 +60,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
           </ScrollView>
         </View>
         <BottomSheetsOfDeletedCheckList
+          setCheckLists={setCheckLists}
           onAnimateHandler={onAnimateHandler}
           onDismissHandler={onDismissHandler}
           renderBackdrop={renderBackdrop}

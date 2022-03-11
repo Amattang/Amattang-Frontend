@@ -1,5 +1,5 @@
 import { StyleSheet } from 'react-native';
-import { mainBlue, mainLightBlue, mainOrange } from '../../color';
+import { mainBlack, mainBlue, mainLightBlue, mainOrange } from '../../color';
 
 const styles = StyleSheet.create({
   FullScreen: {
@@ -97,6 +97,33 @@ const styles = StyleSheet.create({
   blueText: {
     color: mainBlue,
   },
+  bottomButtonOfBottomSheet: { flexDirection: 'row', marginTop: 10 },
+  selectAllBtn: {
+    width: 150,
+    marginBottom: 30,
+    height: 56,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  updateCheckListButton: {
+    borderRadius: 8,
+    width: 230,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 56,
+    backgroundColor: mainLightBlue,
+  },
+  deletedCheckListBtnWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    marginHorizontal: 17,
+    marginVertical: 5,
+    padding: 20,
+    backgroundColor: mainLightBlue,
+  },
+  deletedCheckListText: { fontSize: 16 },
+  deletedCheckListWhiteText: { color: 'white', fontSize: 16 },
 });
 
 export default styles;
