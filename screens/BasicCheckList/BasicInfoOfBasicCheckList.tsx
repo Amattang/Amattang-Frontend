@@ -37,7 +37,6 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const onDismissHandler = () => {
     setIsBottomSheet(true);
   };
-
   // callbacks
   const handlePresentModalPress = () => {
     isEdit
@@ -49,7 +48,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
     <>
       <BottomSheetModalProvider>
         <View style={[styles.FullScreen]}>
-          <ScrollView onMomentumScrollEnd={() => console.log('tasdf')}>
+          <ScrollView>
             <CheckListComponent
               handlePresentModalPress={handlePresentModalPress}
               setIsBottomSheet={setIsBottomSheet}

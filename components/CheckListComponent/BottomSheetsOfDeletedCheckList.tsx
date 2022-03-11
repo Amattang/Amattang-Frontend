@@ -30,7 +30,7 @@ function BottomSheetsOfDeletedCheckList({
   snapPoints,
   checkLists,
 }: IProps) {
-  const [deletedCheckLists, setDeletedCheckLists] = useState(
+  const [deletedCheckLists, setDeletedCheckLists] = useState<checkList[]>(
     checkLists.filter((CheckLists: checkList) => CheckLists.deleted)
   );
 
@@ -51,6 +51,11 @@ function BottomSheetsOfDeletedCheckList({
           : { ...item }
       )
     );
+  };
+
+  const onSelectAllHandler = () => {
+    setDeletedCheckLists(deletedCheckLists.map((item) => ({ ...item, deleted: false })));
+    console.log('t');
   };
 
   return (
@@ -87,11 +92,19 @@ function BottomSheetsOfDeletedCheckList({
           ))}
         </BottomSheetScrollView>
         <View style={styles.bottomButtonOfBottomSheet}>
-          <Pressable style={[styles.selectAllBtn]}>
+          <Pressable onPress={onSelectAllHandler} style={[styles.selectAllBtn]}>
             <DefaultText style={styles.blueText}>모두 선택</DefaultText>
           </Pressable>
           <Pressable onPress={onUpdateCheckListHandler} style={styles.updateCheckListButton}>
-            <DefaultText style={styles.checkListGrayText}>+ 추가하기</DefaultText>
+            <DefaultText
+              style={
+                deletedCheckLists.filter((item) => item.deleted)
+                  ? styles.checkListGrayText
+                  : [styles.blueText]
+              }
+            >
+              + 추가하기
+            </DefaultText>
           </Pressable>
         </View>
       </BottomSheetModal>

@@ -77,6 +77,7 @@ function CheckListComponent({
             </View>
           </View>
         ))}
+
       <Pressable
         onPress={handlePresentModalPress}
         style={[styles.whiteCard, styles.buttonOfbottomSheet]}

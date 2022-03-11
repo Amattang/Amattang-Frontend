@@ -93,6 +93,7 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 40,
+    paddingVertical: 20,
   },
   blueText: {
     color: mainBlue,
