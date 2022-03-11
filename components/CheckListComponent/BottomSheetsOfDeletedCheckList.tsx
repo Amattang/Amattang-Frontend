@@ -1,4 +1,4 @@
-import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useEffect, useState } from 'react';
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
@@ -55,7 +55,6 @@ function BottomSheetsOfDeletedCheckList({
 
   const onSelectAllHandler = () => {
     setDeletedCheckLists(deletedCheckLists.map((item) => ({ ...item, deleted: false })));
-    console.log('t');
   };
 
   return (
@@ -98,9 +97,9 @@ function BottomSheetsOfDeletedCheckList({
           <Pressable onPress={onUpdateCheckListHandler} style={styles.updateCheckListButton}>
             <DefaultText
               style={
-                deletedCheckLists.filter((item) => item.deleted)
+                deletedCheckLists.filter((CheckLists: checkList) => CheckLists.deleted)
                   ? styles.checkListGrayText
-                  : [styles.blueText]
+                  : [styles.checkListWhiteText]
               }
             >
               + 추가하기
