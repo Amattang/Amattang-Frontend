@@ -16,6 +16,7 @@ export interface checkListTypes extends answerOfType {
   subCategory: string | null;
   questionId: string;
   question: string;
+  checked: boolean;
   deleted?: boolean;
   emoji: string;
   mainCategory: string | null;

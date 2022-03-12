@@ -1,15 +1,16 @@
-import { StyleSheet } from 'react-native';
-import { mainBlack, mainBlue, mainLightBlue, mainOrange } from '../../color';
+import { Dimensions, StyleSheet } from 'react-native';
+import { mainBlue, mainLightBlue, mainOrange } from '../../color';
+
+const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
-  FullScreen: {
-    backgroundColor: mainLightBlue,
-    flex: 1,
-  },
+  checkListWrapper: { flexDirection: 'row' },
 
   whiteCard: {
+    zIndex: 99,
     backgroundColor: 'white',
     padding: 30,
+    width: windowWidth - 34,
     borderRadius: 14,
     marginVertical: 12,
     marginHorizontal: 17,
@@ -125,6 +126,15 @@ const styles = StyleSheet.create({
   },
   deletedCheckListText: { fontSize: 16 },
   deletedCheckListWhiteText: { color: 'white', fontSize: 16 },
+
+  trashButton: {
+    width: 60,
+    marginVertical: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: mainBlue,
+  },
 });
 
 export default styles;

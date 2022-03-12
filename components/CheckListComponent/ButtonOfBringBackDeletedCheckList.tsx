@@ -7,7 +7,7 @@ interface IProps {
   handlePresentModalPress: () => void;
 }
 
-function ButtonOfAddDeletedCheckList({ handlePresentModalPress }: IProps) {
+function ButtonOfBringBackDeletedCheckList({ handlePresentModalPress }: IProps) {
   return (
     <Pressable
       onPress={handlePresentModalPress}
@@ -18,4 +18,4 @@ function ButtonOfAddDeletedCheckList({ handlePresentModalPress }: IProps) {
   );
 }
 
-export default ButtonOfAddDeletedCheckList;
+export default ButtonOfBringBackDeletedCheckList;

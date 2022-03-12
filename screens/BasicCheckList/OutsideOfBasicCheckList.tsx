@@ -14,7 +14,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import { checkListTypes } from '../../types/checkListTypes';
 import { DefaultText } from '../../CustomText';
-import ButtonOfAddDeletedCheckList from '../../components/CheckListComponent/ButtonOfAddDeletedCheckList';
+import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 
 interface IProps {
   isEdit: boolean;
@@ -63,7 +63,9 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
               ))}
 
             {handlePresentModalPress && (
-              <ButtonOfAddDeletedCheckList handlePresentModalPress={handlePresentModalPress} />
+              <ButtonOfBringBackDeletedCheckList
+                handlePresentModalPress={handlePresentModalPress}
+              />
             )}
           </ScrollView>
         </View>

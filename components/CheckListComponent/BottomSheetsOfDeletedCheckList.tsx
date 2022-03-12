@@ -1,10 +1,10 @@
-import React, { Dispatch, RefObject, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import { Pressable, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import { checkListTypes } from '../../types/checkListTypes';
 import { SharedValue } from 'react-native-reanimated';
@@ -12,6 +12,7 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 import styles from './styles';
 
 interface IProps {
+  isEdit: boolean;
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   onAnimateHandler: () => void;
   onDismissHandler: () => void;
@@ -22,6 +23,7 @@ interface IProps {
 }
 
 function BottomSheetsOfDeletedCheckList({
+  isEdit,
   setCheckLists,
   onAnimateHandler,
   onDismissHandler,
@@ -46,13 +48,15 @@ function BottomSheetsOfDeletedCheckList({
   };
 
   const onUpdateCheckList = (deletedCheckList: checkListTypes) => {
-    setDeletedCheckLists(
-      deletedCheckLists.map((item) =>
-        item.questionId === deletedCheckList.questionId
-          ? { ...item, deleted: !item.deleted }
-          : { ...item }
-      )
-    );
+    isEdit
+      ? setDeletedCheckLists(
+          deletedCheckLists.map((item) =>
+            item.questionId === deletedCheckList.questionId
+              ? { ...item, deleted: !item.deleted }
+              : { ...item }
+          )
+        )
+      : Alert.alert('읽기상태입니다!', '추가하기를 취소하고 오른쪽 아래 버튼을 눌러주세요');
   };
 
   const onSelectAllHandler = () => {
@@ -92,16 +96,26 @@ function BottomSheetsOfDeletedCheckList({
             </Pressable>
           ))}
         </BottomSheetScrollView>
+
         <View style={styles.bottomButtonOfBottomSheet}>
           <Pressable onPress={onSelectAllHandler} style={[styles.selectAllBtn]}>
             <DefaultText style={styles.blueText}>모두 선택</DefaultText>
           </Pressable>
-          <Pressable onPress={onUpdateCheckListHandler} style={styles.updateCheckListButton}>
+
+          {/*<Pressable onPress={onUpdateCheckListHandler} style={styles.updateCheckListButton}>*/}
+          <Pressable
+            onPress={onUpdateCheckListHandler}
+            style={
+              deletedCheckLists.filter((checkList) => !checkList.deleted).length
+                ? [styles.updateCheckListButton, styles.checkListFocusedBlue]
+                : styles.updateCheckListButton
+            }
+          >
             <DefaultText
               style={
-                deletedCheckLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
-                  ? styles.checkListGrayText
-                  : [styles.checkListWhiteText]
+                deletedCheckLists.filter((checkList) => !checkList.deleted).length
+                  ? styles.checkListWhiteText
+                  : styles.checkListGrayText
               }
             >
               + 추가하기
