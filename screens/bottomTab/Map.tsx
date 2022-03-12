@@ -4,25 +4,9 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import Carousel from 'react-native-snap-carousel';
 import { styles } from './Map.style';
-import { DefaultText } from '../../CustomText';
-
-interface IHere {
-  latitude: number;
-  longitude: number;
-}
-
-interface ILocations {
-  latlng: IHere;
-  title: string;
-  description: string;
-  text: string;
-  id: number;
-  center: boolean;
-}
-
-//  변경 예정
-const SLIDER_WIDTH = Dimensions.get('window').width;
-const ITEM_WIDTH = Math.round(SLIDER_WIDTH * 0.6);
+import { IPick, ILocations } from '../../types/mapTypes';
+import SlideItem from '../../components/Map/SlideItem';
+import { ITEM_WIDTH, SLIDER_WIDTH } from '../../constants/Map.constant';
 
 // 위치정보 사용
 async function requestPermission() {
@@ -76,7 +60,7 @@ const Map = () => {
     },
   ]);
   // 슬라이드로 선택한 위치
-  const [pick, setPick] = useState<IHere>({
+  const [pick, setPick] = useState<IPick>({
     latitude: 0,
     longitude: 0,
   });
@@ -110,25 +94,10 @@ const Map = () => {
     });
   }, []);
 
-  // 현재 위치로 가기 -> 필요하면 살려두고 필요 없으면 삭제 예정
+  // 현재 위치로 가기
   // const goCurrentPosition = (): void => {
   //   goGeoLocation();
   // };
-
-  const renderItem = ({ item }: any) => {
-    return (
-      <View style={styles.carCard}>
-        <Image style={styles.carImage} source={require('../../assets/images/home/activeAll.png')} />
-        <View style={styles.carText}>
-          <Text style={styles.carTitle}>{item.title}</Text>
-          <View style={styles.carSubtext}>
-            <DefaultText>{item.text}</DefaultText>
-            <DefaultText>{item.description}</DefaultText>
-          </View>
-        </View>
-      </View>
-    );
-  };
 
   return (
     <View style={{ flex: 1 }}>
@@ -173,7 +142,7 @@ const Map = () => {
       <View style={styles.carContainer}>
         <Carousel
           data={locations}
-          renderItem={renderItem}
+          renderItem={SlideItem}
           itemWidth={ITEM_WIDTH}
           sliderWidth={SLIDER_WIDTH}
           layout={'default'}
