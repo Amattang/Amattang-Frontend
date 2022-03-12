@@ -40,11 +40,6 @@ async function requestPermission() {
 }
 
 const Map = () => {
-  const [here, setHere] = useState<IHere | undefined>({
-    latitude: 37.5629087,
-    longitude: 127.035192,
-  });
-
   // mockup data
   const [locations, setLocations] = useState<ILocations[]>([
     {
@@ -80,35 +75,45 @@ const Map = () => {
       center: false,
     },
   ]);
+  // 슬라이드로 선택한 위치
+  const [pick, setPick] = useState<IHere>({
+    latitude: 0,
+    longitude: 0,
+  });
+  // 현재위치
+  // const [here, setHere] = useState<IHere>({
+  //   latitude: 0,
+  //   longitude: 0,
+  // });
 
-  // 내 위치 찾기
-  const goGeoLocation = (): void => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        setHere({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      },
-      (error) => {
-        console.log(error.code, error.message);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
-  };
+  // 내 현재 위치 찾기
+  // const goGeoLocation = (): void => {
+  //   Geolocation.getCurrentPosition(
+  //     (position) => {
+  //       setHere({
+  //         latitude: position.coords.latitude,
+  //         longitude: position.coords.longitude,
+  //       });
+  //     },
+  //     (error) => {
+  //       console.log(error.code, error.message);
+  //     },
+  //     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+  //   );
+  // };
 
   useEffect(() => {
     requestPermission().then((result) => {
       if (result === 'granted') {
-        goGeoLocation();
+        setPick(locations[0].latlng);
       }
     });
   }, []);
 
   // 현재 위치로 가기 -> 필요하면 살려두고 필요 없으면 삭제 예정
-  const goCurrentPosition = (): void => {
-    goGeoLocation();
-  };
+  // const goCurrentPosition = (): void => {
+  //   goGeoLocation();
+  // };
 
   const renderItem = ({ item }: any) => {
     return (
@@ -127,22 +132,18 @@ const Map = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {here && (
+      {pick && (
         <MapView
           style={{ flex: 1 }}
           provider={PROVIDER_GOOGLE}
-          initialRegion={{
-            latitude: here.latitude,
-            longitude: here.longitude,
-            latitudeDelta: 0.0922,
-            longitudeDelta: 0.0421,
+          region={{
+            latitude: pick.latitude,
+            longitude: pick.longitude,
+            latitudeDelta: 0.0122,
+            longitudeDelta: 0.0021,
           }}
-          // region={{
-          //   latitude: here.latitude,
-          //   longitude: here.longitude,
-          //   latitudeDelta: 0.0922,
-          //   longitudeDelta: 0.0421,
-          // }}
+          zoomEnabled={true}
+          showsScale={true}
         >
           {locations.map((marker, idx) => (
             <Marker
@@ -151,13 +152,13 @@ const Map = () => {
               description={marker.description}
               image={
                 marker.center
-                  ? require('../../assets/images/home/activeAll.png')
-                  : require('../../assets/images/home/activeMap.png')
+                  ? require('../../assets/images/map/mapCenter.png')
+                  : require('../../assets/images/map/mapPosition.png')
               }
               key={idx}
             />
           ))}
-          <Marker
+          {/* <Marker
             coordinate={{
               latitude: here.latitude,
               longitude: here.longitude,
@@ -165,7 +166,7 @@ const Map = () => {
             title={'현재위치'}
             description={'현재위치'}
             pinColor={'blue'}
-          />
+          /> */}
         </MapView>
       )}
       {/* <Button onPress={goCurrentPosition} title={'현재 위치로 가기'} /> */}
@@ -179,7 +180,9 @@ const Map = () => {
           onSnapToItem={(index) => {
             setLocations(
               locations.map((marker) =>
-                marker.id === index ? { ...marker, center: true } : { ...marker, center: false }
+                marker.id === index
+                  ? (setPick(marker.latlng), { ...marker, center: true })
+                  : { ...marker, center: false }
               )
             );
           }}
