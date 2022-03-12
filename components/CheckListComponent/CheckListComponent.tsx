@@ -53,7 +53,7 @@ function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists }: IP
       <PanGestureHandler
         enabled={true}
         onGestureEvent={panGesture}
-        activeOffsetX={[-100, 100]}
+        activeOffsetX={[0, 0]}
         activeOffsetY={1000}
       >
         <Animated.View style={[rStyle]}>
