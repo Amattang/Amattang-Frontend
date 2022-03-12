@@ -1,15 +1,18 @@
-import React from 'react';
-import { Image, Pressable, View } from 'react-native';
+import React, { useState } from 'react';
+import { Alert, Image, Pressable, View } from 'react-native';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
+import { KakaoOAuthToken, login } from '@react-native-seoul/kakao-login';
 
 function Login({ setIsLogin }: any) {
   const onAppleLoginHandler = () => {
     setIsLogin(true);
   };
 
-  const onKakaoLoginHandler = () => {
-    setIsLogin(true);
+  const onKakaoLoginHandler = async (): Promise<void> => {
+    const token: KakaoOAuthToken = await login();
+    console.log(JSON.stringify(token));
+    // setIsLogin(true);
   };
 
   return (
