@@ -1,17 +1,17 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Alert, Pressable, TextInput } from 'react-native';
-import { answerButtonOfType, checkList } from '../../types/checkListTypes';
+import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
 
 interface IProps {
   isEdit: boolean;
-  mainQuestionItem: checkList;
-  checkLists: checkList[];
-  setCheckLists: Dispatch<SetStateAction<checkList[]>>;
+  checkList: checkListTypes;
+  checkLists: checkListTypes[];
+  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-function ButtonsOfTypeD({ isEdit, mainQuestionItem, setCheckLists, checkLists }: IProps) {
+function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
   const [newCheckListElement, setNewCheckListElement] = useState('');
 
   const onChangeTextHandler = (newElement: string) => {
@@ -24,14 +24,14 @@ function ButtonsOfTypeD({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
     newCheckListElement &&
       (await setCheckLists(
         checkLists.map((questionItem) =>
-          questionItem.questionId === mainQuestionItem.questionId
+          questionItem.questionId === checkList.questionId
             ? ({
                 ...questionItem,
                 answer: {
                   ans: [...questionItem.answer.ans, { type: newCheckListElement, val: true }],
                 },
-              } as checkList)
-            : ({ ...questionItem } as checkList)
+              } as checkListTypes)
+            : ({ ...questionItem } as checkListTypes)
         )
       ));
     await setNewCheckListElement('');
@@ -41,7 +41,7 @@ function ButtonsOfTypeD({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
     isEdit
       ? setCheckLists(
           checkLists.map((questionItem) =>
-            questionItem.questionId === mainQuestionItem.questionId
+            questionItem.questionId === checkList.questionId
               ? ({
                   ...questionItem,
                   answer: {
@@ -53,8 +53,8 @@ function ButtonsOfTypeD({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
                       ),
                     ],
                   },
-                } as checkList)
-              : ({ ...questionItem } as checkList)
+                } as checkListTypes)
+              : ({ ...questionItem } as checkListTypes)
           )
         )
       : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
@@ -62,7 +62,7 @@ function ButtonsOfTypeD({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
 
   return (
     <>
-      {mainQuestionItem.answer.ans.map((answer) => (
+      {checkList.answer.ans.map((answer) => (
         <Pressable
           onPress={() => {
             onPressHandler(answer);

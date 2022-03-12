@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Pressable, View } from 'react-native';
-import { checkList } from '../../types/checkListTypes';
+import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import ButtonsOfTypeA from './ButtonsOfTypeA';
 import ButtonsOfTypeD from './ButtonsOfTypeD';
@@ -10,81 +10,59 @@ import ButtonsOfTypeB from './ButtonsOfTypeB';
 interface IProps {
   handlePresentModalPress?: () => void;
   isEdit: boolean;
-  checkLists: checkList[];
-  setCheckLists: Dispatch<SetStateAction<checkList[]>>;
+  checkLists: checkListTypes[];
+  checkList: checkListTypes;
+  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-function CheckListComponent({
-  handlePresentModalPress,
-  isEdit,
-  checkLists,
-  setCheckLists,
-}: IProps) {
+function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists }: IProps) {
   return (
     <>
-      {checkLists
-        .filter((item) => !item.deleted)
-        .map((mainQuestionItem: checkList) => (
-          <View style={styles.whiteCard} key={mainQuestionItem.questionId}>
-            <DefaultText style={styles.checkListMainTitle}>{mainQuestionItem.question}</DefaultText>
-
-            <View style={styles.subTitles}>
-              {mainQuestionItem.subCategory && (
-                <View style={styles.checkListSubTitle}>
-                  <DefaultText style={styles.emoji}>📘 </DefaultText>
-                  <DefaultText style={styles.checkListGrayText}>
-                    {mainQuestionItem.subCategory}
-                  </DefaultText>
-                </View>
-              )}
-              {mainQuestionItem.description && (
-                <View style={styles.checkListSubTitle}>
-                  <DefaultText style={styles.emoji}>👀 </DefaultText>
-                  <DefaultText style={styles.checkListGrayText}>
-                    {mainQuestionItem.description}
-                  </DefaultText>
-                </View>
-              )}
+      <View style={styles.whiteCard} key={checkList.questionId}>
+        <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
+        <View style={styles.subTitles}>
+          {checkList.subCategory && (
+            <View style={styles.checkListSubTitle}>
+              <DefaultText style={styles.emoji}>📘 </DefaultText>
+              <DefaultText style={styles.checkListGrayText}>{checkList.subCategory}</DefaultText>
             </View>
-
-            <View style={styles.buttonsOfCheckList}>
-              {mainQuestionItem.type === 'A' && (
-                <ButtonsOfTypeA
-                  isEdit={isEdit}
-                  mainQuestionItem={mainQuestionItem}
-                  setCheckLists={setCheckLists}
-                  checkLists={checkLists}
-                />
-              )}
-              {mainQuestionItem.type === 'B' && (
-                <ButtonsOfTypeB
-                  isEdit={isEdit}
-                  mainQuestionItem={mainQuestionItem}
-                  setCheckLists={setCheckLists}
-                  checkLists={checkLists}
-                />
-              )}
-              {mainQuestionItem.type === 'C' && <DefaultText>c</DefaultText>}
-              {mainQuestionItem.type === 'D' && (
-                <ButtonsOfTypeD
-                  isEdit={isEdit}
-                  mainQuestionItem={mainQuestionItem}
-                  setCheckLists={setCheckLists}
-                  checkLists={checkLists}
-                />
-              )}
+          )}
+          {checkList.description && (
+            <View style={styles.checkListSubTitle}>
+              <DefaultText style={styles.emoji}>👀 </DefaultText>
+              <DefaultText style={styles.checkListGrayText}>{checkList.description}</DefaultText>
             </View>
-          </View>
-        ))}
+          )}
+        </View>
 
-      {handlePresentModalPress && (
-        <Pressable
-          onPress={handlePresentModalPress}
-          style={[styles.whiteCard, styles.buttonOfbottomSheet]}
-        >
-          <DefaultText style={styles.blueText}>+ 추가하기</DefaultText>
-        </Pressable>
-      )}
+        <View style={styles.buttonsOfCheckList}>
+          {checkList.type === 'A' && (
+            <ButtonsOfTypeA
+              isEdit={isEdit}
+              checkList={checkList}
+              setCheckLists={setCheckLists}
+              checkLists={checkLists}
+            />
+          )}
+          {checkList.type === 'B' && (
+            <ButtonsOfTypeB
+              isEdit={isEdit}
+              checkList={checkList}
+              setCheckLists={setCheckLists}
+              checkLists={checkLists}
+            />
+          )}
+          {checkList.type === 'C' && <DefaultText>c</DefaultText>}
+          {checkList.type === 'D' && (
+            <ButtonsOfTypeD
+              isEdit={isEdit}
+              checkList={checkList}
+              setCheckLists={setCheckLists}
+              checkLists={checkLists}
+            />
+          )}
+        </View>
+      </View>
     </>
   );
 }

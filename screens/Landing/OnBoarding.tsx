@@ -3,14 +3,14 @@ import { Image, Pressable, ScrollView, View } from 'react-native';
 
 import styles from './styles';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
-import { checkList } from '../../types/checkListTypes';
+import { checkListTypes } from '../../types/checkListTypes';
 import { response } from '../../mockData/onBoardingMockUpData';
 import CheckListComponent from '../../components/CheckListComponent/CheckListComponent';
 import { DefaultText } from '../../CustomText';
 import FloatingBtn from '../../components/CheckListComponent/FloatingBtn';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
-  const [checkLists, setCheckLists] = useState<checkList[]>(response);
+  const [checkLists, setCheckLists] = useState<checkListTypes[]>(response);
   const onMapHandler = () => {
     navigation.navigate('map');
   };

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
-import { Alert, View } from 'react-native';
+import { Alert, Pressable, View } from 'react-native';
 import { ScrollView } from 'react-native-gesture-handler';
 
 import styles from '../../components/CheckListComponent/styles';
@@ -12,6 +12,9 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 import BottomSheetsOfDeletedCheckList from '../../components/CheckListComponent/BottomSheetsOfDeletedCheckList';
+import { checkListTypes } from '../../types/checkListTypes';
+import { DefaultText } from '../../CustomText';
+import ButtonOfAddDeletedCheckList from '../../components/CheckListComponent/ButtonOfAddDeletedCheckList';
 
 interface IProps {
   isEdit: boolean;
@@ -47,17 +50,23 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   return (
     <>
       <BottomSheetModalProvider>
-        <View style={[styles.FullScreen]}>
-          <ScrollView>
-            <CheckListComponent
-              handlePresentModalPress={handlePresentModalPress}
-              setIsBottomSheet={setIsBottomSheet}
-              isEdit={isEdit}
-              checkLists={checkLists}
-              setCheckLists={setCheckLists}
-            />
-          </ScrollView>
-        </View>
+        <ScrollView>
+          {checkLists
+            .filter((item) => !item.deleted)
+            .map((mainQuestionItem: checkListTypes) => (
+              <CheckListComponent
+                checkLists={checkLists}
+                isEdit={isEdit}
+                checkList={mainQuestionItem}
+                setCheckLists={setCheckLists}
+              />
+            ))}
+
+          {handlePresentModalPress && (
+            <ButtonOfAddDeletedCheckList handlePresentModalPress={handlePresentModalPress} />
+          )}
+        </ScrollView>
+
         <BottomSheetsOfDeletedCheckList
           setCheckLists={setCheckLists}
           onAnimateHandler={onAnimateHandler}

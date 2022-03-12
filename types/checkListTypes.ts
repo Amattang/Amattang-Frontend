@@ -12,7 +12,7 @@ export interface answerOfType {
   };
 }
 
-export interface checkList extends answerOfType {
+export interface checkListTypes extends answerOfType {
   subCategory: string | null;
   questionId: string;
   question: string;

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
-import { View } from 'react-native';
+import { Pressable, View } from 'react-native';
 
 import { response } from '../../mockData/checkListOfOutside';
 import styles from '../../components/CheckListComponent/styles';
@@ -12,6 +12,9 @@ import {
   BottomSheetModal,
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
+import { checkListTypes } from '../../types/checkListTypes';
+import { DefaultText } from '../../CustomText';
+import ButtonOfAddDeletedCheckList from '../../components/CheckListComponent/ButtonOfAddDeletedCheckList';
 
 interface IProps {
   isEdit: boolean;
@@ -47,23 +50,32 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
       <BottomSheetModalProvider>
         <View style={[styles.FullScreen]}>
           <ScrollView>
-            <CheckListComponent
-              handlePresentModalPress={handlePresentModalPress}
-              setIsBottomSheet={setIsBottomSheet}
-              isEdit={isEdit}
-              checkLists={checkLists}
-              setCheckLists={setCheckLists}
-            />
+            {checkLists
+              .filter((item) => !item.deleted)
+              .map((mainQuestionItem: checkListTypes) => (
+                <CheckListComponent
+                  checkLists={checkLists}
+                  handlePresentModalPress={handlePresentModalPress}
+                  isEdit={isEdit}
+                  checkList={mainQuestionItem}
+                  setCheckLists={setCheckLists}
+                />
+              ))}
+
+            {handlePresentModalPress && (
+              <ButtonOfAddDeletedCheckList handlePresentModalPress={handlePresentModalPress} />
+            )}
           </ScrollView>
-          <BottomSheetsOfDeletedCheckList
-            onAnimateHandler={onAnimateHandler}
-            onDismissHandler={onDismissHandler}
-            renderBackdrop={renderBackdrop}
-            bottomSheetModalRef={bottomSheetModalRef}
-            snapPoints={snapPoints}
-            checkLists={checkLists}
-          />
         </View>
+        <BottomSheetsOfDeletedCheckList
+          setCheckLists={setCheckLists}
+          onAnimateHandler={onAnimateHandler}
+          onDismissHandler={onDismissHandler}
+          renderBackdrop={renderBackdrop}
+          bottomSheetModalRef={bottomSheetModalRef}
+          snapPoints={snapPoints}
+          checkLists={checkLists}
+        />
       </BottomSheetModalProvider>
     </>
   );

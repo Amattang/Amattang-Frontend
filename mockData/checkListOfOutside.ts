@@ -1,6 +1,6 @@
-import { checkList } from '../types/checkListTypes';
+import { checkListTypes } from '../types/checkListTypes';
 
-export const response: checkList[] = [
+export const response: checkListTypes[] = [
   {
     questionId: 'questio7n21',
     question: '주차 공간이 있나요?',

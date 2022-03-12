@@ -1,17 +1,17 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Alert, Pressable, TextInput, View } from 'react-native';
-import { answerButtonOfType, checkList } from '../../types/checkListTypes';
+import { Alert, TextInput, View } from 'react-native';
+import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
 
 interface IProps {
   isEdit: boolean;
-  mainQuestionItem: checkList;
-  checkLists: checkList[];
-  setCheckLists: Dispatch<SetStateAction<checkList[]>>;
+  checkList: checkListTypes;
+  checkLists: checkListTypes[];
+  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-function ButtonsOfTypeA({ isEdit, mainQuestionItem, setCheckLists, checkLists }: IProps) {
+function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
   const [newCheckListElement, setNewCheckListElement] = useState('');
 
   const onEndEditing = (newElement: string) => {
@@ -23,7 +23,7 @@ function ButtonsOfTypeA({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
   const onChangeTextHandler = async (answer: answerButtonOfType) => {
     await setCheckLists(
       checkLists.map((questionItem) =>
-        questionItem.questionId === mainQuestionItem.questionId
+        questionItem.questionId === checkList.questionId
           ? ({
               ...questionItem,
               answer: {
@@ -35,15 +35,15 @@ function ButtonsOfTypeA({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
                   ),
                 ],
               },
-            } as checkList)
-          : ({ ...questionItem } as checkList)
+            } as checkListTypes)
+          : ({ ...questionItem } as checkListTypes)
       )
     );
   };
 
   return (
     <>
-      {mainQuestionItem.answer.ans.map((answer) => (
+      {checkList.answer.ans.map((answer) => (
         <View style={styles.typeBBtnWrapper}>
           <TextInput
             autoCorrect={false}

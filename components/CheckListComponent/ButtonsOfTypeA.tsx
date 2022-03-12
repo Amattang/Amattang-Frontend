@@ -1,22 +1,22 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { Alert, Pressable, View } from 'react-native';
-import { answerButtonOfType, checkList } from '../../types/checkListTypes';
+import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
 
 interface IProps {
   isEdit: boolean;
-  mainQuestionItem: checkList;
-  checkLists: checkList[];
-  setCheckLists: Dispatch<SetStateAction<checkList[]>>;
+  checkList: checkListTypes;
+  checkLists: checkListTypes[];
+  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-function ButtonsOfTypeA({ isEdit, mainQuestionItem, setCheckLists, checkLists }: IProps) {
+function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
   const onPressHandler = (answer: answerButtonOfType) => {
     isEdit
       ? setCheckLists(
           checkLists.map((questionItem) =>
-            questionItem.questionId === mainQuestionItem.questionId
+            questionItem.questionId === checkList.questionId
               ? ({
                   ...questionItem,
                   answer: {
@@ -28,8 +28,8 @@ function ButtonsOfTypeA({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
                       ),
                     ],
                   },
-                } as checkList)
-              : ({ ...questionItem } as checkList)
+                } as checkListTypes)
+              : ({ ...questionItem } as checkListTypes)
           )
         )
       : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
@@ -37,11 +37,11 @@ function ButtonsOfTypeA({ isEdit, mainQuestionItem, setCheckLists, checkLists }:
 
   return (
     <>
-      {mainQuestionItem.answer.ans.map((answer) => (
+      {checkList.answer.ans.map((answer) => (
         <Pressable
           onPress={() => onPressHandler(answer)}
           style={
-            mainQuestionItem.answer.ans.length < 3
+            checkList.answer.ans.length < 3
               ? answer.val
                 ? answer.redType
                   ? [styles.typeABtnWrapper, styles.checkListFocusedOrange]
