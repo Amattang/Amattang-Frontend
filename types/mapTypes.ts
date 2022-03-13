@@ -11,7 +11,3 @@ export interface ILocations {
   id: number;
   center: boolean;
 }
-
-export interface ISlides {
-  item: ILocations;
-}
