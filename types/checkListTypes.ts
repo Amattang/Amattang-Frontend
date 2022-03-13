@@ -16,11 +16,27 @@ export interface checkListTypes extends answerOfType {
   subCategory: string | null;
   questionId: string;
   question: string;
-  checked: boolean;
+  checked?: boolean;
   deleted?: boolean;
   emoji: string;
   mainCategory: string | null;
   rule: string | null;
   description: string | null;
   type: 'A' | 'B' | 'C' | 'D' | 'M';
+}
+
+export interface myItemElementType {
+  checked: boolean;
+  content: string;
+}
+
+export interface myItemType {
+  categoryName: string;
+  questionId: string;
+  question: myItemElementType[];
+}
+
+export interface myItemClickHandlerType {
+  myItem: myItemType;
+  myItemElement: myItemElementType;
 }

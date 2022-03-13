@@ -50,6 +50,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
             .filter((item) => !item.deleted)
             .map((mainQuestionItem: checkListTypes) => (
               <CheckListComponent
+                isOnboarding={false}
                 checkLists={checkLists}
                 isEdit={isEdit}
                 checkList={mainQuestionItem}

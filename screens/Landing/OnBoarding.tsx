@@ -49,7 +49,15 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
               </Pressable>
             </View>
           </View>
-          <CheckListComponent isEdit={true} checkLists={checkLists} setCheckLists={setCheckLists} />
+          {checkLists.map((checkList) => (
+            <CheckListComponent
+              isOnboarding={true}
+              checkList={checkList}
+              isEdit={true}
+              checkLists={checkLists}
+              setCheckLists={setCheckLists}
+            />
+          ))}
         </ScrollView>
       </View>
       <FloatingBtn floatingFunction={floatingFunction} image={'rightArrow'} />

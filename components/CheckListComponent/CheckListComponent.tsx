@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Image, Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import ButtonsOfTypeA from './ButtonsOfTypeA';
@@ -21,9 +21,16 @@ interface IProps {
   checkLists: checkListTypes[];
   checkList: checkListTypes;
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
+  isOnboarding: boolean;
 }
 
-function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists }: IProps) {
+function CheckListComponent({
+  isEdit,
+  checkLists,
+  checkList,
+  setCheckLists,
+  isOnboarding,
+}: IProps) {
   const translateX = useSharedValue(0);
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
@@ -51,7 +58,7 @@ function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists }: IP
   return (
     <View style={styles.checkListWrapper}>
       <PanGestureHandler
-        enabled={true}
+        enabled={isOnboarding ? false : true}
         onGestureEvent={panGesture}
         activeOffsetX={[0, 0]}
         activeOffsetY={1000}

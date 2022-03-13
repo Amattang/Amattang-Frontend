@@ -99,6 +99,9 @@ const styles = StyleSheet.create({
   blueText: {
     color: mainBlue,
   },
+  whiteText: {
+    color: 'white',
+  },
   bottomButtonOfBottomSheet: { flexDirection: 'row', marginTop: 10 },
   selectAllBtn: {
     width: 150,
@@ -134,6 +137,71 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     borderRadius: 10,
     backgroundColor: mainBlue,
+  },
+
+  myItem: {
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  myItemMainTitle: {
+    marginTop: 30,
+  },
+
+  myItemSubTitle: {
+    marginTop: 15,
+  },
+
+  myItemInputBox: {
+    borderRadius: 10,
+    marginHorizontal: 17,
+    marginTop: 10,
+    paddingHorizontal: 17,
+    paddingVertical: 15,
+
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    flexDirection: 'row',
+  },
+
+  myItemElements: {
+    padding: 20,
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    width: windowWidth - 94,
+  },
+
+  myItemBottomSheetButton: {
+    width: 60,
+    height: 57,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+
+  myItemElementsWrapper: {
+    width: windowWidth - 34,
+    flexDirection: 'row',
+    backgroundColor: 'white',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    borderRadius: 10,
+    marginHorizontal: 17,
+    marginTop: 10,
+  },
+
+  myItemDetailElementWrapper: {
+    flexDirection: 'row',
+    width: windowWidth - 34,
+    marginLeft: 35,
+    paddingVertical: 15,
+  },
+
+  myItemDetailElementText: {
+    marginLeft: 10,
+  },
+  myItemCount: {
+    marginLeft: 15,
   },
 });
 

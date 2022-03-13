@@ -48,12 +48,13 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   return (
     <>
       <BottomSheetModalProvider>
-        <View style={[styles.FullScreen]}>
+        <View>
           <ScrollView>
             {checkLists
               .filter((item) => !item.deleted)
               .map((mainQuestionItem: checkListTypes) => (
                 <CheckListComponent
+                  isOnboarding={false}
                   checkLists={checkLists}
                   handlePresentModalPress={handlePresentModalPress}
                   isEdit={isEdit}
@@ -70,6 +71,7 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
           </ScrollView>
         </View>
         <BottomSheetsOfDeletedCheckList
+          isEdit={isEdit}
           setCheckLists={setCheckLists}
           onAnimateHandler={onAnimateHandler}
           onDismissHandler={onDismissHandler}
