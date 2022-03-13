@@ -1,17 +1,23 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 
+const windowWidth = Dimensions.get('window').width;
+
 const styles = StyleSheet.create({
-  checkListCards: { marginVertical: 30, marginHorizontal: 17 },
+  checkListWrapper: { flexDirection: 'row' },
+
   whiteCard: {
+    zIndex: 99,
     backgroundColor: 'white',
     padding: 30,
+    width: windowWidth - 34,
     borderRadius: 14,
     marginVertical: 12,
+    marginHorizontal: 17,
   },
   checkListMainTitle: { fontSize: 20 },
   buttonsOfCheckList: {
-    marginTop: 50,
+    marginTop: 40,
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
@@ -22,7 +28,7 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  subTitles: { marginTop: 19 },
+  subTitles: { marginTop: 14 },
   checkListSubTitle: { flexDirection: 'row' },
   checkListGrayText: { color: '#7C7C7C', lineHeight: 24 },
   checkListWhiteText: { color: 'white', lineHeight: 24 },
@@ -35,10 +41,21 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: mainLightBlue,
   },
+  typeAExtendedBtnWrapper: {
+    marginRight: 19,
+    borderRadius: 4,
+    paddingHorizontal: 14,
+    height: 44,
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: mainLightBlue,
+  },
   checkListFocusedBlue: { backgroundColor: mainBlue },
   checkListFocusedOrange: { backgroundColor: mainOrange },
 
-  rightArrowWrapper: {
+  typeBBtnWrapper: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
+
+  floatingBtnWrapper: {
     width: 55,
     height: 55,
     justifyContent: 'center',
@@ -61,6 +78,62 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     backgroundColor: mainLightBlue,
+  },
+
+  container: {
+    height: 110,
+    padding: 24,
+    justifyContent: 'center',
+    backgroundColor: 'grey',
+  },
+  contentContainer: {
+    height: 110,
+    alignItems: 'center',
+  },
+  buttonOfbottomSheet: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    marginBottom: 40,
+    paddingVertical: 20,
+  },
+  blueText: {
+    color: mainBlue,
+  },
+  bottomButtonOfBottomSheet: { flexDirection: 'row', marginTop: 10 },
+  selectAllBtn: {
+    width: 150,
+    marginBottom: 30,
+    height: 56,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  updateCheckListButton: {
+    borderRadius: 8,
+    width: 230,
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 56,
+    backgroundColor: mainLightBlue,
+  },
+  deletedCheckListBtnWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    fontSize: 18,
+    marginHorizontal: 17,
+    marginVertical: 5,
+    padding: 20,
+    backgroundColor: mainLightBlue,
+  },
+  deletedCheckListText: { fontSize: 16 },
+  deletedCheckListWhiteText: { color: 'white', fontSize: 16 },
+
+  trashButton: {
+    width: 60,
+    marginVertical: 12,
+    justifyContent: 'center',
+    alignItems: 'center',
+    borderRadius: 10,
+    backgroundColor: mainBlue,
   },
 });
 

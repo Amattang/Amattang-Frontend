@@ -1,14 +1,17 @@
-import React from 'react';
-import { Image, Pressable, Share, Text } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Pressable, Share } from 'react-native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
 import { CheckListStackParamsList, CheckListStackProps } from '../../../types/navigationTypes';
 import styles from './styles';
 import ProfileSetting from '../../../screens/ProfileSetting/ProfileSetting';
+import { mainLightBlue } from '../../../color';
+import { DefaultText } from '../../../CustomText';
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
 function CheckListStackNav({ navigation }: CheckListStackProps) {
+  const [isEdit, setIsEdit] = useState(true);
   const onShare = async () => {
     try {
       const result = await Share.share({
@@ -27,31 +30,63 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
       throw new Error(error);
     }
   };
+
+  const onSubmitHandler = () => {
+    setIsEdit(false);
+  };
   return (
     <>
       <NativeStack.Navigator>
-        <NativeStack.Screen
-          name="basicCheckList"
-          component={BasicCheckList}
-          options={() => ({
-            headerTitleAlign: 'center',
-            headerShadowVisible: false,
-            title: '기본 체크리스트',
-            headerRight: () => (
-              <Pressable onPress={onShare}>
-                <Text>공유</Text>
-              </Pressable>
-            ),
-            headerLeft: () => (
-              <Pressable onPress={() => navigation.goBack()}>
-                <Image
-                  style={styles.leftArrowImg}
-                  source={require('../../../assets/images/common/leftArrow.png')}
-                />
-              </Pressable>
-            ),
-          })}
-        />
+        {isEdit ? (
+          <NativeStack.Screen
+            name="basicCheckList"
+            children={() => <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />}
+            options={() => ({
+              headerTitleAlign: 'center',
+              headerShadowVisible: false,
+              headerStyle: { backgroundColor: mainLightBlue },
+              title: '기본 체크리스트',
+              headerRight: () => (
+                <Pressable onPress={onSubmitHandler}>
+                  <DefaultText>저장</DefaultText>
+                </Pressable>
+              ),
+              headerLeft: () => (
+                <Pressable onPress={() => navigation.goBack()}>
+                  <Image
+                    style={styles.leftArrowImg}
+                    source={require('../../../assets/images/common/leftArrow.png')}
+                  />
+                </Pressable>
+              ),
+            })}
+          />
+        ) : (
+          <NativeStack.Screen
+            name="basicCheckList"
+            children={() => <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />}
+            options={() => ({
+              headerTitleAlign: 'center',
+              headerShadowVisible: false,
+              headerStyle: { backgroundColor: mainLightBlue },
+              title: '기본 체크리스트',
+              headerRight: () => (
+                <Pressable onPress={onShare}>
+                  <Image source={require('../../../assets/images/checkList/share.png')} />
+                </Pressable>
+              ),
+              headerLeft: () => (
+                <Pressable onPress={() => navigation.goBack()}>
+                  <Image
+                    style={styles.leftArrowImg}
+                    source={require('../../../assets/images/common/leftArrow.png')}
+                  />
+                </Pressable>
+              ),
+            })}
+          />
+        )}
+
         <NativeStack.Screen
           name={'profileSetting'}
           component={ProfileSetting}

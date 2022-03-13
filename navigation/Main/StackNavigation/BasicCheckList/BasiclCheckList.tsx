@@ -1,38 +1,75 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { createMaterialTopTabNavigator } from '@react-navigation/material-top-tabs';
 
 import BasicInfoOfBasicCheckList from '../../../../screens/BasicCheckList/BasicInfoOfBasicCheckList';
 import OutsideOfBasicCheckList from '../../../../screens/BasicCheckList/OutsideOfBasicCheckList';
 import InsideOfBasicCheckList from '../../../../screens/BasicCheckList/InsideOfBasicCheckList';
 import MyItemOfBasicCheckList from '../../../../screens/BasicCheckList/MyItemOfBasicCheckList';
+import { mainLightBlue } from '../../../../color';
+import FloatingBtn from '../../../../components/CheckListComponent/FloatingBtn';
 
 const Tab = createMaterialTopTabNavigator();
 
-function BasicCheckList() {
+interface IProps {
+  setIsEdit: Dispatch<SetStateAction<boolean>>;
+  isEdit: boolean;
+}
+
+function BasicCheckList({ setIsEdit, isEdit }: IProps) {
+  const [isBottomSheet, setIsBottomSheet] = useState(true);
+  const onEditHandler = () => {
+    setIsEdit(true);
+  };
+
+  const onCameraHandler = () => {
+    console.log('camera');
+  };
+
   return (
     <>
-      <Tab.Navigator screenOptions={{ swipeEnabled: false }}>
+      <Tab.Navigator
+        screenOptions={{ swipeEnabled: false, tabBarStyle: { backgroundColor: mainLightBlue } }}
+      >
         <Tab.Screen
           name="basic"
-          component={BasicInfoOfBasicCheckList}
+          children={() => (
+            <BasicInfoOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+          )}
           options={{ title: '기본 정보' }}
         />
         <Tab.Screen
           name={'outside'}
-          component={OutsideOfBasicCheckList}
+          children={() => (
+            <OutsideOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+          )}
           options={{ title: '외부 시설' }}
         />
         <Tab.Screen
           name={'inside'}
-          component={InsideOfBasicCheckList}
+          children={() => (
+            <InsideOfBasicCheckList
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+              isBottomSheet={isBottomSheet}
+            />
+          )}
           options={{ title: '내부 시설' }}
         />
         <Tab.Screen
           name={'option'}
-          component={MyItemOfBasicCheckList}
+          children={() => (
+            <MyItemOfBasicCheckList
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+              isBottomSheet={isBottomSheet}
+            />
+          )}
           options={{ title: '내 항목' }}
         />
       </Tab.Navigator>
+      {isEdit
+        ? isBottomSheet && <FloatingBtn floatingFunction={onCameraHandler} image={'camera'} />
+        : isBottomSheet && <FloatingBtn floatingFunction={onEditHandler} image={'edit'} />}
     </>
   );
 }

@@ -1,11 +1,17 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Pressable } from 'react-native';
-import { DefaultText } from '../../CustomText';
+import BasicCheckListComponents from '../../components/BasicCheckListComponents';
 
-function InsideOfBasicCheckList() {
+interface IProps {
+  isEdit: boolean;
+  setIsBottomSheet: Dispatch<SetStateAction<boolean>>;
+  isBottomSheet: boolean;
+}
+
+function InsideOfBasicCheckList({ isEdit, isBottomSheet, setIsBottomSheet }: IProps) {
   return (
     <Pressable>
-      <DefaultText>내부항목</DefaultText>
+      <BasicCheckListComponents />
     </Pressable>
   );
 }

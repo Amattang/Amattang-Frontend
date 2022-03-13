@@ -1,6 +1,7 @@
 export interface answerButtonOfType {
-  val: boolean;
+  val?: boolean;
   redType?: boolean;
+  description?: string;
   type: string;
 }
 
@@ -11,13 +12,15 @@ export interface answerOfType {
   };
 }
 
-export interface checkList extends answerOfType {
+export interface checkListTypes extends answerOfType {
   subCategory: string | null;
   questionId: string;
   question: string;
+  checked: boolean;
+  deleted?: boolean;
   emoji: string;
   mainCategory: string | null;
   rule: string | null;
-  description: string;
-  type: 'A' | 'B' | 'C' | 'D';
+  description: string | null;
+  type: 'A' | 'B' | 'C' | 'D' | 'M';
 }

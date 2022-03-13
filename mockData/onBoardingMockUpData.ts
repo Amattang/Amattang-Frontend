@@ -1,6 +1,6 @@
-import { checkList } from '../types/checkListTypes';
+import { checkListTypes } from '../types/checkListTypes';
 
-export const response: checkList[] = [
+export const response: checkListTypes[] = [
   {
     questionId: 'question1',
     question: '창틀이 깨끗한가요?',

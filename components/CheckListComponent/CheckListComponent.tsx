@@ -1,61 +1,122 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { View } from 'react-native';
-import { checkList } from '../../types/checkListTypes';
+import { Image, Pressable, View } from 'react-native';
+import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import ButtonsOfTypeA from './ButtonsOfTypeA';
 import ButtonsOfTypeD from './ButtonsOfTypeD';
 import { DefaultText } from '../../CustomText';
+import ButtonsOfTypeB from './ButtonsOfTypeB';
+import { PanGestureHandler, PanGestureHandlerGestureEvent } from 'react-native-gesture-handler';
+import Animated, {
+  useAnimatedGestureHandler,
+  useAnimatedStyle,
+  useSharedValue,
+  withTiming,
+} from 'react-native-reanimated';
+import ButtonOfGoToTrash from './ButtonOfGoToTrash';
 
 interface IProps {
-  checkLists: checkList[];
-  setCheckLists: Dispatch<SetStateAction<checkList[]>>;
+  handlePresentModalPress?: () => void;
+  isEdit: boolean;
+  checkLists: checkListTypes[];
+  checkList: checkListTypes;
+  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-function CheckListComponent({ checkLists, setCheckLists }: IProps) {
+function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists }: IProps) {
+  const translateX = useSharedValue(0);
+
+  const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
+    onActive: (event) => {
+      translateX.value = event.translationX;
+    },
+    onEnd: () => {
+      const shouldBeDismissed = translateX.value > -40;
+      if (shouldBeDismissed) {
+        translateX.value = withTiming(0);
+      } else {
+        translateX.value = withTiming(-80);
+      }
+    },
+  });
+
+  const rStyle = useAnimatedStyle(() => ({
+    transform: [
+      {
+        translateX: translateX.value,
+      },
+    ],
+  }));
+
   return (
-    <>
-      {checkLists.map((mainQuestionItem: checkList) => (
-        <View style={styles.whiteCard} key={mainQuestionItem.questionId}>
-          <DefaultText style={styles.checkListMainTitle}>{mainQuestionItem.question}</DefaultText>
-          <View style={styles.subTitles}>
-            {mainQuestionItem.subCategory && (
-              <View style={styles.checkListSubTitle}>
-                <DefaultText style={styles.emoji}>📘 </DefaultText>
-                <DefaultText style={styles.checkListGrayText}>
-                  {mainQuestionItem.subCategory}
-                </DefaultText>
-              </View>
-            )}
-            {mainQuestionItem.description && (
-              <View style={styles.checkListSubTitle}>
-                <DefaultText style={styles.emoji}>👀 </DefaultText>
-                <DefaultText style={styles.checkListGrayText}>
-                  {mainQuestionItem.description}
-                </DefaultText>
-              </View>
-            )}
+    <View style={styles.checkListWrapper}>
+      <PanGestureHandler
+        enabled={true}
+        onGestureEvent={panGesture}
+        activeOffsetX={[0, 0]}
+        activeOffsetY={1000}
+      >
+        <Animated.View style={[rStyle]}>
+          <View style={styles.whiteCard} key={checkList.questionId}>
+            <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
+            <View style={styles.subTitles}>
+              {checkList.subCategory && (
+                <View style={styles.checkListSubTitle}>
+                  <DefaultText style={styles.emoji}>📘 </DefaultText>
+                  <DefaultText style={styles.checkListGrayText}>
+                    {checkList.subCategory}
+                  </DefaultText>
+                </View>
+              )}
+              {checkList.description && (
+                <View style={styles.checkListSubTitle}>
+                  <DefaultText style={styles.emoji}>👀 </DefaultText>
+                  <DefaultText style={styles.checkListGrayText}>
+                    {checkList.description}
+                  </DefaultText>
+                </View>
+              )}
+            </View>
+
+            <View style={styles.buttonsOfCheckList}>
+              {checkList.type === 'A' && (
+                <ButtonsOfTypeA
+                  isEdit={isEdit}
+                  checkList={checkList}
+                  setCheckLists={setCheckLists}
+                  checkLists={checkLists}
+                />
+              )}
+              {checkList.type === 'B' && (
+                <ButtonsOfTypeB
+                  isEdit={isEdit}
+                  checkList={checkList}
+                  setCheckLists={setCheckLists}
+                  checkLists={checkLists}
+                />
+              )}
+              {checkList.type === 'C' && <DefaultText>c</DefaultText>}
+              {checkList.type === 'D' && (
+                <ButtonsOfTypeD
+                  isEdit={isEdit}
+                  checkList={checkList}
+                  setCheckLists={setCheckLists}
+                  checkLists={checkLists}
+                />
+              )}
+            </View>
           </View>
-          <View style={styles.buttonsOfCheckList}>
-            {mainQuestionItem.type === 'A' && (
-              <ButtonsOfTypeA
-                mainQuestionItem={mainQuestionItem}
-                setCheckLists={setCheckLists}
-                checkLists={checkLists}
-              />
-            )}
-            {mainQuestionItem.type === 'B' && <DefaultText>b</DefaultText>}
-            {mainQuestionItem.type === 'C' && <DefaultText>c</DefaultText>}
-            {mainQuestionItem.type === 'D' && (
-              <ButtonsOfTypeD
-                mainQuestionItem={mainQuestionItem}
-                setCheckLists={setCheckLists}
-                checkLists={checkLists}
-              />
-            )}
-          </View>
-        </View>
-      ))}
-    </>
+        </Animated.View>
+      </PanGestureHandler>
+      <ButtonOfGoToTrash
+        translateX={translateX}
+        rStyle={rStyle}
+        isEdit={isEdit}
+        checkList={checkList}
+        setCheckLists={setCheckLists}
+        checkLists={checkLists}
+      />
+    </View>
   );
 }
 

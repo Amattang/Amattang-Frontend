@@ -1,16 +1,22 @@
 import React, { useState } from 'react';
 import { Image, Pressable, ScrollView, View } from 'react-native';
+
 import styles from './styles';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
-import { checkList } from '../../types/checkListTypes';
+import { checkListTypes } from '../../types/checkListTypes';
 import { response } from '../../mockData/onBoardingMockUpData';
 import CheckListComponent from '../../components/CheckListComponent/CheckListComponent';
 import { DefaultText } from '../../CustomText';
+import FloatingBtn from '../../components/CheckListComponent/FloatingBtn';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
-  const [checkLists, setCheckLists] = useState<checkList[]>(response);
+  const [checkLists, setCheckLists] = useState<checkListTypes[]>(response);
   const onMapHandler = () => {
     navigation.navigate('map');
+  };
+
+  const floatingFunction = () => {
+    navigation.navigate('login');
   };
 
   return (
@@ -21,7 +27,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
             우리집을 체크하며 {'\n'}아맞땅을 미리 경험해보세요
           </DefaultText>
         </View>
-        <ScrollView style={styles.checkListCards}>
+        <ScrollView>
           <View style={styles.whiteCard}>
             <DefaultText style={styles.checkListMainTitle}>주소를 입력하세요</DefaultText>
             <View style={styles.buttonsOfCheckList}>
@@ -43,12 +49,10 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
               </Pressable>
             </View>
           </View>
-          <CheckListComponent checkLists={checkLists} setCheckLists={setCheckLists} />
+          <CheckListComponent isEdit={true} checkLists={checkLists} setCheckLists={setCheckLists} />
         </ScrollView>
       </View>
-      <Pressable onPress={() => navigation.navigate('login')} style={styles.rightArrowWrapper}>
-        <Image source={require('../../assets/images/common/rightArrow.png')} />
-      </Pressable>
+      <FloatingBtn floatingFunction={floatingFunction} image={'rightArrow'} />
     </>
   );
 }
