@@ -2,7 +2,13 @@ import React, { useState } from 'react';
 import { Alert, Image, Pressable, View } from 'react-native';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
-import { KakaoOAuthToken, login } from '@react-native-seoul/kakao-login';
+import {
+  KakaoOAuthToken,
+  login,
+  getAccessToken,
+  KakaoAccessTokenInfo,
+} from '@react-native-seoul/kakao-login';
+import axios from 'axios';
 
 function Login({ setIsLogin }: any) {
   const onAppleLoginHandler = () => {
@@ -10,9 +16,38 @@ function Login({ setIsLogin }: any) {
   };
 
   const onKakaoLoginHandler = async (): Promise<void> => {
-    const token: KakaoOAuthToken = await login();
-    console.log(JSON.stringify(token));
-    // setIsLogin(true);
+    await login();
+    const access: KakaoAccessTokenInfo = await getAccessToken();
+
+    const data = {
+      accessToken: access.accessToken,
+      provider: 'kakao',
+    };
+
+    // console.log(data);
+
+    axios
+      .post('/login', data, {
+        headers: {
+          'Access-Control-Allow-Origin': '*',
+          'Content-Type': 'application/json',
+        },
+      })
+      .then((res) => {
+        console.log(`response : ${res}`);
+        setIsLogin(true);
+      })
+      .catch((err) => {
+        console.log(err);
+        const status = err?.response?.status;
+        if (status === undefined) {
+          console.dir('데이터 오류' + JSON.stringify(err));
+        } else if (status === 400) {
+          console.dir('400에러');
+        } else if (status === 500) {
+          console.dir('내부 서버 오류');
+        }
+      });
   };
 
   return (
