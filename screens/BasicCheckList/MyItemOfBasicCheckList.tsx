@@ -78,13 +78,13 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
-        <ButtonOfAddMyItem
-          isEdit={isEdit}
-          myItem={null}
-          eachMyItemHandler={eachMyItemHandler}
-          setMyItems={setMyItems}
-        />
         <ScrollView>
+          <ButtonOfAddMyItem
+            isEdit={isEdit}
+            myItem={null}
+            eachMyItemHandler={eachMyItemHandler}
+            setMyItems={setMyItems}
+          />
           {myItems.map((myItem) => (
             <MyItem
               isEdit={isEdit}
@@ -101,6 +101,7 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
           clickedMyItem={clickedMyItem}
           setClickedMyItem={setClickedMyItem}
           setMyItems={setMyItems}
+          myItems={myItems}
           isEdit={isEdit}
           onAnimateHandler={onAnimateHandler}
           onDismissHandler={onDismissHandler}

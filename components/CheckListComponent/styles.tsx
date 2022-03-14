@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     padding: 30,
     width: windowWidth - 34,
     borderRadius: 14,
-    marginVertical: 12,
+    marginVertical: 8,
     marginHorizontal: 17,
   },
   checkListMainTitle: { fontSize: 20 },
@@ -202,6 +202,11 @@ const styles = StyleSheet.create({
   },
   myItemCount: {
     marginLeft: 15,
+  },
+  myItemBottomSheetWrapper: { justifyContent: 'space-between', flex: 1 },
+
+  myItemBottomSheetFinishButton: {
+    marginBottom: 35,
   },
 });
 
