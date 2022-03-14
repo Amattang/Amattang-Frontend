@@ -14,7 +14,7 @@ interface IProps {
 }
 
 function MyItem({ elementClickedHandler, myItem, eachMyItemHandler, isEdit }: IProps) {
-  const [isMyItemClicked, setIsMyItemClicked] = useState(true);
+  const [isMyItemClicked, setIsMyItemClicked] = useState(false);
 
   const onUpdateMyItemHandler = () => {
     isEdit

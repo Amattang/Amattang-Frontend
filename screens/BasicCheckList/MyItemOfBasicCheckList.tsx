@@ -41,11 +41,11 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const elementClickedHandler = ({ myItem, myItemElement }: myItemClickHandlerType) => {
     setMyItems(
       myItems.map((selectedItem) =>
-        myItem.questionId === selectedItem.questionId
+        myItem.categoryId === selectedItem.categoryId
           ? {
               ...selectedItem,
               question: selectedItem.question.map((selectedItemElement) =>
-                selectedItemElement.content === myItemElement.content
+                selectedItemElement.questionId === myItemElement.questionId
                   ? {
                       ...selectedItemElement,
                       checked: !selectedItemElement.checked,
@@ -99,6 +99,8 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
         <BottomSheetsOfMyItem
           handleSheetChanges={handleSheetChanges}
           clickedMyItem={clickedMyItem}
+          setClickedMyItem={setClickedMyItem}
+          setMyItems={setMyItems}
           isEdit={isEdit}
           onAnimateHandler={onAnimateHandler}
           onDismissHandler={onDismissHandler}

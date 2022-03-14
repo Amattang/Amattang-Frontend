@@ -28,15 +28,21 @@ export interface checkListTypes extends answerOfType {
 export interface myItemElementType {
   checked: boolean;
   content: string;
+  questionId: string;
 }
 
 export interface myItemType {
   categoryName: string;
-  questionId: string;
+  categoryId: string;
   question: myItemElementType[];
 }
 
 export interface myItemClickHandlerType {
   myItem: myItemType;
   myItemElement: myItemElementType;
+}
+
+export interface myItemElementHandlerType {
+  onChangedQuestionElement: string;
+  clickedMyItemElements: myItemElementType;
 }
