@@ -26,12 +26,13 @@ const KakaoLoginBtn = ({ setIsLogin }: any) => {
 
     axios
       .post(`${API_HOST}/login`, data, {
-        headers: {
-          'Access-Control-Allow-Origin': '*',
-          'Content-Type': 'application/json',
-        },
+        // headers: {
+        //   'Access-Control-Allow-Origin': '*',
+        //   'Content-Type': 'application/json',
+        // },
       })
       .then((res) => {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${access.accessToken}`;
         console.log(`response : ${JSON.stringify(res)}`);
         setIsLogin(true);
       })
