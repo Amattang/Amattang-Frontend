@@ -33,18 +33,18 @@ const KakaoLoginBtn = ({ setIsLogin }: any) => {
       })
       .then((res) => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${access.accessToken}`;
-        console.log(`response : ${JSON.stringify(res)}`);
+        // console.log(`response : ${JSON.stringify(res)}`);
         setIsLogin(true);
       })
       .catch((err) => {
-        console.log(err);
+        // console.log(err);
         const status = err?.response?.status;
         if (status === undefined) {
-          console.log('데이터 오류' + JSON.stringify(err));
+          console.error('데이터 오류');
         } else if (status === 400) {
-          console.log('400에러');
+          console.error('400에러');
         } else if (status === 500) {
-          console.log('내부 서버 오류');
+          console.error('내부 서버 오류');
         }
       });
   };
