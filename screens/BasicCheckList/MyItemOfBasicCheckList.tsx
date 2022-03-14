@@ -12,7 +12,7 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 import MyItem from '../../components/CheckListComponent/myItem/MyItem';
-import BottomSheetsOfMyItem from '../../components/CheckListComponent/myItem/BottomSheetsOfMyItem';
+import MyItemOfBottomSheets from '../../components/CheckListComponent/myItem/MyItemOfBottomSheets';
 
 interface IProps {
   isEdit: boolean;
@@ -96,7 +96,7 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
           ))}
         </ScrollView>
         {myItems.length === 0 && <BlankedMyItem />}
-        <BottomSheetsOfMyItem
+        <MyItemOfBottomSheets
           handleSheetChanges={handleSheetChanges}
           clickedMyItem={clickedMyItem}
           setClickedMyItem={setClickedMyItem}
