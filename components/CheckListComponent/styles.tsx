@@ -4,7 +4,11 @@ import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
-  checkListWrapper: { flexDirection: 'row' },
+  checkListWrapper: {
+    flexDirection: 'row',
+    marginVertical: 8,
+    marginHorizontal: 17,
+  },
 
   whiteCard: {
     zIndex: 99,
@@ -12,8 +16,6 @@ const styles = StyleSheet.create({
     padding: 30,
     width: windowWidth - 34,
     borderRadius: 14,
-    marginVertical: 8,
-    marginHorizontal: 17,
   },
   checkListMainTitle: { fontSize: 20 },
   buttonsOfCheckList: {
@@ -91,6 +93,8 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   buttonOfbottomSheet: {
+    marginHorizontal: 17,
+    marginVertical: 8,
     justifyContent: 'center',
     alignItems: 'center',
     marginBottom: 40,
@@ -133,7 +137,7 @@ const styles = StyleSheet.create({
 
   trashButton: {
     width: 60,
-    marginVertical: 12,
+    marginLeft: 20,
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 10,

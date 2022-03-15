@@ -76,6 +76,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
           </DefaultText>
         </Pressable>
       ))}
+
       <TextInput
         autoCorrect={false}
         onChangeText={onChangeTextHandler}

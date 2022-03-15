@@ -1,4 +1,4 @@
-import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useCallback, useState } from 'react';
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
@@ -12,6 +12,8 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 import styles from './styles';
 
 interface IProps {
+  deletedCheckLists: checkListTypes[];
+  setDeletedCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   isEdit: boolean;
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   onAnimateHandler: () => void;
@@ -23,6 +25,8 @@ interface IProps {
 }
 
 function BottomSheetsOfDeletedCheckList({
+  deletedCheckLists,
+  setDeletedCheckLists,
   isEdit,
   setCheckLists,
   onAnimateHandler,
@@ -32,10 +36,6 @@ function BottomSheetsOfDeletedCheckList({
   snapPoints,
   checkLists,
 }: IProps) {
-  const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>(
-    checkLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
-  );
-
   const onUpdateCheckListHandler = () => {
     bottomSheetModalRef?.current?.dismiss();
     // 애니매이션 지속시간에  상태변경이 일어나면 애니매이션이 취소됨
@@ -43,8 +43,9 @@ function BottomSheetsOfDeletedCheckList({
       setDeletedCheckLists(
         deletedCheckLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
       );
-      setCheckLists([...checkLists, ...deletedCheckLists]);
+      setCheckLists([...checkLists.filter((item) => item.deleted === false), ...deletedCheckLists]);
     }, 500);
+    setTimeout(() => 1000);
   };
 
   const onUpdateCheckList = (deletedCheckList: checkListTypes) => {

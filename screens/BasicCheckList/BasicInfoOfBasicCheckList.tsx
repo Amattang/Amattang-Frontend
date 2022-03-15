@@ -21,6 +21,9 @@ interface IProps {
 
 function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const [checkLists, setCheckLists] = useState(response);
+  const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>(
+    checkLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
+  );
 
   // 바텀시트 동작을 위한 코드
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -50,6 +53,8 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
             .filter((item) => !item.deleted)
             .map((mainQuestionItem: checkListTypes) => (
               <CheckListComponent
+                deletedCheckLists={deletedCheckLists}
+                setDeletedCheckLists={setDeletedCheckLists}
                 onBoarding={false}
                 checkLists={checkLists}
                 isEdit={isEdit}
@@ -64,6 +69,8 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
         </ScrollView>
 
         <BottomSheetsOfDeletedCheckList
+          deletedCheckLists={deletedCheckLists}
+          setDeletedCheckLists={setDeletedCheckLists}
           isEdit={isEdit}
           setCheckLists={setCheckLists}
           onAnimateHandler={onAnimateHandler}

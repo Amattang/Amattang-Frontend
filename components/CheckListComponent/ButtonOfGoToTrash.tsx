@@ -1,10 +1,12 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Alert, Image, Pressable } from 'react-native';
+import { Image, Pressable } from 'react-native';
 import Animated, { SharedValue, withTiming } from 'react-native-reanimated';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 
 interface IProps {
+  deletedCheckLists: checkListTypes[];
+  setDeletedCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   translateX: SharedValue<number>;
   rStyle: { transform: { translateX: number }[] };
   isEdit: boolean;
@@ -14,6 +16,8 @@ interface IProps {
 }
 
 function ButtonOfGoToTrash({
+  deletedCheckLists,
+  setDeletedCheckLists,
   translateX,
   rStyle,
   isEdit,
@@ -26,14 +30,13 @@ function ButtonOfGoToTrash({
   const onDeleteHandler = async () => {
     translateX.value = withTiming(0);
     isEdit &&
-      setTimeout(() => {
-        setCheckLists(
+      setTimeout(async () => {
+        await setCheckLists(
           checkLists.map((item) =>
-            item.questionId === checkList.questionId
-              ? { ...item, deleted: !item.deleted }
-              : { ...item }
+            item.questionId === checkList.questionId ? { ...item, deleted: true } : { ...item }
           )
         );
+        await setDeletedCheckLists([...deletedCheckLists, { ...checkList, deleted: true }]);
       }, 500);
   };
 

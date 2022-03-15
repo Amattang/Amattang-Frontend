@@ -16,6 +16,8 @@ import Animated, {
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
 
 interface IProps {
+  deletedCheckLists: checkListTypes[];
+  setDeletedCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   handlePresentModalPress?: () => void;
   isEdit: boolean;
   checkLists: checkListTypes[];
@@ -24,7 +26,15 @@ interface IProps {
   onBoarding: boolean;
 }
 
-function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists, onBoarding }: IProps) {
+function CheckListComponent({
+  deletedCheckLists,
+  setDeletedCheckLists,
+  isEdit,
+  checkLists,
+  checkList,
+  setCheckLists,
+  onBoarding,
+}: IProps) {
   const translateX = useSharedValue(0);
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
@@ -54,8 +64,7 @@ function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists, onBo
       <PanGestureHandler
         enabled={!onBoarding}
         onGestureEvent={panGesture}
-        activeOffsetX={[0, 0]}
-        activeOffsetY={1000}
+        activeOffsetX={[-0, 100]}
       >
         <Animated.View style={[rStyle]}>
           <View style={styles.whiteCard} key={checkList.questionId}>
@@ -110,6 +119,8 @@ function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists, onBo
         </Animated.View>
       </PanGestureHandler>
       <ButtonOfGoToTrash
+        deletedCheckLists={deletedCheckLists}
+        setDeletedCheckLists={setDeletedCheckLists}
         translateX={translateX}
         rStyle={rStyle}
         isEdit={isEdit}
