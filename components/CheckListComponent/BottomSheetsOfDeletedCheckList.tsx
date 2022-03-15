@@ -100,8 +100,6 @@ function BottomSheetsOfDeletedCheckList({
           <Pressable onPress={onSelectAllHandler} style={[styles.selectAllBtn]}>
             <DefaultText style={styles.blueText}>모두 선택</DefaultText>
           </Pressable>
-
-          {/*<Pressable onPress={onUpdateCheckListHandler} style={styles.updateCheckListButton}>*/}
           <Pressable
             onPress={onUpdateCheckListHandler}
             style={

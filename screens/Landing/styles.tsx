@@ -84,11 +84,8 @@ const styles = StyleSheet.create({
   checkListFocusedOrange: { backgroundColor: mainOrange },
 
   floatingBtnWrapper: {
-    width: 55,
-    height: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: mainBlue,
     borderRadius: 55,
     position: 'absolute',
     right: 20,

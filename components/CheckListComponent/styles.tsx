@@ -119,6 +119,7 @@ const styles = StyleSheet.create({
     backgroundColor: mainLightBlue,
   },
   deletedCheckListBtnWrapper: {
+    borderRadius: 10,
     justifyContent: 'center',
     alignItems: 'center',
     fontSize: 18,
