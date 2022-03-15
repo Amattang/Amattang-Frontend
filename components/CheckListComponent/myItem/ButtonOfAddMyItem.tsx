@@ -1,6 +1,6 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { myItemType } from '../../../types/checkListTypes';
-import { Alert, Pressable } from 'react-native';
+import { Pressable } from 'react-native';
 import { DefaultText } from '../../../CustomText';
 import styles from '../styles';
 
@@ -13,9 +13,7 @@ interface IProps {
 
 function ButtonOfAddMyItem({ eachMyItemHandler, myItem, isEdit }: IProps) {
   const onCreateMyItemHandler = () => {
-    isEdit
-      ? eachMyItemHandler(myItem)
-      : Alert.alert('읽기상태입니다!', '추가하기를 취소하고 오른쪽 아래 버튼을 눌러주세요');
+    isEdit && eachMyItemHandler(myItem);
   };
   return (
     <Pressable onPress={onCreateMyItemHandler} style={styles.myItemInputBox}>

@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { DefaultText } from '../../../CustomText';
-import { Alert, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { myItemClickHandlerType, myItemType } from '../../../types/checkListTypes';
 import MyItemElement from './MyItemElement';
 import styles from '../styles';
@@ -17,9 +17,7 @@ function MyItem({ elementClickedHandler, myItem, eachMyItemHandler, isEdit }: IP
   const [isMyItemClicked, setIsMyItemClicked] = useState(false);
 
   const onUpdateMyItemHandler = () => {
-    isEdit
-      ? eachMyItemHandler(myItem)
-      : Alert.alert('읽기상태입니다!', '추가하기를 취소하고 오른쪽 아래 버튼을 눌러주세요');
+    isEdit && eachMyItemHandler(myItem);
   };
   return (
     <>

@@ -13,7 +13,6 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 import { checkListTypes } from '../../types/checkListTypes';
-import { DefaultText } from '../../CustomText';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 
 interface IProps {
@@ -54,7 +53,7 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
               .filter((item) => !item.deleted)
               .map((mainQuestionItem: checkListTypes) => (
                 <CheckListComponent
-                  isOnboarding={false}
+                  onBoarding={false}
                   checkLists={checkLists}
                   handlePresentModalPress={handlePresentModalPress}
                   isEdit={isEdit}

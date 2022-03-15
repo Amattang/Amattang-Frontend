@@ -4,7 +4,7 @@ import {
   BottomSheetModal,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import { Alert, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import { checkListTypes } from '../../types/checkListTypes';
 import { SharedValue } from 'react-native-reanimated';
@@ -48,15 +48,14 @@ function BottomSheetsOfDeletedCheckList({
   };
 
   const onUpdateCheckList = (deletedCheckList: checkListTypes) => {
-    isEdit
-      ? setDeletedCheckLists(
-          deletedCheckLists.map((item) =>
-            item.questionId === deletedCheckList.questionId
-              ? { ...item, deleted: !item.deleted }
-              : { ...item }
-          )
+    isEdit &&
+      setDeletedCheckLists(
+        deletedCheckLists.map((item) =>
+          item.questionId === deletedCheckList.questionId
+            ? { ...item, deleted: !item.deleted }
+            : { ...item }
         )
-      : Alert.alert('읽기상태입니다!', '추가하기를 취소하고 오른쪽 아래 버튼을 눌러주세요');
+      );
   };
 
   const onSelectAllHandler = () => {

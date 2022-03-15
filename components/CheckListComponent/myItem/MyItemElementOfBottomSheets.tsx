@@ -1,26 +1,22 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import {
-  myItemElementHandlerType,
-  myItemElementType,
-  myItemType,
-} from '../../../types/checkListTypes';
+import { myItemElementType, myItemType } from '../../../types/checkListTypes';
 import { Image, TextInput, View } from 'react-native';
+import styles from '../styles';
 
 interface IProps {
   setClickedMyItem: Dispatch<SetStateAction<myItemType | null>>;
   clickedMyItem: myItemType;
+  isEdit: boolean;
   clickedMyItemElements: myItemElementType;
 }
 
 function MyItemElementOfBottomSheets({
   setClickedMyItem,
   clickedMyItem,
+  isEdit,
   clickedMyItemElements,
 }: IProps) {
-  const onChangeQuestionElementHandler = ({
-    onChangedQuestionElement,
-    clickedMyItemElements,
-  }: myItemElementHandlerType) => {
+  const onChangeQuestionElementHandler = (onChangedQuestionElement: string) => {
     onChangedQuestionElement === ''
       ? setClickedMyItem({
           ...clickedMyItem,
@@ -39,7 +35,7 @@ function MyItemElementOfBottomSheets({
         } as myItemType);
   };
   return (
-    <View>
+    <View style={styles.myItemElementsOfBottomSheets}>
       {clickedMyItemElements.checked ? (
         <Image source={require('../../../assets/images/checkList/checkedCheckBox.png')} />
       ) : (
@@ -47,12 +43,11 @@ function MyItemElementOfBottomSheets({
       )}
       {clickedMyItemElements && (
         <TextInput
+          editable={isEdit}
+          style={styles.myItemEachElementOfBottomSheets}
           value={clickedMyItemElements.content}
           onChangeText={(onChangedQuestionElement) =>
-            onChangeQuestionElementHandler({
-              onChangedQuestionElement,
-              clickedMyItemElements,
-            })
+            onChangeQuestionElementHandler(onChangedQuestionElement)
           }
         />
       )}

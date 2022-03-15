@@ -21,16 +21,10 @@ interface IProps {
   checkLists: checkListTypes[];
   checkList: checkListTypes;
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
-  isOnboarding: boolean;
+  onBoarding: boolean;
 }
 
-function CheckListComponent({
-  isEdit,
-  checkLists,
-  checkList,
-  setCheckLists,
-  isOnboarding,
-}: IProps) {
+function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists, onBoarding }: IProps) {
   const translateX = useSharedValue(0);
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
@@ -58,7 +52,7 @@ function CheckListComponent({
   return (
     <View style={styles.checkListWrapper}>
       <PanGestureHandler
-        enabled={isOnboarding ? false : true}
+        enabled={!onBoarding}
         onGestureEvent={panGesture}
         activeOffsetX={[0, 0]}
         activeOffsetY={1000}

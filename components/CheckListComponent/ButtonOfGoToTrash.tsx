@@ -25,17 +25,16 @@ function ButtonOfGoToTrash({
 
   const onDeleteHandler = async () => {
     translateX.value = withTiming(0);
-    isEdit
-      ? setTimeout(() => {
-          setCheckLists(
-            checkLists.map((item) =>
-              item.questionId === checkList.questionId
-                ? { ...item, deleted: !item.deleted }
-                : { ...item }
-            )
-          );
-        }, 500)
-      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+    isEdit &&
+      setTimeout(() => {
+        setCheckLists(
+          checkLists.map((item) =>
+            item.questionId === checkList.questionId
+              ? { ...item, deleted: !item.deleted }
+              : { ...item }
+          )
+        );
+      }, 500);
   };
 
   return (

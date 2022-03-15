@@ -29,6 +29,7 @@ function MyItemOfBottomSheets({
   onDismissHandler,
   onAnimateHandler,
   setClickedMyItem,
+  isEdit,
   setMyItems,
   myItems,
   bottomSheetModalRef,
@@ -77,31 +78,27 @@ function MyItemOfBottomSheets({
       onChange={handleSheetChanges}
     >
       <View style={[styles.myItemBottomSheetWrapper]}>
-        {clickedMyItem?.categoryId && (
-          <DeleteMyItemButtonOfBottomSheets
-            clickedMyItem={clickedMyItem}
-            bottomSheetModalRef={bottomSheetModalRef}
-            setMyItems={setMyItems}
-            myItems={myItems}
-          />
-        )}
         <TextInput
-          style={{ width: 100, height: 50 }}
+          style={styles.myItemCategoryName}
           value={clickedMyItem?.categoryName}
           placeholder={'새 그룹'}
+          editable={isEdit}
           onChangeText={(newCategoryName) => onCategoryNameHandler(newCategoryName)}
         />
         <ScrollView>
           {clickedMyItem?.question?.map((clickedMyItemElements) => (
             <MyItemElementOfBottomSheets
+              isEdit={isEdit}
               setClickedMyItem={setClickedMyItem}
               clickedMyItem={clickedMyItem}
               clickedMyItemElements={clickedMyItemElements}
             />
           ))}
           <TextInput
+            style={styles.addMyItemEachElementOfBottomSheets}
             placeholder={'+ 항목 추가'}
             value={newElement}
+            editable={isEdit}
             onChangeText={(elementText) => onCreateQuestionElementTextHandler(elementText)}
             onEndEditing={onCreateQuestionElementHandler}
           />
@@ -113,6 +110,15 @@ function MyItemOfBottomSheets({
           myItems={myItems}
         />
       </View>
+      {clickedMyItem?.categoryId && (
+        <DeleteMyItemButtonOfBottomSheets
+          isEdit={isEdit}
+          clickedMyItem={clickedMyItem}
+          bottomSheetModalRef={bottomSheetModalRef}
+          setMyItems={setMyItems}
+          myItems={myItems}
+        />
+      )}
     </BottomSheetModal>
   );
 }

@@ -33,7 +33,7 @@ export interface myItemElementType {
 
 export interface myItemType {
   categoryName: string;
-  categoryId: string;
+  categoryId: string | null;
   question: myItemElementType[];
 }
 
@@ -44,5 +44,5 @@ export interface myItemClickHandlerType {
 
 export interface myItemElementHandlerType {
   onChangedQuestionElement: string;
-  clickedMyItemElements: myItemElementType;
+  clickedMyItemElement: myItemElementType;
 }

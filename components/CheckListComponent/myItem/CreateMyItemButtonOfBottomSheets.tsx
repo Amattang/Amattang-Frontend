@@ -35,7 +35,7 @@ function CreateMyItemButtonOfBottomSheets({
           ]);
         }, 500)
       : setTimeout(() => {
-          setMyItems([...myItems, { ...clickedMyItem, categoryId: uuid.v4() }]);
+          setMyItems([...myItems, { ...clickedMyItem, categoryId: uuid.v4() } as myItemType]);
         }, 500);
   };
   return (

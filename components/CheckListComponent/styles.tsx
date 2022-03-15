@@ -173,10 +173,10 @@ const styles = StyleSheet.create({
   },
 
   myItemBottomSheetButton: {
-    width: 60,
+    width: 50,
     height: 57,
     justifyContent: 'center',
-    alignItems: 'center',
+    alignItems: 'flex-start',
   },
 
   myItemElementsWrapper: {
@@ -194,7 +194,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     width: windowWidth - 34,
     marginLeft: 35,
-    paddingVertical: 15,
+    paddingVertical: 10,
   },
 
   myItemDetailElementText: {
@@ -208,6 +208,23 @@ const styles = StyleSheet.create({
   myItemBottomSheetFinishButton: {
     marginBottom: 35,
   },
+
+  deleteMyItem: { position: 'absolute', right: 0, top: 0, width: 50, height: 50 },
+  myItemCategoryName: {
+    marginHorizontal: 30,
+    color: mainBlue,
+    fontSize: 24,
+    fontWeight: '700',
+    marginBottom: 10,
+  },
+  myItemElementsOfBottomSheets: {
+    flexDirection: 'row',
+    marginHorizontal: 30,
+    justifyContent: 'flex-start',
+    alignItems: 'center',
+  },
+  myItemEachElementOfBottomSheets: { marginVertical: 10, marginLeft: 10 },
+  addMyItemEachElementOfBottomSheets: { marginTop: 20, marginHorizontal: 30 },
 });
 
 export default styles;

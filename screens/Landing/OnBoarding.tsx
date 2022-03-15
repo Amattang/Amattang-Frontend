@@ -51,7 +51,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
           </View>
           {checkLists.map((checkList) => (
             <CheckListComponent
-              isOnboarding={true}
+              onBoarding={true}
               checkList={checkList}
               isEdit={true}
               checkLists={checkLists}
