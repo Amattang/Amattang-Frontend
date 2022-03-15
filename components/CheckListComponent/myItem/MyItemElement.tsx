@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Image, Pressable } from 'react-native';
+import { Image, Pressable } from 'react-native';
 import { DefaultText } from '../../../CustomText';
 import {
   myItemClickHandlerType,
@@ -17,9 +17,7 @@ interface IProps {
 
 function MyItemElement({ myItemElement, elementClickedHandler, myItem, isEdit }: IProps) {
   const myItemElementOnPressHandler = () =>
-    isEdit
-      ? elementClickedHandler({ myItem, myItemElement })
-      : Alert.alert('읽기상태입니다!', '추가하기를 취소하고 오른쪽 아래 버튼을 눌러주세요');
+    isEdit && elementClickedHandler({ myItem, myItemElement });
   return (
     <Pressable onPress={myItemElementOnPressHandler} style={styles.myItemDetailElementWrapper}>
       {myItemElement.checked ? (

@@ -13,6 +13,7 @@ import {
 } from '@gorhom/bottom-sheet';
 import MyItem from '../../components/CheckListComponent/myItem/MyItem';
 import MyItemOfBottomSheets from '../../components/CheckListComponent/myItem/MyItemOfBottomSheets';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   isEdit: boolean;
@@ -66,9 +67,7 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
 
   // callbacks
 
-  const handleSheetChanges = useCallback((index: number) => {
-    console.log('handleSheetChanges', index);
-  }, []);
+  const handleSheetChanges = useCallback(() => {}, []);
 
   const eachMyItemHandler = (MyItemData: myItemType | null) => {
     setClickedMyItem(MyItemData);
@@ -78,24 +77,26 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   return (
     <View style={{ flex: 1 }}>
       <BottomSheetModalProvider>
-        <ScrollView>
-          <ButtonOfAddMyItem
-            isEdit={isEdit}
-            myItem={null}
-            eachMyItemHandler={eachMyItemHandler}
-            setMyItems={setMyItems}
-          />
-          {myItems.map((myItem) => (
-            <MyItem
+        <KeyboardAwareScrollView extraHeight={150}>
+          <ScrollView>
+            <ButtonOfAddMyItem
               isEdit={isEdit}
-              elementClickedHandler={elementClickedHandler}
-              myItems={myItems}
-              myItem={myItem}
+              myItem={null}
               eachMyItemHandler={eachMyItemHandler}
+              setMyItems={setMyItems}
             />
-          ))}
-        </ScrollView>
-        {myItems.length === 0 && <BlankedMyItem />}
+            {myItems.map((myItem) => (
+              <MyItem
+                isEdit={isEdit}
+                elementClickedHandler={elementClickedHandler}
+                myItems={myItems}
+                myItem={myItem}
+                eachMyItemHandler={eachMyItemHandler}
+              />
+            ))}
+          </ScrollView>
+          {myItems.length === 0 && <BlankedMyItem />}
+        </KeyboardAwareScrollView>
         <MyItemOfBottomSheets
           handleSheetChanges={handleSheetChanges}
           clickedMyItem={clickedMyItem}

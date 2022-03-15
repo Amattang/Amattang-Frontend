@@ -3,6 +3,7 @@ import { Alert, Pressable, TextInput } from 'react-native';
 import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   isEdit: boolean;
@@ -76,7 +77,6 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
           </DefaultText>
         </Pressable>
       ))}
-
       <TextInput
         autoCorrect={false}
         onChangeText={onChangeTextHandler}

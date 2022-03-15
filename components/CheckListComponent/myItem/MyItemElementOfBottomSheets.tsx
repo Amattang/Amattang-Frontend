@@ -1,7 +1,8 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { myItemElementType, myItemType } from '../../../types/checkListTypes';
-import { Image, TextInput, View } from 'react-native';
+import { Image, View } from 'react-native';
 import styles from '../styles';
+import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
 
 interface IProps {
   setClickedMyItem: Dispatch<SetStateAction<myItemType | null>>;
@@ -42,7 +43,7 @@ function MyItemElementOfBottomSheets({
         <Image source={require('../../../assets/images/checkList/unCheckedCheckBox.png')} />
       )}
       {clickedMyItemElements && (
-        <TextInput
+        <BottomSheetTextInput
           editable={isEdit}
           style={styles.myItemEachElementOfBottomSheets}
           value={clickedMyItemElements.content}

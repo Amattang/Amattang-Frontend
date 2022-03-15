@@ -1,5 +1,9 @@
 import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
-import { BottomSheetBackgroundProps, BottomSheetModal } from '@gorhom/bottom-sheet';
+import {
+  BottomSheetBackgroundProps,
+  BottomSheetModal,
+  BottomSheetTextInput,
+} from '@gorhom/bottom-sheet';
 import { ScrollView, TextInput, View } from 'react-native';
 import uuid from 'react-native-uuid';
 
@@ -78,7 +82,7 @@ function MyItemOfBottomSheets({
       onChange={handleSheetChanges}
     >
       <View style={[styles.myItemBottomSheetWrapper]}>
-        <TextInput
+        <BottomSheetTextInput
           style={styles.myItemCategoryName}
           value={clickedMyItem?.categoryName}
           placeholder={'새 그룹'}
@@ -94,7 +98,7 @@ function MyItemOfBottomSheets({
               clickedMyItemElements={clickedMyItemElements}
             />
           ))}
-          <TextInput
+          <BottomSheetTextInput
             style={styles.addMyItemEachElementOfBottomSheets}
             placeholder={'+ 항목 추가'}
             value={newElement}

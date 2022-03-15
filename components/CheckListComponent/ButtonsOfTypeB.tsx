@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Alert, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';

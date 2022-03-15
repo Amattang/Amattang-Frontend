@@ -11,7 +11,6 @@ const styles = StyleSheet.create({
   pinnedText: {
     marginTop: 20,
     marginBottom: 15,
-    marginLeft: 17,
     fontWeight: '700',
     fontSize: 18,
   },
