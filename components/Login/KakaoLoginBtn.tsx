@@ -2,38 +2,34 @@ import React from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import styles from '../../screens/Landing/styles';
-import {
-  login,
-  getAccessToken,
-  KakaoAccessTokenInfo,
-  KakaoProfile,
-  getProfile,
-  KakaoProfileNoneAgreement,
-} from '@react-native-seoul/kakao-login';
+import { login, KakaoOAuthToken } from '@react-native-seoul/kakao-login';
 import axios from 'axios';
-import { API_HOST } from '../../constant';
+import { isLoggedIn, setAuthTokens } from 'react-native-axios-jwt';
+import { axiosInstance } from './LoginToken';
 
 const KakaoLoginBtn = ({ setIsLogin }: any) => {
   const onKakaoLoginHandler = async (): Promise<void> => {
-    await login();
-    const access: KakaoAccessTokenInfo = await getAccessToken();
-    // const profile: KakaoProfile | KakaoProfileNoneAgreement = await getProfile();
+    console.log(await isLoggedIn());
+    if (await isLoggedIn()) {
+      setIsLogin(true);
+      return;
+    }
+    const access: KakaoOAuthToken = await login();
 
     const data = {
       accessToken: access.accessToken,
       provider: 'kakao',
     };
 
-    axios
-      .post(`${API_HOST}/login`, data, {
-        // headers: {
-        //   'Access-Control-Allow-Origin': '*',
-        //   'Content-Type': 'application/json',
-        // },
-      })
+    axiosInstance
+      .post(`/login`, data)
       .then((res) => {
         axios.defaults.headers.common['Authorization'] = `Bearer ${access.accessToken}`;
-        // console.log(`response : ${JSON.stringify(res)}`);
+        console.log(`response : ${JSON.stringify(res.data.data)}`);
+        setAuthTokens({
+          accessToken: res.data.data.accessToken,
+          refreshToken: res.data.data.refreshToken,
+        });
         setIsLogin(true);
       })
       .catch((err) => {
