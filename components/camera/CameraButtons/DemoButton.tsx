@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, Pressable, ViewStyle, TextStyle } from 'react-native';
+import { mainBlue } from '../../../color';
 
 interface Props {
   onPress: () => void;
@@ -7,15 +8,7 @@ interface Props {
 
 export function DemoButton({ onPress, children }: React.PropsWithChildren<Props>) {
   return (
-    <Pressable
-      onPress={onPress}
-      style={({ pressed }) => [
-        {
-          backgroundColor: pressed ? 'skyblue' : 'steelblue',
-        },
-        styles.container,
-      ]}
-    >
+    <Pressable onPress={onPress} style={[{ backgroundColor: mainBlue }, styles.container]}>
       <Text style={styles.text}>{children}</Text>
     </Pressable>
   );

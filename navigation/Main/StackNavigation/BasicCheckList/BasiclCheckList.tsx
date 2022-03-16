@@ -9,6 +9,7 @@ import { mainLightBlue } from '../../../../color';
 import FloatingBtn from '../../../../components/CheckListComponent/FloatingBtn';
 import { useNavigation } from '@react-navigation/native';
 import { NestedProps } from '../../../../types/navigationTypes';
+import CameraAndGallery from '../../../../components/camera/CameraAndGallery';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -20,12 +21,15 @@ interface IProps {
 function BasicCheckList({ setIsEdit, isEdit }: IProps) {
   const navigation = useNavigation<NestedProps>();
   const [isBottomSheet, setIsBottomSheet] = useState(true);
+  const [onModal, setOnModal] = useState(true);
   const onEditHandler = () => {
     setIsEdit(true);
   };
 
   const onCameraHandler = () => {
-    navigation.navigate('stack', { screen: 'camera' });
+    // navigation.navigate('stack', { screen: 'camera' });
+    setOnModal(!onModal);
+    console.log('t');
   };
 
   return (
@@ -69,6 +73,7 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
       {isEdit
         ? isBottomSheet && <FloatingBtn floatingFunction={onCameraHandler} image={'camera'} />
         : isBottomSheet && <FloatingBtn floatingFunction={onEditHandler} image={'edit'} />}
+      {onModal ? <CameraAndGallery setOnModal={setOnModal} onModal={onModal} /> : null}
     </>
   );
 }

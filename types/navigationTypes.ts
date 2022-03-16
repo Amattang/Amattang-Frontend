@@ -16,7 +16,6 @@ export type OnBoardingStackProps = NativeStackScreenProps<OnBoardingStackParamsL
 export type CheckListStackParamsList = {
   basicCheckList: undefined;
   profileSetting: undefined;
-  camera: undefined;
 };
 
 export type CheckListStackProps = NativeStackScreenProps<
