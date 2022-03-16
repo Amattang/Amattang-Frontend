@@ -12,6 +12,7 @@ import ProfileSetting from '../../../screens/ProfileSetting/ProfileSetting';
 import { mainLightBlue } from '../../../color';
 import { DefaultText } from '../../../CustomText';
 import { TransitionPresets } from '@react-navigation/stack';
+import Camera from '../../../screens/Camera/Camera';
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
 function CheckListStackNav({ navigation }: CheckListStackProps) {
@@ -89,6 +90,7 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
           children={() => <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />}
           options={() => ({ title: '기본 체크리스트' })}
         />
+        <NativeStack.Screen name={'camera'} component={Camera} options={{ headerShown: false }} />
         <NativeStack.Screen
           name={'profileSetting'}
           component={ProfileSetting}

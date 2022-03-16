@@ -7,6 +7,8 @@ import InsideOfBasicCheckList from '../../../../screens/BasicCheckList/InsideOfB
 import MyItemOfBasicCheckList from '../../../../screens/BasicCheckList/MyItemOfBasicCheckList';
 import { mainLightBlue } from '../../../../color';
 import FloatingBtn from '../../../../components/CheckListComponent/FloatingBtn';
+import { useNavigation } from '@react-navigation/native';
+import { NestedProps } from '../../../../types/navigationTypes';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -16,13 +18,14 @@ interface IProps {
 }
 
 function BasicCheckList({ setIsEdit, isEdit }: IProps) {
+  const navigation = useNavigation<NestedProps>();
   const [isBottomSheet, setIsBottomSheet] = useState(true);
   const onEditHandler = () => {
     setIsEdit(true);
   };
 
   const onCameraHandler = () => {
-    console.log('camera');
+    navigation.navigate('stack', { screen: 'camera' });
   };
 
   return (
