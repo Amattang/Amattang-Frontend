@@ -8,6 +8,10 @@
 	<string>Used to Location's Info always for Using Beacon.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
+	<key>NSPhotoLibraryUsageDescription</key>
+	<string>아맞땅에서 갤러리 접근 권한을 요청합니다.</string>
+	<key>NSCameraUsageDescription</key>
+	<string>아맞땅에서 사진 접근 권한을 요청합니다.</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
