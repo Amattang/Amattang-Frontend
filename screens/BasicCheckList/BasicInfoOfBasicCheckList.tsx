@@ -13,6 +13,7 @@ import {
 import BottomSheetsOfDeletedCheckList from '../../components/CheckListComponent/BottomSheetsOfDeletedCheckList';
 import { checkListTypes } from '../../types/checkListTypes';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   isEdit: boolean;
@@ -21,6 +22,9 @@ interface IProps {
 
 function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const [checkLists, setCheckLists] = useState(response);
+  const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>(
+    checkLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
+  );
 
   // 바텀시트 동작을 위한 코드
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -44,35 +48,44 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
 
   return (
     <>
-      <BottomSheetModalProvider>
-        <ScrollView>
-          {checkLists
-            .filter((item) => !item.deleted)
-            .map((mainQuestionItem: checkListTypes) => (
-              <CheckListComponent
-                checkLists={checkLists}
-                isEdit={isEdit}
-                checkList={mainQuestionItem}
-                setCheckLists={setCheckLists}
+      <KeyboardAwareScrollView extraHeight={150}>
+        <BottomSheetModalProvider>
+          <ScrollView>
+            {checkLists
+              .filter((item) => !item.deleted)
+              .map((mainQuestionItem: checkListTypes) => (
+                <CheckListComponent
+                  deletedCheckLists={deletedCheckLists}
+                  setDeletedCheckLists={setDeletedCheckLists}
+                  onBoarding={false}
+                  checkLists={checkLists}
+                  isEdit={isEdit}
+                  checkList={mainQuestionItem}
+                  setCheckLists={setCheckLists}
+                />
+              ))}
+
+            {handlePresentModalPress && (
+              <ButtonOfBringBackDeletedCheckList
+                handlePresentModalPress={handlePresentModalPress}
               />
-            ))}
+            )}
+          </ScrollView>
 
-          {handlePresentModalPress && (
-            <ButtonOfBringBackDeletedCheckList handlePresentModalPress={handlePresentModalPress} />
-          )}
-        </ScrollView>
-
-        <BottomSheetsOfDeletedCheckList
-          isEdit={isEdit}
-          setCheckLists={setCheckLists}
-          onAnimateHandler={onAnimateHandler}
-          onDismissHandler={onDismissHandler}
-          renderBackdrop={renderBackdrop}
-          bottomSheetModalRef={bottomSheetModalRef}
-          snapPoints={snapPoints}
-          checkLists={checkLists}
-        />
-      </BottomSheetModalProvider>
+          <BottomSheetsOfDeletedCheckList
+            deletedCheckLists={deletedCheckLists}
+            setDeletedCheckLists={setDeletedCheckLists}
+            isEdit={isEdit}
+            setCheckLists={setCheckLists}
+            onAnimateHandler={onAnimateHandler}
+            onDismissHandler={onDismissHandler}
+            renderBackdrop={renderBackdrop}
+            bottomSheetModalRef={bottomSheetModalRef}
+            snapPoints={snapPoints}
+            checkLists={checkLists}
+          />
+        </BottomSheetModalProvider>
+      </KeyboardAwareScrollView>
     </>
   );
 }

@@ -3,6 +3,7 @@ import { Alert, Pressable, TextInput } from 'react-native';
 import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   isEdit: boolean;
@@ -15,9 +16,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
   const [newCheckListElement, setNewCheckListElement] = useState('');
 
   const onChangeTextHandler = (newElement: string) => {
-    isEdit
-      ? setNewCheckListElement(newElement)
-      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+    isEdit && setNewCheckListElement(newElement);
   };
 
   const onEndEditing = async () => {

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Image, Pressable, View } from 'react-native';
+import { View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import ButtonsOfTypeA from './ButtonsOfTypeA';
@@ -16,14 +16,25 @@ import Animated, {
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
 
 interface IProps {
+  deletedCheckLists: checkListTypes[];
+  setDeletedCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   handlePresentModalPress?: () => void;
   isEdit: boolean;
   checkLists: checkListTypes[];
   checkList: checkListTypes;
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
+  onBoarding: boolean;
 }
 
-function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists }: IProps) {
+function CheckListComponent({
+  deletedCheckLists,
+  setDeletedCheckLists,
+  isEdit,
+  checkLists,
+  checkList,
+  setCheckLists,
+  onBoarding,
+}: IProps) {
   const translateX = useSharedValue(0);
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
@@ -51,10 +62,9 @@ function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists }: IP
   return (
     <View style={styles.checkListWrapper}>
       <PanGestureHandler
-        enabled={true}
+        enabled={!onBoarding}
         onGestureEvent={panGesture}
-        activeOffsetX={[0, 0]}
-        activeOffsetY={1000}
+        activeOffsetX={[-0, 100]}
       >
         <Animated.View style={[rStyle]}>
           <View style={styles.whiteCard} key={checkList.questionId}>
@@ -109,6 +119,8 @@ function CheckListComponent({ isEdit, checkLists, checkList, setCheckLists }: IP
         </Animated.View>
       </PanGestureHandler>
       <ButtonOfGoToTrash
+        deletedCheckLists={deletedCheckLists}
+        setDeletedCheckLists={setDeletedCheckLists}
         translateX={translateX}
         rStyle={rStyle}
         isEdit={isEdit}

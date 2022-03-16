@@ -1,10 +1,10 @@
-import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useCallback, useState } from 'react';
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
   BottomSheetScrollView,
 } from '@gorhom/bottom-sheet';
-import { Alert, Pressable, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import { checkListTypes } from '../../types/checkListTypes';
 import { SharedValue } from 'react-native-reanimated';
@@ -12,6 +12,8 @@ import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/typ
 import styles from './styles';
 
 interface IProps {
+  deletedCheckLists: checkListTypes[];
+  setDeletedCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   isEdit: boolean;
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   onAnimateHandler: () => void;
@@ -23,6 +25,8 @@ interface IProps {
 }
 
 function BottomSheetsOfDeletedCheckList({
+  deletedCheckLists,
+  setDeletedCheckLists,
   isEdit,
   setCheckLists,
   onAnimateHandler,
@@ -32,10 +36,6 @@ function BottomSheetsOfDeletedCheckList({
   snapPoints,
   checkLists,
 }: IProps) {
-  const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>(
-    checkLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
-  );
-
   const onUpdateCheckListHandler = () => {
     bottomSheetModalRef?.current?.dismiss();
     // 애니매이션 지속시간에  상태변경이 일어나면 애니매이션이 취소됨
@@ -43,20 +43,20 @@ function BottomSheetsOfDeletedCheckList({
       setDeletedCheckLists(
         deletedCheckLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
       );
-      setCheckLists([...checkLists, ...deletedCheckLists]);
+      setCheckLists([...checkLists.filter((item) => item.deleted === false), ...deletedCheckLists]);
     }, 500);
+    setTimeout(() => 1000);
   };
 
   const onUpdateCheckList = (deletedCheckList: checkListTypes) => {
-    isEdit
-      ? setDeletedCheckLists(
-          deletedCheckLists.map((item) =>
-            item.questionId === deletedCheckList.questionId
-              ? { ...item, deleted: !item.deleted }
-              : { ...item }
-          )
+    isEdit &&
+      setDeletedCheckLists(
+        deletedCheckLists.map((item) =>
+          item.questionId === deletedCheckList.questionId
+            ? { ...item, deleted: !item.deleted }
+            : { ...item }
         )
-      : Alert.alert('읽기상태입니다!', '추가하기를 취소하고 오른쪽 아래 버튼을 눌러주세요');
+      );
   };
 
   const onSelectAllHandler = () => {
@@ -101,8 +101,6 @@ function BottomSheetsOfDeletedCheckList({
           <Pressable onPress={onSelectAllHandler} style={[styles.selectAllBtn]}>
             <DefaultText style={styles.blueText}>모두 선택</DefaultText>
           </Pressable>
-
-          {/*<Pressable onPress={onUpdateCheckListHandler} style={styles.updateCheckListButton}>*/}
           <Pressable
             onPress={onUpdateCheckListHandler}
             style={

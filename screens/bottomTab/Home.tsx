@@ -1,5 +1,4 @@
 import React, { useEffect, useState } from 'react';
-import { GestureHandlerRootView } from 'react-native-gesture-handler';
 
 import EmptyHome from '../../components/Home/EmptyHome';
 import CheckListHome from '../../components/Home/CheckListHome';

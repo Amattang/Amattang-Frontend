@@ -13,26 +13,25 @@ interface IProps {
 
 function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
   const onPressHandler = (answer: answerButtonOfType) => {
-    isEdit
-      ? setCheckLists(
-          checkLists.map((questionItem) =>
-            questionItem.questionId === checkList.questionId
-              ? ({
-                  ...questionItem,
-                  answer: {
-                    ans: [
-                      ...questionItem.answer.ans.map((answerItem) =>
-                        answerItem.type === answer.type
-                          ? { ...answerItem, val: true }
-                          : { ...answerItem, val: false }
-                      ),
-                    ],
-                  },
-                } as checkListTypes)
-              : ({ ...questionItem } as checkListTypes)
-          )
+    isEdit &&
+      setCheckLists(
+        checkLists.map((questionItem) =>
+          questionItem.questionId === checkList.questionId
+            ? ({
+                ...questionItem,
+                answer: {
+                  ans: [
+                    ...questionItem.answer.ans.map((answerItem) =>
+                      answerItem.type === answer.type
+                        ? { ...answerItem, val: true }
+                        : { ...answerItem, val: false }
+                    ),
+                  ],
+                },
+              } as checkListTypes)
+            : ({ ...questionItem } as checkListTypes)
         )
-      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+      );
   };
 
   return (

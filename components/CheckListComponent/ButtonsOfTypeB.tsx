@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useState } from 'react';
-import { Alert, TextInput, View } from 'react-native';
+import { TextInput, View } from 'react-native';
 import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
@@ -15,9 +15,7 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
   const [newCheckListElement, setNewCheckListElement] = useState('');
 
   const onEndEditing = (newElement: string) => {
-    isEdit
-      ? setNewCheckListElement(newElement)
-      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+    isEdit && setNewCheckListElement(newElement);
   };
 
   const onChangeTextHandler = async (answer: answerButtonOfType) => {

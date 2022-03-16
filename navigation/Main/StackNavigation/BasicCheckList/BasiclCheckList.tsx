@@ -58,11 +58,7 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
         <Tab.Screen
           name={'option'}
           children={() => (
-            <MyItemOfBasicCheckList
-              isEdit={isEdit}
-              setIsBottomSheet={setIsBottomSheet}
-              isBottomSheet={isBottomSheet}
-            />
+            <MyItemOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
           )}
           options={{ title: '내 항목' }}
         />

@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
       ? { position: 'absolute', bottom: 60, marginHorizontal: '5%', width: '90%' }
       : { position: 'absolute', bottom: 40, marginHorizontal: '5%', width: '90%' },
   mainText: { fontSize: 24, lineHeight: 40, color: mainBlack },
-  subText: { marginTop: 32, lineHeight: 30, color: mainBlack },
+  subText: { fontSize: 16, marginTop: 32, lineHeight: 30, color: mainBlack },
 
   mainImage: { alignItems: 'flex-end', marginTop: 30 },
   loginImage: { alignItems: 'flex-end', marginRight: 30, marginTop: 80 },
@@ -84,11 +84,8 @@ const styles = StyleSheet.create({
   checkListFocusedOrange: { backgroundColor: mainOrange },
 
   floatingBtnWrapper: {
-    width: 55,
-    height: 55,
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: mainBlue,
     borderRadius: 55,
     position: 'absolute',
     right: 20,

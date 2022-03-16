@@ -13,7 +13,6 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 import { checkListTypes } from '../../types/checkListTypes';
-import { DefaultText } from '../../CustomText';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 
 interface IProps {
@@ -23,6 +22,10 @@ interface IProps {
 
 function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const [checkLists, setCheckLists] = useState(response);
+  const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>(
+    checkLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
+  );
+
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
   // variables
@@ -48,12 +51,15 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   return (
     <>
       <BottomSheetModalProvider>
-        <View style={[styles.FullScreen]}>
+        <View>
           <ScrollView>
             {checkLists
               .filter((item) => !item.deleted)
               .map((mainQuestionItem: checkListTypes) => (
                 <CheckListComponent
+                  deletedCheckLists={deletedCheckLists}
+                  setDeletedCheckLists={setDeletedCheckLists}
+                  onBoarding={false}
                   checkLists={checkLists}
                   handlePresentModalPress={handlePresentModalPress}
                   isEdit={isEdit}
@@ -70,6 +76,9 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
           </ScrollView>
         </View>
         <BottomSheetsOfDeletedCheckList
+          deletedCheckLists={deletedCheckLists}
+          setDeletedCheckLists={setDeletedCheckLists}
+          isEdit={isEdit}
           setCheckLists={setCheckLists}
           onAnimateHandler={onAnimateHandler}
           onDismissHandler={onDismissHandler}

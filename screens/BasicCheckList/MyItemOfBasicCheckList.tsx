@@ -1,18 +1,117 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Pressable } from 'react-native';
-import { DefaultText } from '../../CustomText';
+import React, { Dispatch, SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
+import { Alert, ScrollView, View } from 'react-native';
+
+import BlankedMyItem from '../../components/CheckListComponent/myItem/BlankedMyItem';
+import ButtonOfAddMyItem from '../../components/CheckListComponent/myItem/ButtonOfAddMyItem';
+import { myItemClickHandlerType, myItemType } from '../../types/checkListTypes';
+import { response } from '../../mockData/checkListOfMyItem';
+import {
+  BottomSheetBackdrop,
+  BottomSheetBackgroundProps,
+  BottomSheetModal,
+  BottomSheetModalProvider,
+} from '@gorhom/bottom-sheet';
+import MyItem from '../../components/CheckListComponent/myItem/MyItem';
+import MyItemOfBottomSheets from '../../components/CheckListComponent/myItem/MyItemOfBottomSheets';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   isEdit: boolean;
   setIsBottomSheet: Dispatch<SetStateAction<boolean>>;
-  isBottomSheet: boolean;
 }
 
-function MyItemOfBasicCheckList({ isEdit, isBottomSheet, setIsBottomSheet }: IProps) {
+function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
+  const [myItems, setMyItems] = useState<myItemType[]>(response);
+  const [clickedMyItem, setClickedMyItem] = useState<myItemType | null>(null);
+
+  const renderBackdrop = (props: BottomSheetBackgroundProps) => (
+    <BottomSheetBackdrop {...props} opacity={0.7} />
+  );
+  const onAnimateHandler = () => {
+    setIsBottomSheet(false);
+  };
+  const onDismissHandler = () => {
+    setIsBottomSheet(true);
+  };
+  const handlePresentModalPress = () => {
+    isEdit
+      ? bottomSheetModalRef.current?.present()
+      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+  };
+
+  const elementClickedHandler = ({ myItem, myItemElement }: myItemClickHandlerType) => {
+    setMyItems(
+      myItems.map((selectedItem) =>
+        myItem.categoryId === selectedItem.categoryId
+          ? {
+              ...selectedItem,
+              question: selectedItem.question.map((selectedItemElement) =>
+                selectedItemElement.questionId === myItemElement.questionId
+                  ? {
+                      ...selectedItemElement,
+                      checked: !selectedItemElement.checked,
+                    }
+                  : { ...selectedItemElement }
+              ),
+            }
+          : { ...selectedItem }
+      )
+    );
+  };
+
+  // ref
+  const bottomSheetModalRef = useRef<BottomSheetModal>(null);
+
+  // variables
+  const snapPoints = useMemo(() => ['25%', '50%'], []);
+
+  // callbacks
+
+  const handleSheetChanges = useCallback(() => {}, []);
+
+  const eachMyItemHandler = (MyItemData: myItemType | null) => {
+    setClickedMyItem(MyItemData);
+    handlePresentModalPress();
+  };
+
   return (
-    <Pressable>
-      <DefaultText>내 항목</DefaultText>
-    </Pressable>
+    <View style={{ flex: 1 }}>
+      <BottomSheetModalProvider>
+        <KeyboardAwareScrollView extraHeight={150}>
+          <ScrollView>
+            <ButtonOfAddMyItem
+              isEdit={isEdit}
+              myItem={null}
+              eachMyItemHandler={eachMyItemHandler}
+              setMyItems={setMyItems}
+            />
+            {myItems.map((myItem) => (
+              <MyItem
+                isEdit={isEdit}
+                elementClickedHandler={elementClickedHandler}
+                myItems={myItems}
+                myItem={myItem}
+                eachMyItemHandler={eachMyItemHandler}
+              />
+            ))}
+          </ScrollView>
+          {myItems.length === 0 && <BlankedMyItem />}
+        </KeyboardAwareScrollView>
+        <MyItemOfBottomSheets
+          handleSheetChanges={handleSheetChanges}
+          clickedMyItem={clickedMyItem}
+          setClickedMyItem={setClickedMyItem}
+          setMyItems={setMyItems}
+          myItems={myItems}
+          isEdit={isEdit}
+          onAnimateHandler={onAnimateHandler}
+          onDismissHandler={onDismissHandler}
+          renderBackdrop={renderBackdrop}
+          bottomSheetModalRef={bottomSheetModalRef}
+          snapPoints={snapPoints}
+        />
+      </BottomSheetModalProvider>
+    </View>
   );
 }
 
