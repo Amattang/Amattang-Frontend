@@ -1,5 +1,6 @@
 import * as React from 'react';
 import { StyleSheet, SafeAreaView, View, Image, ScrollView } from 'react-native';
+import Modal from 'react-native-modal';
 import { DemoButton, DemoResponse } from './CameraButtons';
 
 import * as ImagePicker from 'react-native-image-picker';
@@ -20,7 +21,7 @@ export default function CameraAndGallery() {
   }, []);
 
   return (
-    <SafeAreaView style={styles.container}>
+    <Modal>
       <ScrollView>
         <View style={styles.buttonContainer}>
           {actions.map(({ title, type, options }) => {
@@ -31,27 +32,28 @@ export default function CameraAndGallery() {
             );
           })}
         </View>
-        <DemoResponse>{response}</DemoResponse>
+        {/*<DemoResponse>{response}</DemoResponse>*/}
 
-        {response?.assets &&
-          response?.assets.map(({ uri }: any) => (
-            <View key={uri} style={styles.image}>
-              <Image
-                resizeMode="cover"
-                resizeMethod="scale"
-                style={{ width: 200, height: 200 }}
-                source={{ uri: uri }}
-              />
-            </View>
-          ))}
+        {/*{response?.assets &&*/}
+        {/*  response?.assets.map(({ uri }: any) => (*/}
+        {/*    <View key={uri} style={styles.image}>*/}
+        {/*      <Image*/}
+        {/*        resizeMode="cover"*/}
+        {/*        resizeMethod="scale"*/}
+        {/*        style={{ width: 200, height: 200 }}*/}
+        {/*        source={{ uri: uri }}*/}
+        {/*      />*/}
+        {/*    </View>*/}
+        {/*  ))}*/}
       </ScrollView>
-    </SafeAreaView>
+    </Modal>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    height: 300,
+    width: 300,
     backgroundColor: 'aliceblue',
   },
   buttonContainer: {
