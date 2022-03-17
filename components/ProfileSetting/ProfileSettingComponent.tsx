@@ -2,18 +2,48 @@ import React, { useEffect, useState } from 'react';
 import { Switch, View, Platform, Image, Pressable, Linking, ScrollView } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import styles from './styles';
-import { PERMISSIONS, request } from 'react-native-permissions';
+import { check, PERMISSIONS, request } from 'react-native-permissions';
 import { mainBlue } from '../../color';
 
 function ProfileSettingComponent() {
-  const [onCameraAccess, setOnCameraAccess] = useState(false);
-  const [onGalleryAccess, setOnGalleryAccess] = useState(false);
-  const [onLocationAccess, setOnLocationAccess] = useState(false);
+  const [onCameraAccess, setOnCameraAccess] = useState<boolean>(false);
+  const [onGalleryAccess, setOnGalleryAccess] = useState<boolean>(false);
+  const [onLocationAccess, setOnLocationAccess] = useState<boolean>(false);
 
   useEffect(() => {
-    onCameraAccessHandler();
-    onGalleryAccessHandler();
-    onLocationAccessHandler();
+    if (Platform.OS === 'ios') {
+      check(PERMISSIONS.IOS.CAMERA)
+        .then(() => setOnCameraAccess(true))
+        .catch(() => setOnCameraAccess(false));
+      check(PERMISSIONS.IOS.PHOTO_LIBRARY)
+        .then(() => setOnGalleryAccess(true))
+        .catch(() => setOnGalleryAccess(false));
+      check(PERMISSIONS.IOS.LOCATION_ALWAYS)
+        .then(() => setOnLocationAccess(true))
+        .catch(() =>
+          check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
+            .then(() => setOnLocationAccess(true))
+            .catch(() => setOnGalleryAccess(false))
+        );
+    }
+    if (Platform.OS === 'android') {
+      check(PERMISSIONS.ANDROID.CAMERA)
+        .then(() => setOnCameraAccess(true))
+        .catch(() => setOnCameraAccess(false));
+      check(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)
+        .then(() =>
+          check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
+            .then(() => setOnGalleryAccess(true))
+            .catch(() => setOnGalleryAccess(false))
+        )
+        .catch(() => setOnGalleryAccess(false));
+      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
+        .then(() => setOnLocationAccess(true))
+        .catch(() => setOnLocationAccess(false));
+      check(PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION)
+        .then(() => setOnLocationAccess(true))
+        .catch(() => setOnLocationAccess(false));
+    }
   }, []);
 
   const onCameraAccessHandler = async () => {
@@ -37,13 +67,11 @@ function ProfileSettingComponent() {
 
   const onLocationAccessHandler = async () => {
     if (Platform.OS === 'ios') {
-      request(PERMISSIONS.IOS.LOCATION_ALWAYS).then(() => setOnGalleryAccess(true));
-      request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(() => setOnGalleryAccess(true));
+      request(PERMISSIONS.IOS.LOCATION_ALWAYS).then(() => setOnLocationAccess(true));
+      request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(() => setOnLocationAccess(true));
     }
     if (Platform.OS === 'android') {
       request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(() => setOnLocationAccess(true));
-      request(PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION).then(() => setOnLocationAccess(true));
-      request(PERMISSIONS.ANDROID.ACCESS_BACKGROUND_LOCATION).then(() => setOnLocationAccess(true));
     }
   };
 
