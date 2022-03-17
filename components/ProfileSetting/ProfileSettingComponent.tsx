@@ -1,79 +1,9 @@
-import React, { useEffect, useState } from 'react';
-import { Switch, View, Platform, Image, Pressable, Linking, ScrollView } from 'react-native';
+import React from 'react';
+import { View, Image, Pressable, Linking, ScrollView } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import styles from './styles';
-import { check, PERMISSIONS, request } from 'react-native-permissions';
-import { mainBlue } from '../../color';
 
 function ProfileSettingComponent() {
-  const [onCameraAccess, setOnCameraAccess] = useState<boolean>(false);
-  const [onGalleryAccess, setOnGalleryAccess] = useState<boolean>(false);
-  const [onLocationAccess, setOnLocationAccess] = useState<boolean>(false);
-
-  useEffect(() => {
-    if (Platform.OS === 'ios') {
-      check(PERMISSIONS.IOS.CAMERA)
-        .then(() => setOnCameraAccess(true))
-        .catch(() => setOnCameraAccess(false));
-      check(PERMISSIONS.IOS.PHOTO_LIBRARY)
-        .then(() => setOnGalleryAccess(true))
-        .catch(() => setOnGalleryAccess(false));
-      check(PERMISSIONS.IOS.LOCATION_ALWAYS)
-        .then(() => setOnLocationAccess(true))
-        .catch(() =>
-          check(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE)
-            .then(() => setOnLocationAccess(true))
-            .catch(() => setOnGalleryAccess(false))
-        );
-    }
-    if (Platform.OS === 'android') {
-      check(PERMISSIONS.ANDROID.CAMERA)
-        .then(() => setOnCameraAccess(true))
-        .catch(() => setOnCameraAccess(false));
-      check(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE)
-        .then(() =>
-          check(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE)
-            .then(() => setOnGalleryAccess(true))
-            .catch(() => setOnGalleryAccess(false))
-        )
-        .catch(() => setOnGalleryAccess(false));
-      check(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION)
-        .then(() => setOnLocationAccess(true))
-        .catch(() => setOnLocationAccess(false));
-      check(PERMISSIONS.ANDROID.ACCESS_COARSE_LOCATION)
-        .then(() => setOnLocationAccess(true))
-        .catch(() => setOnLocationAccess(false));
-    }
-  }, []);
-
-  const onCameraAccessHandler = async () => {
-    if (Platform.OS === 'ios') {
-      request(PERMISSIONS.IOS.CAMERA).then(() => setOnCameraAccess(true));
-    }
-    if (Platform.OS === 'android') {
-      request(PERMISSIONS.ANDROID.CAMERA).then(() => setOnCameraAccess(true));
-    }
-  };
-
-  const onGalleryAccessHandler = async () => {
-    if (Platform.OS === 'ios') {
-      request(PERMISSIONS.IOS.PHOTO_LIBRARY).then(() => setOnGalleryAccess(true));
-    }
-    if (Platform.OS === 'android') {
-      await request(PERMISSIONS.ANDROID.WRITE_EXTERNAL_STORAGE);
-      request(PERMISSIONS.ANDROID.READ_EXTERNAL_STORAGE).then(() => setOnCameraAccess(true));
-    }
-  };
-
-  const onLocationAccessHandler = async () => {
-    if (Platform.OS === 'ios') {
-      request(PERMISSIONS.IOS.LOCATION_ALWAYS).then(() => setOnLocationAccess(true));
-      request(PERMISSIONS.IOS.LOCATION_WHEN_IN_USE).then(() => setOnLocationAccess(true));
-    }
-    if (Platform.OS === 'android') {
-      request(PERMISSIONS.ANDROID.ACCESS_FINE_LOCATION).then(() => setOnLocationAccess(true));
-    }
-  };
 
   return (
     <>
@@ -84,38 +14,8 @@ function ProfileSettingComponent() {
 
             <View style={styles.horizontalLine} />
 
-            <DefaultText style={styles.profileSettingTitle}>접근성</DefaultText>
-
             <View>
-              <View style={styles.profileSettingEachElementWrapper}>
-                <DefaultText style={styles.profileSettingEachElementText}>카메라</DefaultText>
-                <Switch
-                  value={onCameraAccess}
-                  onChange={onCameraAccessHandler}
-                  disabled={onCameraAccess}
-                  trackColor={{ false: 'black', true: mainBlue }}
-                />
-              </View>
-              <View style={styles.profileSettingEachElementWrapper}>
-                <DefaultText style={styles.profileSettingEachElementText}>갤러리</DefaultText>
-                <Switch
-                  value={onGalleryAccess}
-                  onChange={onGalleryAccessHandler}
-                  disabled={onGalleryAccess}
-                  trackColor={{ false: 'black', true: mainBlue }}
-                />
-              </View>
-              <View style={styles.profileSettingEachElementWrapper}>
-                <DefaultText style={styles.profileSettingEachElementText}>위치접근</DefaultText>
-                <Switch
-                  value={onLocationAccess}
-                  onChange={onLocationAccessHandler}
-                  disabled={onLocationAccess}
-                  trackColor={{ false: 'black', true: mainBlue }}
-                />
-              </View>
               <View style={styles.horizontalLine} />
-
               <DefaultText style={styles.profileSettingTitle}>고객센터</DefaultText>
               <Pressable
                 onPress={() => Linking.openURL('https://www.naver.com')}
