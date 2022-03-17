@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
       ? { position: 'absolute', bottom: 60, marginHorizontal: '5%', width: '90%' }
       : { position: 'absolute', bottom: 40, marginHorizontal: '5%', width: '90%' },
   mainText: { fontSize: 24, lineHeight: 40, color: mainBlack },
-  subText: { marginTop: 32, lineHeight: 30, color: mainBlack },
+  subText: { fontSize: 16, marginTop: 32, lineHeight: 30, color: mainBlack },
 
   mainImage: { alignItems: 'flex-end', marginTop: 30 },
   loginImage: { alignItems: 'flex-end', marginRight: 30, marginTop: 80 },
@@ -40,12 +40,12 @@ const styles = StyleSheet.create({
   kakaoLoginBtn: { backgroundColor: '#FEE500', marginTop: 12 },
   kakaoLoginText: {},
 
-  checkListCards: { marginVertical: 30, marginHorizontal: 17 },
   whiteCard: {
     backgroundColor: 'white',
     padding: 30,
     borderRadius: 14,
     marginVertical: 12,
+    marginHorizontal: 17,
   },
   checkListMainTitle: { fontSize: 20 },
   buttonsOfCheckList: {
@@ -83,12 +83,9 @@ const styles = StyleSheet.create({
   checkListFocusedBlue: { backgroundColor: mainBlue },
   checkListFocusedOrange: { backgroundColor: mainOrange },
 
-  rightArrowWrapper: {
-    width: 55,
-    height: 55,
+  floatingBtnWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
-    backgroundColor: mainBlue,
     borderRadius: 55,
     position: 'absolute',
     right: 20,

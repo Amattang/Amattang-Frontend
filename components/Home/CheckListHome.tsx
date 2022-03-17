@@ -14,15 +14,13 @@ function CheckListHome() {
         Find your{'\n'}
         home sweet home 🏠
       </DefaultText>
-      <DefaultText style={[styles.pinnedText]}>📌 고정된 리스트</DefaultText>
-      <View style={styles.pinnedChecklistWrapper}>
-        <ScrollView horizontal={true}>
-          <PinnedCheckList response={response} />
-        </ScrollView>
-      </View>
-
       <View style={styles.unpinnedChecklistWrapper}>
         <ScrollView>
+          <DefaultText style={[styles.pinnedText]}>📌 고정된 리스트</DefaultText>
+          <ScrollView horizontal={true}>
+            <PinnedCheckList response={response} />
+          </ScrollView>
+
           <UnPinnedCheckList response={response} />
         </ScrollView>
       </View>

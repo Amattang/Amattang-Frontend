@@ -1,46 +1,56 @@
 import React, { Dispatch, SetStateAction } from 'react';
-import { Pressable, View } from 'react-native';
-import { checkList } from '../../types/checkListTypes';
+import { Alert, Pressable, View } from 'react-native';
+import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
 
 interface IProps {
-  mainQuestionItem: checkList;
-  checkLists: checkList[];
-  setCheckLists: Dispatch<SetStateAction<checkList[]>>;
+  isEdit: boolean;
+  checkList: checkListTypes;
+  checkLists: checkListTypes[];
+  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-function ButtonsOfTypeA({ mainQuestionItem, setCheckLists, checkLists }: IProps) {
+function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
+  const onPressHandler = (answer: answerButtonOfType) => {
+    isEdit &&
+      setCheckLists(
+        checkLists.map((questionItem) =>
+          questionItem.questionId === checkList.questionId
+            ? ({
+                ...questionItem,
+                answer: {
+                  ans: [
+                    ...questionItem.answer.ans.map((answerItem) =>
+                      answerItem.type === answer.type
+                        ? { ...answerItem, val: true }
+                        : { ...answerItem, val: false }
+                    ),
+                  ],
+                },
+              } as checkListTypes)
+            : ({ ...questionItem } as checkListTypes)
+        )
+      );
+  };
+
   return (
     <>
-      {mainQuestionItem.answer.ans.map((answer) => (
+      {checkList.answer.ans.map((answer) => (
         <Pressable
-          onPress={() =>
-            setCheckLists(
-              checkLists.map((questionItem) =>
-                questionItem.questionId === mainQuestionItem.questionId
-                  ? ({
-                      ...questionItem,
-                      answer: {
-                        ans: [
-                          ...questionItem.answer.ans.map((answerItem) =>
-                            answerItem.type === answer.type
-                              ? { ...answerItem, val: true }
-                              : { ...answerItem, val: false }
-                          ),
-                        ],
-                      },
-                    } as checkList)
-                  : ({ ...questionItem } as checkList)
-              )
-            )
-          }
+          onPress={() => onPressHandler(answer)}
           style={
-            answer.val
+            checkList.answer.ans.length < 3
+              ? answer.val
+                ? answer.redType
+                  ? [styles.typeABtnWrapper, styles.checkListFocusedOrange]
+                  : [styles.typeABtnWrapper, styles.checkListFocusedBlue]
+                : [styles.typeABtnWrapper]
+              : answer.val
               ? answer.redType
-                ? [styles.typeABtnWrapper, styles.checkListFocusedOrange]
-                : [styles.typeABtnWrapper, styles.checkListFocusedBlue]
-              : [styles.typeABtnWrapper]
+                ? [styles.typeAExtendedBtnWrapper, styles.checkListFocusedOrange]
+                : [styles.typeAExtendedBtnWrapper, styles.checkListFocusedBlue]
+              : [styles.typeAExtendedBtnWrapper]
           }
         >
           <View>

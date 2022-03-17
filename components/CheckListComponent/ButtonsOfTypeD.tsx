@@ -1,53 +1,90 @@
-import React, { Dispatch, SetStateAction } from 'react';
-import { Pressable, View } from 'react-native';
-import { checkList } from '../../types/checkListTypes';
+import React, { Dispatch, SetStateAction, useState } from 'react';
+import { Alert, Pressable, TextInput } from 'react-native';
+import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
-  mainQuestionItem: checkList;
-  checkLists: checkList[];
-  setCheckLists: Dispatch<SetStateAction<checkList[]>>;
+  isEdit: boolean;
+  checkList: checkListTypes;
+  checkLists: checkListTypes[];
+  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-function ButtonsOfTypeD({ mainQuestionItem, setCheckLists, checkLists }: IProps) {
+function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
+  const [newCheckListElement, setNewCheckListElement] = useState('');
+
+  const onChangeTextHandler = (newElement: string) => {
+    isEdit && setNewCheckListElement(newElement);
+  };
+
+  const onEndEditing = async () => {
+    newCheckListElement &&
+      (await setCheckLists(
+        checkLists.map((questionItem) =>
+          questionItem.questionId === checkList.questionId
+            ? ({
+                ...questionItem,
+                answer: {
+                  ans: [...questionItem.answer.ans, { type: newCheckListElement, val: true }],
+                },
+              } as checkListTypes)
+            : ({ ...questionItem } as checkListTypes)
+        )
+      ));
+    await setNewCheckListElement('');
+  };
+
+  const onPressHandler = (answer: answerButtonOfType) => {
+    isEdit
+      ? setCheckLists(
+          checkLists.map((questionItem) =>
+            questionItem.questionId === checkList.questionId
+              ? ({
+                  ...questionItem,
+                  answer: {
+                    ans: [
+                      ...questionItem.answer.ans.map((answerItem) =>
+                        answerItem.type === answer.type
+                          ? { ...answerItem, val: !answerItem.val }
+                          : { ...answerItem }
+                      ),
+                    ],
+                  },
+                } as checkListTypes)
+              : ({ ...questionItem } as checkListTypes)
+          )
+        )
+      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+  };
+
   return (
     <>
-      {mainQuestionItem.answer.ans.map((answer) => (
+      {checkList.answer.ans.map((answer) => (
         <Pressable
-          onPress={() =>
-            setCheckLists(
-              checkLists.map((questionItem) =>
-                questionItem.questionId === mainQuestionItem.questionId
-                  ? ({
-                      ...questionItem,
-                      answer: {
-                        ans: [
-                          ...questionItem.answer.ans.map((answerItem) =>
-                            answerItem.type === answer.type
-                              ? { ...answerItem, val: !answerItem.val }
-                              : { ...answerItem }
-                          ),
-                        ],
-                      },
-                    } as checkList)
-                  : ({ ...questionItem } as checkList)
-              )
-            )
-          }
+          onPress={() => {
+            onPressHandler(answer);
+          }}
           style={
             answer.val
               ? [styles.typeDBtnWrapper, styles.checkListFocusedBlue]
               : [styles.typeDBtnWrapper]
           }
         >
-          <View>
-            <DefaultText style={answer.val ? styles.checkListWhiteText : styles.checkListGrayText}>
-              {answer.type}
-            </DefaultText>
-          </View>
+          <DefaultText style={answer.val ? styles.checkListWhiteText : styles.checkListGrayText}>
+            {answer.type}
+          </DefaultText>
         </Pressable>
       ))}
+      <TextInput
+        autoCorrect={false}
+        onChangeText={onChangeTextHandler}
+        onEndEditing={onEndEditing}
+        placeholder={'+ 직접 입력'}
+        value={newCheckListElement}
+        style={styles.typeDBtnWrapper}
+      />
     </>
   );
 }
