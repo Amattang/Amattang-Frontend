@@ -1,16 +1,23 @@
-import React from 'react';
-import { Image, Pressable, View } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Pressable, useWindowDimensions, View } from 'react-native';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
+import KakaoLoginBtn from '../../components/Login/KakaoLoginBtn';
+import AppleLoginBtn from '../../components/Login/AppleLoginBtn';
+import Cookies from 'universal-cookie';
 
 function Login({ setIsLogin }: any) {
-  const onAppleLoginHandler = () => {
-    setIsLogin(true);
-  };
+  // const cookies = new Cookies();
 
-  const onKakaoLoginHandler = () => {
-    setIsLogin(true);
-  };
+  // const setRefreshTokenToCookie = (refreshToken: string) => {
+  //   cookies.set('refresh_token', refreshToken, { sameSite: 'strict' });
+  //   console.log(cookies.get('refresh_token'));
+  // };
+
+  // const logout = () => {
+  //   console.log('logout. Clear');
+  //   cookies.remove('refresh_token');
+  // };
 
   return (
     <View style={styles.landingPageFullScreen}>
@@ -27,18 +34,8 @@ function Login({ setIsLogin }: any) {
         <Image source={require('../../assets/images/landing/loginImage.png')} />
       </View>
       <View style={styles.lowerElement}>
-        <Pressable onPress={onAppleLoginHandler} style={[styles.appleLoginBtn, styles.bottomBtn]}>
-          <View style={styles.bottomImg}>
-            <Image source={require('../../assets/images/landing/apple.png')} />
-          </View>
-          <DefaultText style={styles.appleLoginText}>Apple로 시작하기</DefaultText>
-        </Pressable>
-        <Pressable onPress={onKakaoLoginHandler} style={[styles.kakaoLoginBtn, styles.bottomBtn]}>
-          <View style={styles.bottomImg}>
-            <Image source={require('../../assets/images/landing/kakao.png')} />
-          </View>
-          <DefaultText style={styles.kakaoLoginText}>카카오톡으로 시작하기</DefaultText>
-        </Pressable>
+        <AppleLoginBtn setIsLogin={setIsLogin} />
+        <KakaoLoginBtn setIsLogin={setIsLogin} />
       </View>
     </View>
   );
