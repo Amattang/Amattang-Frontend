@@ -7,21 +7,7 @@ import { styles } from './Map.style';
 import { IPick, ILocations } from '../../types/mapTypes';
 import SlideItem from '../../components/Map/SlideItem';
 import { ITEM_WIDTH, SLIDER_WIDTH } from '../../constants/Map.constant';
-
-// 위치정보 사용
-async function requestPermission() {
-  try {
-    if (Platform.OS === 'ios') {
-      return await Geolocation.requestAuthorization('always');
-    }
-    // 안드로이드 위치 정보 수집 권한 요청
-    if (Platform.OS === 'android') {
-      return await PermissionsAndroid.request(PermissionsAndroid.PERMISSIONS.ACCESS_FINE_LOCATION);
-    }
-  } catch (e) {
-    console.log(e);
-  }
-}
+import { requestPermission } from '../../utils/LocationPermission';
 
 const Map = () => {
   // mockup data
@@ -64,27 +50,6 @@ const Map = () => {
     latitude: 0,
     longitude: 0,
   });
-  // 현재위치
-  // const [here, setHere] = useState<IHere>({
-  //   latitude: 0,
-  //   longitude: 0,
-  // });
-
-  // 내 현재 위치 찾기
-  // const goGeoLocation = (): void => {
-  //   Geolocation.getCurrentPosition(
-  //     (position) => {
-  //       setHere({
-  //         latitude: position.coords.latitude,
-  //         longitude: position.coords.longitude,
-  //       });
-  //     },
-  //     (error) => {
-  //       console.log(error.code, error.message);
-  //     },
-  //     { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-  //   );
-  // };
 
   useEffect(() => {
     requestPermission().then((result) => {
@@ -93,11 +58,6 @@ const Map = () => {
       }
     });
   }, []);
-
-  // 현재 위치로 가기
-  // const goCurrentPosition = (): void => {
-  //   goGeoLocation();
-  // };
 
   return (
     <View style={{ flex: 1 }}>
@@ -127,18 +87,8 @@ const Map = () => {
               key={idx}
             />
           ))}
-          {/* <Marker
-            coordinate={{
-              latitude: here.latitude,
-              longitude: here.longitude,
-            }}
-            title={'현재위치'}
-            description={'현재위치'}
-            pinColor={'blue'}
-          /> */}
         </MapView>
       )}
-      {/* <Button onPress={goCurrentPosition} title={'현재 위치로 가기'} /> */}
       <View style={styles.carContainer}>
         <Carousel
           data={locations}

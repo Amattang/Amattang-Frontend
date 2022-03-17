@@ -4,21 +4,8 @@ import styles from './styles';
 import { DefaultText } from '../../CustomText';
 import KakaoLoginBtn from '../../components/Login/KakaoLoginBtn';
 import AppleLoginBtn from '../../components/Login/AppleLoginBtn';
-import Cookies from 'universal-cookie';
 
 function Login({ setIsLogin }: any) {
-  // const cookies = new Cookies();
-
-  // const setRefreshTokenToCookie = (refreshToken: string) => {
-  //   cookies.set('refresh_token', refreshToken, { sameSite: 'strict' });
-  //   console.log(cookies.get('refresh_token'));
-  // };
-
-  // const logout = () => {
-  //   console.log('logout. Clear');
-  //   cookies.remove('refresh_token');
-  // };
-
   return (
     <View style={styles.landingPageFullScreen}>
       <View style={styles.upperElement}>

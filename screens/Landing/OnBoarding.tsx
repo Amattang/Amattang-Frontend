@@ -1,6 +1,5 @@
-import React, { useState } from 'react';
-import { Image, Pressable, ScrollView, View } from 'react-native';
-
+import React, { useEffect, useState } from 'react';
+import { Image, PermissionsAndroid, Platform, Pressable, ScrollView, View } from 'react-native';
 import styles from './styles';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { checkListTypes } from '../../types/checkListTypes';
@@ -8,11 +7,41 @@ import { response } from '../../mockData/onBoardingMockUpData';
 import CheckListComponent from '../../components/CheckListComponent/CheckListComponent';
 import { DefaultText } from '../../CustomText';
 import FloatingBtn from '../../components/CheckListComponent/FloatingBtn';
+import Geolocation from 'react-native-geolocation-service';
+import { IHere } from '../../types/mapTypes';
+import { requestPermission } from '../../utils/LocationPermission';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
   const [checkLists, setCheckLists] = useState<checkListTypes[]>(response);
+
+  // 내 현재 위치 찾기
+  const [here, setHere] = useState<IHere | undefined>(undefined);
+
+  const goGeoLocation = (): void => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setHere({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+      (error) => {
+        console.error(error.message);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+  };
+
+  useEffect(() => {
+    goGeoLocation();
+  }, []);
+
   const onMapHandler = () => {
-    navigation.navigate('map');
+    requestPermission().then((result) => {
+      if (result === 'granted') {
+        navigation.navigate('map', { here: here });
+      }
+    });
   };
 
   const floatingFunction = () => {
