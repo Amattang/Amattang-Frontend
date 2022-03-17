@@ -9,6 +9,7 @@
 #import <React/RCTBundleURLProvider.h>
 #import <React/RCTRootView.h>
 #import "RNSplashScreen.h"
+#import <RNKakaoLogins.h>
 
 
 #ifdef FB_SONARKIT_ENABLED
