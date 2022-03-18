@@ -192,8 +192,8 @@
 				00E356EA1AD99517003FC87E /* Sources */,
 				00E356EB1AD99517003FC87E /* Frameworks */,
 				00E356EC1AD99517003FC87E /* Resources */,
-				A704F1FF7B0BA3F11903FE54 /* [CP] Embed Pods Frameworks */,
 				9AE9D3090B6F347AFD582890 /* [CP] Copy Pods Resources */,
+				1F6EC25D5552719CB96A8E3E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -215,8 +215,8 @@
 				13B07F8C1A680F5B00A75B9A /* Frameworks */,
 				13B07F8E1A680F5B00A75B9A /* Resources */,
 				00DD1BFF1BD5951E006B06BC /* Bundle React Native code and images */,
-				6D3EEBAD6EFD4FD4F0883EEB /* [CP] Embed Pods Frameworks */,
 				5B47E0FBBCFFD085FF7F926B /* [CP] Copy Pods Resources */,
+				1B3BEC552C671A6E460D3F2E /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -302,6 +302,40 @@
 			shellPath = /bin/sh;
 			shellScript = "set -e\n\nexport NODE_BINARY=node\n../node_modules/react-native/scripts/react-native-xcode.sh\n";
 		};
+		1B3BEC552C671A6E460D3F2E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-amattang/Pods-amattang-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-amattang/Pods-amattang-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-amattang/Pods-amattang-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		1F6EC25D5552719CB96A8E3E /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-amattang-amattangTests/Pods-amattang-amattangTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-amattang-amattangTests/Pods-amattang-amattangTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-amattang-amattangTests/Pods-amattang-amattangTests-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
 		3B247CC90F421AF26AE55E08 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -341,23 +375,6 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-amattang/Pods-amattang-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		6D3EEBAD6EFD4FD4F0883EEB /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-amattang/Pods-amattang-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-amattang/Pods-amattang-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-amattang/Pods-amattang-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
 		9AE9D3090B6F347AFD582890 /* [CP] Copy Pods Resources */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -373,23 +390,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-amattang-amattangTests/Pods-amattang-amattangTests-resources.sh\"\n";
-			showEnvVarsInLog = 0;
-		};
-		A704F1FF7B0BA3F11903FE54 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-amattang-amattangTests/Pods-amattang-amattangTests-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-amattang-amattangTests/Pods-amattang-amattangTests-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-amattang-amattangTests/Pods-amattang-amattangTests-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E2727FF780D20FBDC0F6DC9B /* [CP] Check Pods Manifest.lock */ = {
