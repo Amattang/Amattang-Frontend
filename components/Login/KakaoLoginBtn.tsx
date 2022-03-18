@@ -1,13 +1,17 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import styles from '../../screens/Landing/styles';
 import { login, KakaoOAuthToken } from '@react-native-seoul/kakao-login';
 import axios from 'axios';
-import { isLoggedIn, setAuthTokens } from 'react-native-axios-jwt';
+import { setAuthTokens } from 'react-native-axios-jwt';
 import { axiosInstance } from './LoginToken';
 
-const KakaoLoginBtn = ({ setIsLogin }: any) => {
+type Props = {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+};
+
+const KakaoLoginBtn = ({ setIsLogin }: Props) => {
   const onKakaoLoginHandler = async (): Promise<void> => {
     const access: KakaoOAuthToken = await login();
 
