@@ -3,6 +3,11 @@ export interface IPick {
   longitude: number;
 }
 
+export interface IHere {
+  latitude: number;
+  longitude: number;
+}
+
 export interface ILocations {
   latlng: IPick;
   title: string;
