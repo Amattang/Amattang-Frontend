@@ -1,7 +1,7 @@
 import React, { Dispatch, SetStateAction } from 'react';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
-import { OnBoardingStackParamsList, OnBoardingStackProps } from '../../types/navigationTypes';
+import { OnBoardingStackParamsList } from '../../types/navigationTypes';
 import Login from '../../screens/Landing/Login';
 import OnBoarding from '../../screens/Landing/OnBoarding';
 import Landing from '../../screens/Landing/Landing';

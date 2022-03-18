@@ -8,8 +8,6 @@
 	<string>Used to Location's Info always for Using Beacon.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string/>
-	<key>NSPhotoLibraryUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like access to your photo gallery</string>
 	<key>NSCameraUsageDescription</key>
 	<string>$(PRODUCT_NAME) would like to use your camera</string>
 	<key>NSPhotoLibraryAddUsageDescription</key>

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Text } from 'react-native';
+import ProfileSettingComponent from '../../components/ProfileSetting/ProfileSettingComponent';
 
 function ProfileSetting() {
-  return <Text>ProfileSetting</Text>;
+  return <ProfileSettingComponent />;
 }
 
 export default ProfileSetting;
