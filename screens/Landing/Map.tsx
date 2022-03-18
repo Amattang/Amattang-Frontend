@@ -12,6 +12,8 @@ function Map({ route }: any) {
   // 현위치 좌표 -> 도로명주소
   const [address, setAddress] = useState('');
 
+  // here.latitude
+  // here.longitude
   const x = 126.95000261443744;
   const y = 37.39151960530102;
 
@@ -22,7 +24,7 @@ function Map({ route }: any) {
           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}&input_coord=WGS84`,
           {
             headers: {
-              Authorization: 'KakaoAK 918b29e2641545569013d1e5e6ba3611', // REST API 키
+              Authorization: `KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}`, // REST API 키
             },
           }
         )
