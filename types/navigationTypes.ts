@@ -1,8 +1,8 @@
-import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 import { BottomTabNavigationProp, BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp, NavigatorScreenParams } from '@react-navigation/native';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
 import { IHere } from './mapTypes';
+import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-navigation/native-stack';
 
 // onBoardingStack
 export type OnBoardingStackParamsList = {
