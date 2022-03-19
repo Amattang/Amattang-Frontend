@@ -8,18 +8,17 @@ import Wall from '../../../../screens/BasicCheckList/Inside/Wall';
 import Entrance from '../../../../screens/BasicCheckList/Inside/Entrance';
 import Option from '../../../../screens/BasicCheckList/Inside/Option';
 import { mainLightBlue } from '../../../../color';
-import { checkListTypes } from '../../../../types/checkListTypes';
-import { DefaultText } from '../../../../CustomText';
-import { Animated, TouchableOpacity, View } from 'react-native';
+
 const Tab = createMaterialTopTabNavigator();
 
 interface IProps {
   isEdit: boolean;
   setIsBottomSheet: Dispatch<SetStateAction<boolean>>;
-  isBottomSheet: boolean;
+  isBottomSheet?: boolean;
+  checkListId: number;
 }
 
-function InsideOfBasicCheckList({ isEdit, setIsBottomSheet, isBottomSheet }: IProps) {
+function InsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IProps) {
   return (
     <>
       <Tab.Navigator
@@ -41,13 +40,71 @@ function InsideOfBasicCheckList({ isEdit, setIsBottomSheet, isBottomSheet }: IPr
           },
         }}
       >
-        <Tab.Screen name={'window'} component={Window} options={{ title: '창문' }} />
-        <Tab.Screen name={'ceiling'} component={Ceiling} options={{ title: '천장' }} />
-        <Tab.Screen name={'kitchen'} component={Kitchen} options={{ title: '부엌' }} />
-        <Tab.Screen name={'bathroom'} component={Bathroom} options={{ title: '화장실' }} />
-        <Tab.Screen name={'wall'} component={Wall} options={{ title: '벽' }} />
-        <Tab.Screen name={'entrance'} component={Entrance} options={{ title: '현관' }} />
-        <Tab.Screen name={'option'} component={Option} options={{ title: '옵션' }} />
+        <Tab.Screen
+          name={'window'}
+          children={() => (
+            <Window checkListId={checkListId} isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+          )}
+          options={{ title: '창문' }}
+        />
+        <Tab.Screen
+          name={'ceiling'}
+          children={() => (
+            <Ceiling
+              checkListId={checkListId}
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+            />
+          )}
+          options={{ title: '천장' }}
+        />
+        <Tab.Screen
+          name={'kitchen'}
+          children={() => (
+            <Kitchen
+              checkListId={checkListId}
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+            />
+          )}
+          options={{ title: '부엌' }}
+        />
+        <Tab.Screen
+          name={'bathroom'}
+          children={() => (
+            <Bathroom
+              checkListId={checkListId}
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+            />
+          )}
+          options={{ title: '화장실' }}
+        />
+        <Tab.Screen
+          name={'wall'}
+          children={() => (
+            <Wall checkListId={checkListId} isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+          )}
+          options={{ title: '벽' }}
+        />
+        <Tab.Screen
+          name={'entrance'}
+          children={() => (
+            <Entrance
+              checkListId={checkListId}
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+            />
+          )}
+          options={{ title: '현관' }}
+        />
+        <Tab.Screen
+          name={'option'}
+          children={() => (
+            <Option checkListId={checkListId} isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+          )}
+          options={{ title: '옵션' }}
+        />
       </Tab.Navigator>
     </>
   );

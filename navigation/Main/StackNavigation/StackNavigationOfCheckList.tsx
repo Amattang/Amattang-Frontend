@@ -40,6 +40,8 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
 
   const onSubmitHandler = () => {
     setIsEdit(false);
+    console.log(checkListContext?.choseCheckListByServer);
+    console.log(checkListContext?.deletedCheckListByServer);
   };
 
   const screenOptions: NativeStackNavigationOptions = {

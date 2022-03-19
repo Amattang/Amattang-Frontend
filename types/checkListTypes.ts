@@ -1,17 +1,18 @@
-export interface answerButtonOfType {
+export interface answerButtonType {
   val?: boolean;
   redType?: boolean;
   description?: string;
-  type: string;
+  type?: string;
+  ans?: boolean;
 }
 
-export interface answerOfType {
-  answer: Array<answerButtonOfType>;
+export interface answerListType {
+  answer: answerButtonType[];
 }
 
-export interface checkListTypes extends answerOfType {
+export interface checkListTypes extends answerListType {
   subCategory: string | null;
-  questionId: string;
+  questionId: number;
   question: string;
   checked?: boolean;
   visibility: boolean;
@@ -53,10 +54,13 @@ export interface deletedCheckListQuestionByServerType {
   visibility: boolean;
 }
 
-export interface choseCheckLIstByServerType {
-  typeA?: answerButtonOfType[];
-  typeB?: answerButtonOfType[];
-  typeC?: answerButtonOfType[];
-  typeD?: answerButtonOfType[];
-  typeM?: answerButtonOfType[];
+export interface choseCheckListByServerType {
+  typeA?: choseCheckListItemByServerType[];
+  typeB?: choseCheckListItemByServerType[];
+  typeD?: choseCheckListItemByServerType[];
+  typeM?: choseCheckListItemByServerType[];
+}
+
+export interface choseCheckListItemByServerType extends answerListType {
+  questionId: number;
 }

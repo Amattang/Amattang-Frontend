@@ -1,4 +1,4 @@
-import React, { Dispatch, RefObject, SetStateAction } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useContext } from 'react';
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
@@ -10,6 +10,7 @@ import { checkListTypes } from '../../types/checkListTypes';
 import { SharedValue } from 'react-native-reanimated';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import styles from './styles';
+import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface IProps {
   deletedCheckLists: checkListTypes[];
@@ -36,6 +37,8 @@ function BottomSheetsOfDeletedCheckList({
   snapPoints,
   checkLists,
 }: IProps) {
+  const checkListContext = useContext(checkListCtx);
+
   const onUpdateCheckListHandler = () => {
     bottomSheetModalRef?.current?.dismiss();
     // 애니매이션 지속시간에  상태변경이 일어나면 애니매이션이 취소됨
@@ -44,8 +47,13 @@ function BottomSheetsOfDeletedCheckList({
         deletedCheckLists.filter((CheckLists: checkListTypes) => !CheckLists.visibility)
       );
       setCheckLists([...checkLists.filter((item) => item.visibility), ...deletedCheckLists]);
+      checkListContext?.setDeletedCheckListByServer({
+        question: [
+          ...checkListContext?.deletedCheckListByServer.question,
+          ...deletedCheckLists.map((item) => ({ id: item.questionId, visibility: true })),
+        ],
+      });
     }, 500);
-    setTimeout(() => 1000);
   };
 
   const onUpdateCheckList = (deletedCheckList: checkListTypes) => {

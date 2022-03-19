@@ -1,8 +1,9 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
 import { Image, Pressable } from 'react-native';
 import Animated, { SharedValue, withTiming } from 'react-native-reanimated';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
+import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface IProps {
   deletedCheckLists?: checkListTypes[];
@@ -27,6 +28,8 @@ function ButtonOfGoToTrash({
 }: IProps) {
   const AnimatedPressable = Animated.createAnimatedComponent(Pressable);
 
+  const checkListContext = useContext(checkListCtx);
+
   const onDeleteHandler = async () => {
     translateX.value = withTiming(0);
     setDeletedCheckLists &&
@@ -39,6 +42,12 @@ function ButtonOfGoToTrash({
           )
         );
         await setDeletedCheckLists([...deletedCheckLists, { ...checkList, visibility: false }]);
+        await checkListContext?.setDeletedCheckListByServer({
+          question: [
+            ...checkListContext?.deletedCheckListByServer.question,
+            { id: checkList.questionId, visibility: false },
+          ],
+        });
       }, 500);
   };
 

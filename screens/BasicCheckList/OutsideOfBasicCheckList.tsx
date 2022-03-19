@@ -35,10 +35,10 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IPro
   );
 
   const getServerData = async () => {
-    console.log(checkListId);
     const serverResponse = await axios.get(
       `/api/check-list/${checkListId}/common?mainCategory=외부시설`
     );
+
     setCheckLists([
       ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
         ...item,
@@ -100,7 +100,7 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IPro
                 />
               ))}
 
-            {deletedCheckLists && (
+            {deletedCheckLists.length !== 0 && (
               <ButtonOfBringBackDeletedCheckList
                 handlePresentModalPress={handlePresentModalPress}
               />

@@ -38,9 +38,12 @@ function Window({ isEdit, setIsBottomSheet, checkListId }: IProps) {
   );
 
   const getServerData = async () => {
+    console.log(checkListId);
     const serverResponse = await axios.get(
       `/api/check-list/${checkListId}/common?mainCategory=내부시설&subCategory=창문`
     );
+
+    console.log(serverResponse);
     setCheckLists([
       ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
         ...item,
@@ -102,7 +105,7 @@ function Window({ isEdit, setIsBottomSheet, checkListId }: IProps) {
                 />
               ))}
 
-            {deletedCheckLists && (
+            {deletedCheckLists.length !== 0 && (
               <ButtonOfBringBackDeletedCheckList
                 handlePresentModalPress={handlePresentModalPress}
               />

@@ -19,8 +19,6 @@ interface IProps {
 
 function BasicCheckList({ setIsEdit, isEdit }: IProps) {
   const [isBottomSheet, setIsBottomSheet] = useState(true);
-  const [outsideCheckLists, setOutsideCheckLists] = useState<checkListTypes[]>([]);
-  const [customCheckLists, setCustomCheckLists] = useState([]);
   const [onModal, setOnModal] = useState(false);
   const [checkListId, setCheckListId] = useState(0);
   const onEditHandler = () => {
@@ -66,6 +64,7 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
               isEdit={isEdit}
               setIsBottomSheet={setIsBottomSheet}
               isBottomSheet={isBottomSheet}
+              checkListId={checkListId}
             />
           )}
           options={{ title: '내부 시설' }}

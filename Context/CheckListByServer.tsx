@@ -1,11 +1,11 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react';
-import { choseCheckLIstByServerType, deletedCheckListByServerType } from '../types/checkListTypes';
+import { choseCheckListByServerType, deletedCheckListByServerType } from '../types/checkListTypes';
 
 interface contextType {
   deletedCheckListByServer: deletedCheckListByServerType;
   setDeletedCheckListByServer: Dispatch<SetStateAction<deletedCheckListByServerType>>;
-  choseCheckLIstByServer: choseCheckLIstByServerType;
-  setChoseCheckLIstByServer: Dispatch<SetStateAction<choseCheckLIstByServerType>>;
+  choseCheckListByServer: choseCheckListByServerType;
+  setChoseCheckListByServer: Dispatch<SetStateAction<choseCheckListByServerType>>;
 }
 
 export const checkListCtx = createContext<contextType | null>(null);
@@ -13,10 +13,9 @@ export const checkListCtx = createContext<contextType | null>(null);
 const CheckListStore: React.FC = (props) => {
   const [deletedCheckListByServer, setDeletedCheckListByServer] =
     useState<deletedCheckListByServerType>({ question: [] });
-  const [choseCheckLIstByServer, setChoseCheckLIstByServer] = useState<choseCheckLIstByServerType>({
+  const [choseCheckListByServer, setChoseCheckListByServer] = useState<choseCheckListByServerType>({
     typeA: [],
     typeB: [],
-    typeC: [],
     typeD: [],
     typeM: [],
   });
@@ -26,8 +25,8 @@ const CheckListStore: React.FC = (props) => {
       value={{
         deletedCheckListByServer,
         setDeletedCheckListByServer,
-        choseCheckLIstByServer,
-        setChoseCheckLIstByServer,
+        choseCheckListByServer,
+        setChoseCheckListByServer,
       }}
     >
       {props.children}

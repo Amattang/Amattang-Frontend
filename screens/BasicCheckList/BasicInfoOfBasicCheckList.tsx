@@ -12,8 +12,7 @@ import BottomSheetsOfDeletedCheckList from '../../components/CheckListComponent/
 import { checkListTypes } from '../../types/checkListTypes';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 import axios from 'axios';
-import { ActivityIndicator, Pressable } from 'react-native';
-import { DefaultText } from '../../CustomText';
+import { ActivityIndicator } from 'react-native';
 
 interface IProps {
   checkListId?: number | false;
@@ -36,7 +35,7 @@ function BasicInfoOfBasicCheckList({
     const serverResponse = checkListId
       ? await axios.get(`/api/check-list/${checkListId}/common?mainCategory=기본정보`)
       : await axios.get('/api/check-list/init');
-
+    console.log(serverResponse);
     setCheckLists([
       ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
         ...item,
@@ -93,7 +92,7 @@ function BasicInfoOfBasicCheckList({
                 />
               ))}
 
-            {deletedCheckLists && (
+            {deletedCheckLists.length !== 0 && (
               <ButtonOfBringBackDeletedCheckList
                 handlePresentModalPress={handlePresentModalPress}
               />

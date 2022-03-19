@@ -102,7 +102,7 @@ function Bathroom({ isEdit, setIsBottomSheet, checkListId }: IProps) {
                 />
               ))}
 
-            {deletedCheckLists && (
+            {deletedCheckLists.length !== 0 && (
               <ButtonOfBringBackDeletedCheckList
                 handlePresentModalPress={handlePresentModalPress}
               />
