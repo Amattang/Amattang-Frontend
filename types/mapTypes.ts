@@ -4,8 +4,8 @@ export interface IPick {
 }
 
 export interface IHere {
-  latitude: number;
-  longitude: number;
+  latitude: undefined | number;
+  longitude: undefined | number;
 }
 
 export interface ILocations {

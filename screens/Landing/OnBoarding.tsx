@@ -7,45 +7,23 @@ import { response } from '../../mockData/onBoardingMockUpData';
 import CheckListComponent from '../../components/CheckListComponent/CheckListComponent';
 import { DefaultText } from '../../CustomText';
 import FloatingBtn from '../../components/CheckListComponent/FloatingBtn';
-import Geolocation from 'react-native-geolocation-service';
-import { IHere } from '../../types/mapTypes';
 import { requestPermission } from '../../utils/LocationPermission';
+import FindAddress from '../../components/Map/FindAddress';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
   const [checkLists, setCheckLists] = useState<checkListTypes[]>(response);
 
-  // 내 현재 위치 찾기
-  const [here, setHere] = useState<IHere | undefined>(undefined);
-
-  const goGeoLocation = (): void => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        setHere({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      },
-      (error) => {
-        console.error(error.message);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
+  const floatingFunction = () => {
+    navigation.navigate('login');
   };
 
-  useEffect(() => {
-    goGeoLocation();
-  }, []);
-
+  // 허가 있어야 map으로 이동
   const onMapHandler = () => {
     requestPermission().then((result) => {
       if (result === 'granted') {
-        navigation.navigate('map', { here: here });
+        navigation.navigate('map', { activeType: true });
       }
     });
-  };
-
-  const floatingFunction = () => {
-    navigation.navigate('login');
   };
 
   return (
@@ -60,12 +38,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
           <View style={styles.whiteCard}>
             <DefaultText style={styles.checkListMainTitle}>주소를 입력하세요</DefaultText>
             <View style={styles.buttonsOfCheckList}>
-              <Pressable
-                onPress={() => console.log('여기에 누르면 이제 지도 검색 궈궈')}
-                style={[styles.directInputOfAddress, styles.buttonOfCheckList]}
-              >
-                <DefaultText style={styles.directInputTextOfAddress}>직접 입력</DefaultText>
-              </Pressable>
+              <FindAddress />
               <Pressable
                 onPress={onMapHandler}
                 style={[styles.mapInputOfAddress, styles.buttonOfCheckList]}

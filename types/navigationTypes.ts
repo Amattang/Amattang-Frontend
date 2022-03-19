@@ -2,14 +2,13 @@ import { NativeStackNavigationProp, NativeStackScreenProps } from '@react-naviga
 import { BottomTabNavigationProp, BottomTabScreenProps } from '@react-navigation/bottom-tabs';
 import { CompositeNavigationProp, NavigatorScreenParams } from '@react-navigation/native';
 import { MaterialTopTabScreenProps } from '@react-navigation/material-top-tabs';
-import { IHere } from './mapTypes';
 
 // onBoardingStack
 export type OnBoardingStackParamsList = {
   landing: undefined;
   login: undefined;
   onBoarding: undefined;
-  map: { here: IHere | undefined };
+  map: undefined;
 };
 export type OnBoardingStackProps = NativeStackScreenProps<OnBoardingStackParamsList, 'landing'>;
 

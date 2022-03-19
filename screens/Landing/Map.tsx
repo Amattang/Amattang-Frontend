@@ -1,16 +1,37 @@
 import React, { useEffect, useState } from 'react';
-import { Button, Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, View } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import { DefaultText } from '../../CustomText';
 import axios from 'axios';
+import { IHere } from '../../types/mapTypes';
+import Geolocation from 'react-native-geolocation-service';
+import AddressItem from '../../components/Map/AddressItem';
+import { OnBoardingStackProps } from '../../types/navigationTypes';
 
-// 타입 뭘로 하지
 function Map({ route }: any) {
-  const { here } = route.params;
-  const [specificAddress, onChangeText] = useState<string>('');
-
+  const { params } = route;
+  const [here, setHere] = useState<IHere>({
+    latitude: 37.498095,
+    longitude: 127.02761,
+  });
   // 현위치 좌표 -> 도로명주소
   const [address, setAddress] = useState('');
+
+  // 현재위치 찾기
+  const goGeoLocation = (): void => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        setHere({
+          latitude: position.coords.latitude,
+          longitude: position.coords.longitude,
+        });
+      },
+      (error) => {
+        console.error(error.message);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+  };
 
   // here.latitude
   // here.longitude
@@ -24,7 +45,7 @@ function Map({ route }: any) {
           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}&input_coord=WGS84`,
           {
             headers: {
-              Authorization: `KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}`, // REST API 키
+              Authorization: `KakaoAK 918b29e2641545569013d1e5e6ba3611`, // REST API 키
             },
           }
         )
@@ -41,46 +62,43 @@ function Map({ route }: any) {
   };
 
   useEffect(() => {
-    coordToAddress();
+    if (params.activeType) {
+      goGeoLocation();
+      console.log('true');
+    } else {
+      console.log('false');
+    }
+    // coordToAddress();
   }, []);
 
   return (
     <View style={{ flex: 1 }}>
-      {here && (
-        <MapView
-          style={{ flex: 1 }}
-          provider={PROVIDER_GOOGLE}
-          region={{
-            latitude: here.latitude,
-            longitude: here.longitude,
-            latitudeDelta: 0.0122,
-            longitudeDelta: 0.0021,
+      <MapView
+        style={{ flex: 1 }}
+        provider={PROVIDER_GOOGLE}
+        region={{
+          latitude: here.latitude as number,
+          longitude: here.longitude as number,
+          latitudeDelta: 0.0122,
+          longitudeDelta: 0.0021,
+        }}
+        zoomEnabled={true}
+        showsScale={true}
+      >
+        <Marker
+          coordinate={{
+            latitude: here.latitude as number,
+            longitude: here.longitude as number,
           }}
-          zoomEnabled={true}
-          showsScale={true}
-        >
-          <Marker
-            coordinate={{
-              latitude: here.latitude,
-              longitude: here.longitude,
-            }}
-            title={'현재위치'}
-            description={'현재위치'}
-            pinColor={'blue'}
-          />
-        </MapView>
-      )}
-      <View>
-        <Text>{address}</Text>
-        <TextInput
-          placeholder="상세 주소 입력"
-          onChangeText={onChangeText}
-          value={specificAddress}
+          title={'현재위치'}
+          description={'현재위치'}
+          pinColor={'blue'}
         />
-        <Pressable onPress={() => console.log('주소 등록')}>
-          <DefaultText>이 위치로 주소 설정</DefaultText>
-        </Pressable>
-      </View>
+      </MapView>
+      <Pressable onPress={goGeoLocation}>
+        <DefaultText>현재위치로 가기</DefaultText>
+      </Pressable>
+      <AddressItem />
     </View>
   );
 }
