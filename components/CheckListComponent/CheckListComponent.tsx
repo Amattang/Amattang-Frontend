@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useCallback, useEffect } from 'react';
 import { View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
@@ -59,10 +59,14 @@ function CheckListComponent({
     ],
   }));
 
+  useEffect(() => {
+    translateX.value = 0;
+  }, [isEdit]);
+
   return (
     <View style={styles.checkListWrapper}>
       <PanGestureHandler
-        enabled={!onBoarding}
+        enabled={!onBoarding && isEdit}
         onGestureEvent={panGesture}
         activeOffsetX={[-0, 100]}
       >

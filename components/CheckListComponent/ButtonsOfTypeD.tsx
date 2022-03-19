@@ -26,9 +26,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
           questionItem.questionId === checkList.questionId
             ? ({
                 ...questionItem,
-                answer: {
-                  ans: [...questionItem.answer.ans, { type: newCheckListElement, val: true }],
-                },
+                answer: [...questionItem.answer, { type: newCheckListElement, val: true }],
               } as checkListTypes)
             : ({ ...questionItem } as checkListTypes)
         )
@@ -43,15 +41,13 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
             questionItem.questionId === checkList.questionId
               ? ({
                   ...questionItem,
-                  answer: {
-                    ans: [
-                      ...questionItem.answer.ans.map((answerItem) =>
-                        answerItem.type === answer.type
-                          ? { ...answerItem, val: !answerItem.val }
-                          : { ...answerItem }
-                      ),
-                    ],
-                  },
+                  answer: [
+                    ...questionItem.answer.map((answerItem) =>
+                      answerItem.type === answer.type
+                        ? { ...answerItem, val: !answerItem.val }
+                        : { ...answerItem }
+                    ),
+                  ],
                 } as checkListTypes)
               : ({ ...questionItem } as checkListTypes)
           )
@@ -61,7 +57,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
 
   return (
     <>
-      {checkList.answer.ans.map((answer) => (
+      {checkList.answer.map((answer) => (
         <Pressable
           onPress={() => {
             onPressHandler(answer);
@@ -77,14 +73,16 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
           </DefaultText>
         </Pressable>
       ))}
-      <TextInput
-        autoCorrect={false}
-        onChangeText={onChangeTextHandler}
-        onEndEditing={onEndEditing}
-        placeholder={'+ 직접 입력'}
-        value={newCheckListElement}
-        style={styles.typeDBtnWrapper}
-      />
+      <KeyboardAwareScrollView extraHeight={150}>
+        <TextInput
+          autoCorrect={false}
+          onChangeText={onChangeTextHandler}
+          onEndEditing={onEndEditing}
+          placeholder={'+ 직접 입력'}
+          value={newCheckListElement}
+          style={[styles.typeDBtnWrapper, styles.typeDInputBtnWrapper]}
+        />
+      </KeyboardAwareScrollView>
     </>
   );
 }

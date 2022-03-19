@@ -23,7 +23,7 @@ const KakaoLoginBtn = ({ setIsLogin }: Props) => {
     axiosInstance
       .post(`/login`, data)
       .then((res) => {
-        axios.defaults.headers.common['Authorization'] = `Bearer ${access.accessToken}`;
+        axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.accessToken}`;
         setAuthTokens({
           accessToken: res.data.data.accessToken,
           refreshToken: res.data.data.refreshToken,

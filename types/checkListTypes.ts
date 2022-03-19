@@ -6,10 +6,7 @@ export interface answerButtonOfType {
 }
 
 export interface answerOfType {
-  answer: {
-    answerId: string;
-    ans: Array<answerButtonOfType>;
-  };
+  answer: Array<answerButtonOfType>;
 }
 
 export interface checkListTypes extends answerOfType {
@@ -17,7 +14,7 @@ export interface checkListTypes extends answerOfType {
   questionId: string;
   question: string;
   checked?: boolean;
-  deleted?: boolean;
+  visibility: boolean;
   emoji: string;
   mainCategory: string | null;
   rule: string | null;

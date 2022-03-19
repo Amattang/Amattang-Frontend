@@ -35,10 +35,10 @@ function ButtonOfGoToTrash({
       setTimeout(async () => {
         await setCheckLists(
           checkLists.map((item) =>
-            item.questionId === checkList.questionId ? { ...item, deleted: true } : { ...item }
+            item.questionId === checkList.questionId ? { ...item, visibility: false } : { ...item }
           )
         );
-        await setDeletedCheckLists([...deletedCheckLists, { ...checkList, deleted: true }]);
+        await setDeletedCheckLists([...deletedCheckLists, { ...checkList, visibility: false }]);
       }, 500);
   };
 

@@ -3,13 +3,12 @@ import { createMaterialTopTabNavigator } from '@react-navigation/material-top-ta
 
 import BasicInfoOfBasicCheckList from '../../../../screens/BasicCheckList/BasicInfoOfBasicCheckList';
 import OutsideOfBasicCheckList from '../../../../screens/BasicCheckList/OutsideOfBasicCheckList';
-import InsideOfBasicCheckList from '../../../../screens/BasicCheckList/InsideOfBasicCheckList';
+import InsideOfBasicCheckList from './InsideOfBasicCheckList';
 import MyItemOfBasicCheckList from '../../../../screens/BasicCheckList/MyItemOfBasicCheckList';
 import { mainLightBlue } from '../../../../color';
 import FloatingBtn from '../../../../components/CheckListComponent/FloatingBtn';
-import { useNavigation } from '@react-navigation/native';
-import { NestedProps } from '../../../../types/navigationTypes';
 import CameraAndGallery from '../../../../components/camera/CameraAndGallery';
+import { checkListTypes } from '../../../../types/checkListTypes';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -19,17 +18,17 @@ interface IProps {
 }
 
 function BasicCheckList({ setIsEdit, isEdit }: IProps) {
-  const navigation = useNavigation<NestedProps>();
   const [isBottomSheet, setIsBottomSheet] = useState(true);
-  const [onModal, setOnModal] = useState(true);
+  const [outsideCheckLists, setOutsideCheckLists] = useState<checkListTypes[]>([]);
+  const [customCheckLists, setCustomCheckLists] = useState([]);
+  const [onModal, setOnModal] = useState(false);
+  const [checkListId, setCheckListId] = useState(0);
   const onEditHandler = () => {
     setIsEdit(true);
   };
 
   const onCameraHandler = () => {
-    // navigation.navigate('stack', { screen: 'camera' });
     setOnModal(!onModal);
-    console.log('t');
   };
 
   return (
@@ -40,14 +39,23 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
         <Tab.Screen
           name="basic"
           children={() => (
-            <BasicInfoOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+            <BasicInfoOfBasicCheckList
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+              checkListId={false}
+              setCheckListId={setCheckListId}
+            />
           )}
           options={{ title: '기본 정보' }}
         />
         <Tab.Screen
           name={'outside'}
           children={() => (
-            <OutsideOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
+            <OutsideOfBasicCheckList
+              isEdit={isEdit}
+              setIsBottomSheet={setIsBottomSheet}
+              checkListId={checkListId}
+            />
           )}
           options={{ title: '외부 시설' }}
         />

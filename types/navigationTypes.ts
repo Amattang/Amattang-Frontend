@@ -54,3 +54,14 @@ export type BasicCheckListParamsList = {
 };
 
 export type BasicCheckListProps = MaterialTopTabScreenProps<BasicCheckListParamsList, 'basic'>;
+
+// insideOfBasicCheckList
+export type InsideOfBasicCheckList = {
+  window: undefined;
+  ceiling: undefined;
+  kitchen: undefined;
+  restroom: undefined;
+  wall: undefined;
+  entrance: undefined;
+  option: undefined;
+};

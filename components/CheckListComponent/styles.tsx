@@ -82,6 +82,10 @@ const styles = StyleSheet.create({
     backgroundColor: mainLightBlue,
   },
 
+  typeDInputBtnWrapper: {
+    width: 100,
+  },
+
   container: {
     height: 110,
     padding: 24,

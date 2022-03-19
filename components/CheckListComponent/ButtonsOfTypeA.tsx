@@ -19,15 +19,13 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
           questionItem.questionId === checkList.questionId
             ? ({
                 ...questionItem,
-                answer: {
-                  ans: [
-                    ...questionItem.answer.ans.map((answerItem) =>
-                      answerItem.type === answer.type
-                        ? { ...answerItem, val: true }
-                        : { ...answerItem, val: false }
-                    ),
-                  ],
-                },
+                answer: [
+                  ...questionItem.answer.map((answerItem) =>
+                    answerItem.type === answer.type
+                      ? { ...answerItem, val: true }
+                      : { ...answerItem, val: false }
+                  ),
+                ],
               } as checkListTypes)
             : ({ ...questionItem } as checkListTypes)
         )
@@ -36,11 +34,11 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
 
   return (
     <>
-      {checkList.answer.ans.map((answer) => (
+      {checkList.answer.map((answer) => (
         <Pressable
           onPress={() => onPressHandler(answer)}
           style={
-            checkList.answer.ans.length < 3
+            checkList?.answer.length < 3
               ? answer.val
                 ? answer.redType
                   ? [styles.typeABtnWrapper, styles.checkListFocusedOrange]

@@ -3,6 +3,7 @@ import { TextInput, View } from 'react-native';
 import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   isEdit: boolean;
@@ -24,15 +25,13 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
         questionItem.questionId === checkList.questionId
           ? ({
               ...questionItem,
-              answer: {
-                ans: [
-                  ...questionItem.answer.ans.map((answerItem) =>
-                    answerItem.description === answer.description
-                      ? { ...answerItem, type: newCheckListElement }
-                      : { ...answerItem, val: false }
-                  ),
-                ],
-              },
+              answer: [
+                ...questionItem.answer.map((answerItem) =>
+                  answerItem.description === answer.description
+                    ? { ...answerItem, type: newCheckListElement }
+                    : { ...answerItem, val: false }
+                ),
+              ],
             } as checkListTypes)
           : ({ ...questionItem } as checkListTypes)
       )
@@ -41,16 +40,18 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
 
   return (
     <>
-      {checkList.answer.ans.map((answer) => (
+      {checkList.answer.map((answer) => (
         <View style={styles.typeBBtnWrapper}>
-          <TextInput
-            autoCorrect={false}
-            onChangeText={onEndEditing}
-            onEndEditing={() => onChangeTextHandler(answer)}
-            placeholder={'직접 입력'}
-            value={newCheckListElement}
-            style={styles.typeDBtnWrapper}
-          />
+          <KeyboardAwareScrollView extraHeight={150}>
+            <TextInput
+              autoCorrect={false}
+              onChangeText={onEndEditing}
+              onEndEditing={() => onChangeTextHandler(answer)}
+              placeholder={'직접 입력'}
+              value={newCheckListElement}
+              style={styles.typeDBtnWrapper}
+            />
+          </KeyboardAwareScrollView>
           <DefaultText style={styles.checkListGrayText}> {answer.description}</DefaultText>
         </View>
       ))}
