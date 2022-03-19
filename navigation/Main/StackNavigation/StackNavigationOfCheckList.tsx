@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Image, Pressable, Share } from 'react-native';
 
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
@@ -11,10 +11,13 @@ import {
   createNativeStackNavigator,
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
+import { checkListCtx } from '../../../Context/CheckListByServer';
 
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
 function CheckListStackNav({ navigation }: CheckListStackProps) {
+  const checkListContext = useContext(checkListCtx);
+
   const [isEdit, setIsEdit] = useState(true);
   const onShare = async () => {
     try {

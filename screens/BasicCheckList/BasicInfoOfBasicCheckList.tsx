@@ -56,7 +56,6 @@ function BasicInfoOfBasicCheckList({
     checkLists && getServerData();
   }, []);
   // setCheckLists(response.data);
-  const test = () => console.log(deletedCheckLists);
   // 바텀시트 동작을 위한 코드
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
   const snapPoints = useMemo(() => [100, 400], []);
@@ -77,9 +76,6 @@ function BasicInfoOfBasicCheckList({
 
   return (
     <>
-      <Pressable onPress={test}>
-        <DefaultText>Tste</DefaultText>
-      </Pressable>
       {onServerData ? (
         <BottomSheetModalProvider>
           <ScrollView>
@@ -97,7 +93,7 @@ function BasicInfoOfBasicCheckList({
                 />
               ))}
 
-            {deletedCheckLists === [] && (
+            {deletedCheckLists && (
               <ButtonOfBringBackDeletedCheckList
                 handlePresentModalPress={handlePresentModalPress}
               />

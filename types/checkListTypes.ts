@@ -43,3 +43,20 @@ export interface myItemElementHandlerType {
   onChangedQuestionElement: string;
   clickedMyItemElement: myItemElementType;
 }
+
+export interface deletedCheckListByServerType {
+  question: deletedCheckListQuestionByServerType[];
+}
+
+export interface deletedCheckListQuestionByServerType {
+  id: number;
+  visibility: boolean;
+}
+
+export interface choseCheckLIstByServerType {
+  typeA?: answerButtonOfType[];
+  typeB?: answerButtonOfType[];
+  typeC?: answerButtonOfType[];
+  typeD?: answerButtonOfType[];
+  typeM?: answerButtonOfType[];
+}

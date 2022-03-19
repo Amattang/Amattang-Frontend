@@ -30,7 +30,7 @@ interface IProps {
   checkListId: number;
 }
 
-function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IProps) {
+function Window({ isEdit, setIsBottomSheet, checkListId }: IProps) {
   const [onServerData, setOnServerData] = useState(false);
   const [checkLists, setCheckLists] = useState<checkListTypes[]>([]);
   const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>(
@@ -39,7 +39,7 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IPro
 
   const getServerData = async () => {
     const serverResponse = await axios.get(
-      `/api/check-list/${checkListId}/common?mainCategory=외부시설`
+      `/api/check-list/${checkListId}/common?mainCategory=내부시설&subCategory=창문`
     );
     setCheckLists([
       ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
@@ -128,4 +128,4 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IPro
   );
 }
 
-export default OutsideOfBasicCheckList;
+export default Window;
