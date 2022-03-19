@@ -5,8 +5,8 @@ import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 
 interface IProps {
-  deletedCheckLists: checkListTypes[];
-  setDeletedCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
+  deletedCheckLists?: checkListTypes[];
+  setDeletedCheckLists?: Dispatch<SetStateAction<checkListTypes[]>>;
   translateX: SharedValue<number>;
   rStyle: { transform: { translateX: number }[] };
   isEdit: boolean;
@@ -29,7 +29,9 @@ function ButtonOfGoToTrash({
 
   const onDeleteHandler = async () => {
     translateX.value = withTiming(0);
-    isEdit &&
+    setDeletedCheckLists &&
+      isEdit &&
+      deletedCheckLists &&
       setTimeout(async () => {
         await setCheckLists(
           checkLists.map((item) =>

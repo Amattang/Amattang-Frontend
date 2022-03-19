@@ -8,7 +8,7 @@ import { RootStackProps } from '../../types/navigationTypes';
 const RootNav = createNativeStackNavigator<RootStackProps>();
 
 const Root = () => (
-  <RootNav.Navigator screenOptions={{ presentation: 'fullScreenModal', headerShown: false }}>
+  <RootNav.Navigator screenOptions={{ headerShown: false }}>
     <RootNav.Screen name="tab" component={BottomNavigation} />
     <RootNav.Screen name="stack" component={CheckListStackNav} />
   </RootNav.Navigator>

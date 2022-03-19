@@ -6,7 +6,6 @@ import axios from 'axios';
 import { IHere } from '../../types/mapTypes';
 import Geolocation from 'react-native-geolocation-service';
 import AddressItem from '../../components/Map/AddressItem';
-import { OnBoardingStackProps } from '../../types/navigationTypes';
 
 function Map({ route }: any) {
   const { params } = route;
@@ -45,7 +44,7 @@ function Map({ route }: any) {
           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}&input_coord=WGS84`,
           {
             headers: {
-              Authorization: `KakaoAK 918b29e2641545569013d1e5e6ba3611`, // REST API 키
+              Authorization: 'KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}', // REST API 키. 연결 아직 안함
             },
           }
         )

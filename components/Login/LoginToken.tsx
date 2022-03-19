@@ -16,3 +16,5 @@ export const requestRefresh: TokenRefreshRequest = async (
 };
 
 applyAuthTokenInterceptor(axiosInstance, { requestRefresh });
+
+// 리프레시 만료됐을 때 login api

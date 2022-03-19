@@ -16,8 +16,8 @@ import Animated, {
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
 
 interface IProps {
-  deletedCheckLists: checkListTypes[];
-  setDeletedCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
+  deletedCheckLists?: checkListTypes[];
+  setDeletedCheckLists?: Dispatch<SetStateAction<checkListTypes[]>>;
   handlePresentModalPress?: () => void;
   isEdit: boolean;
   checkLists: checkListTypes[];
