@@ -1,9 +1,14 @@
-import React, { Dispatch, SetStateAction, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Alert, Pressable, TextInput } from 'react-native';
-import { answerButtonOfType, checkListTypes } from '../../types/checkListTypes';
+import {
+  answerButtonType,
+  checkListTypes,
+  choseCheckListItemByServerType,
+} from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface IProps {
   isEdit: boolean;
@@ -13,6 +18,8 @@ interface IProps {
 }
 
 function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
+  const checkListContext = useContext(checkListCtx);
+
   const [newCheckListElement, setNewCheckListElement] = useState('');
 
   const onChangeTextHandler = (newElement: string) => {
@@ -26,9 +33,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
           questionItem.questionId === checkList.questionId
             ? ({
                 ...questionItem,
-                answer: {
-                  ans: [...questionItem.answer.ans, { type: newCheckListElement, val: true }],
-                },
+                answer: [...questionItem.answer, { type: newCheckListElement, val: true }],
               } as checkListTypes)
             : ({ ...questionItem } as checkListTypes)
         )
@@ -36,33 +41,48 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
     await setNewCheckListElement('');
   };
 
-  const onPressHandler = (answer: answerButtonOfType) => {
-    isEdit
-      ? setCheckLists(
-          checkLists.map((questionItem) =>
-            questionItem.questionId === checkList.questionId
-              ? ({
-                  ...questionItem,
-                  answer: {
-                    ans: [
-                      ...questionItem.answer.ans.map((answerItem) =>
-                        answerItem.type === answer.type
-                          ? { ...answerItem, val: !answerItem.val }
-                          : { ...answerItem }
-                      ),
-                    ],
-                  },
-                } as checkListTypes)
-              : ({ ...questionItem } as checkListTypes)
-          )
+  const onPressHandler = async (answer: answerButtonType) => {
+    isEdit &&
+      (await checkListContext?.setChoseCheckListByServer({
+        ...checkListContext?.choseCheckListByServer,
+        typeD: [
+          ...(checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]),
+          {
+            questionId: checkList.questionId,
+            answer: [
+              ...checkList.answer.map((answerItem) =>
+                answerItem.type === answer.type
+                  ? { ...answerItem, val: !answerItem.val }
+                  : { ...answerItem }
+              ),
+            ],
+          },
+        ],
+      }));
+    isEdit &&
+      (await setCheckLists(
+        checkLists.map((questionItem) =>
+          questionItem.questionId === checkList.questionId
+            ? ({
+                ...questionItem,
+                answer: [
+                  ...questionItem.answer.map((answerItem) =>
+                    answerItem.type === answer.type
+                      ? { ...answerItem, val: !answerItem.val }
+                      : { ...answerItem }
+                  ),
+                ],
+              } as checkListTypes)
+            : ({ ...questionItem } as checkListTypes)
         )
-      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+      ));
   };
 
   return (
     <>
-      {checkList.answer.ans.map((answer) => (
+      {checkList.answer.map((answer, index) => (
         <Pressable
+          key={`${checkList.questionId}-${index}`}
           onPress={() => {
             onPressHandler(answer);
           }}
@@ -77,14 +97,16 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
           </DefaultText>
         </Pressable>
       ))}
-      <TextInput
-        autoCorrect={false}
-        onChangeText={onChangeTextHandler}
-        onEndEditing={onEndEditing}
-        placeholder={'+ 직접 입력'}
-        value={newCheckListElement}
-        style={styles.typeDBtnWrapper}
-      />
+      <KeyboardAwareScrollView extraHeight={150}>
+        <TextInput
+          autoCorrect={false}
+          onChangeText={onChangeTextHandler}
+          onEndEditing={onEndEditing}
+          placeholder={'+ 직접 입력'}
+          value={newCheckListElement}
+          style={[styles.typeDBtnWrapper, styles.typeDInputBtnWrapper]}
+        />
+      </KeyboardAwareScrollView>
     </>
   );
 }

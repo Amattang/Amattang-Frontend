@@ -1,4 +1,4 @@
-import React, { Dispatch, RefObject, SetStateAction, useCallback, useState } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useContext } from 'react';
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
@@ -10,6 +10,7 @@ import { checkListTypes } from '../../types/checkListTypes';
 import { SharedValue } from 'react-native-reanimated';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import styles from './styles';
+import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface IProps {
   deletedCheckLists: checkListTypes[];
@@ -36,16 +37,23 @@ function BottomSheetsOfDeletedCheckList({
   snapPoints,
   checkLists,
 }: IProps) {
+  const checkListContext = useContext(checkListCtx);
+
   const onUpdateCheckListHandler = () => {
     bottomSheetModalRef?.current?.dismiss();
     // 애니매이션 지속시간에  상태변경이 일어나면 애니매이션이 취소됨
     setTimeout(() => {
       setDeletedCheckLists(
-        deletedCheckLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
+        deletedCheckLists.filter((CheckLists: checkListTypes) => !CheckLists.visibility)
       );
-      setCheckLists([...checkLists.filter((item) => item.deleted === false), ...deletedCheckLists]);
+      setCheckLists([...checkLists.filter((item) => item.visibility), ...deletedCheckLists]);
+      checkListContext?.setDeletedCheckListByServer({
+        question: [
+          ...checkListContext?.deletedCheckListByServer.question,
+          ...deletedCheckLists.map((item) => ({ questionId: item.questionId, visibility: true })),
+        ],
+      });
     }, 500);
-    setTimeout(() => 1000);
   };
 
   const onUpdateCheckList = (deletedCheckList: checkListTypes) => {
@@ -53,14 +61,14 @@ function BottomSheetsOfDeletedCheckList({
       setDeletedCheckLists(
         deletedCheckLists.map((item) =>
           item.questionId === deletedCheckList.questionId
-            ? { ...item, deleted: !item.deleted }
+            ? { ...item, visibility: !item.visibility }
             : { ...item }
         )
       );
   };
 
   const onSelectAllHandler = () => {
-    setDeletedCheckLists(deletedCheckLists.map((item) => ({ ...item, deleted: false })));
+    setDeletedCheckLists(deletedCheckLists.map((item) => ({ ...item, visibility: true })));
   };
 
   return (
@@ -79,16 +87,16 @@ function BottomSheetsOfDeletedCheckList({
             <Pressable
               onPress={() => onUpdateCheckList(deletedCheckList)}
               style={
-                deletedCheckList.deleted
-                  ? styles.deletedCheckListBtnWrapper
-                  : [styles.deletedCheckListBtnWrapper, styles.checkListFocusedBlue]
+                deletedCheckList.visibility
+                  ? [styles.deletedCheckListBtnWrapper, styles.checkListFocusedBlue]
+                  : styles.deletedCheckListBtnWrapper
               }
             >
               <DefaultText
                 style={
-                  deletedCheckList.deleted
-                    ? styles.deletedCheckListText
-                    : styles.deletedCheckListWhiteText
+                  deletedCheckList.visibility
+                    ? styles.deletedCheckListWhiteText
+                    : styles.deletedCheckListText
                 }
               >
                 {deletedCheckList.emoji} {deletedCheckList.question}
@@ -104,14 +112,14 @@ function BottomSheetsOfDeletedCheckList({
           <Pressable
             onPress={onUpdateCheckListHandler}
             style={
-              deletedCheckLists.filter((checkList) => !checkList.deleted).length
+              deletedCheckLists.filter((checkList) => checkList.visibility).length
                 ? [styles.updateCheckListButton, styles.checkListFocusedBlue]
                 : styles.updateCheckListButton
             }
           >
             <DefaultText
               style={
-                deletedCheckLists.filter((checkList) => !checkList.deleted).length
+                deletedCheckLists.filter((checkList) => checkList.visibility).length
                   ? styles.checkListWhiteText
                   : styles.checkListGrayText
               }

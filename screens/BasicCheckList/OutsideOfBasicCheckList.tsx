@@ -1,8 +1,12 @@
-import React, { Dispatch, SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
-import { Pressable, View } from 'react-native';
-
-import { response } from '../../mockData/checkListOfOutside';
-import styles from '../../components/CheckListComponent/styles';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
 import CheckListComponent from '../../components/CheckListComponent/CheckListComponent';
 import { ScrollView } from 'react-native-gesture-handler';
 import BottomSheetsOfDeletedCheckList from '../../components/CheckListComponent/BottomSheetsOfDeletedCheckList';
@@ -14,17 +18,45 @@ import {
 } from '@gorhom/bottom-sheet';
 import { checkListTypes } from '../../types/checkListTypes';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
+import axios from 'axios';
+import { ActivityIndicator } from 'react-native';
 
 interface IProps {
   isEdit: boolean;
   setIsBottomSheet: Dispatch<SetStateAction<boolean>>;
+  checkListId: number;
 }
 
-function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
-  const [checkLists, setCheckLists] = useState(response);
+function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IProps) {
+  const [onServerData, setOnServerData] = useState(false);
+  const [checkLists, setCheckLists] = useState<checkListTypes[]>([]);
   const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>(
-    checkLists.filter((CheckLists: checkListTypes) => CheckLists.deleted)
+    checkLists.filter((CheckLists: checkListTypes) => !CheckLists.visibility)
   );
+
+  const getServerData = async () => {
+    const serverResponse = await axios.get(
+      `/api/check-list/${checkListId}/common?mainCategory=외부시설`
+    );
+
+    setCheckLists([
+      ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
+        ...item,
+      })),
+    ]);
+    setDeletedCheckLists(
+      [
+        ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
+          ...item,
+        })),
+      ].filter((item) => !item.visibility)
+    );
+    setOnServerData(true);
+  };
+
+  useEffect(() => {
+    getServerData();
+  }, []);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
@@ -50,11 +82,11 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
 
   return (
     <>
-      <BottomSheetModalProvider>
-        <View>
+      {onServerData ? (
+        <BottomSheetModalProvider>
           <ScrollView>
             {checkLists
-              .filter((item) => !item.deleted)
+              .filter((item) => item.visibility)
               .map((mainQuestionItem: checkListTypes) => (
                 <CheckListComponent
                   deletedCheckLists={deletedCheckLists}
@@ -68,26 +100,28 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
                 />
               ))}
 
-            {handlePresentModalPress && (
+            {deletedCheckLists.length !== 0 && (
               <ButtonOfBringBackDeletedCheckList
                 handlePresentModalPress={handlePresentModalPress}
               />
             )}
           </ScrollView>
-        </View>
-        <BottomSheetsOfDeletedCheckList
-          deletedCheckLists={deletedCheckLists}
-          setDeletedCheckLists={setDeletedCheckLists}
-          isEdit={isEdit}
-          setCheckLists={setCheckLists}
-          onAnimateHandler={onAnimateHandler}
-          onDismissHandler={onDismissHandler}
-          renderBackdrop={renderBackdrop}
-          bottomSheetModalRef={bottomSheetModalRef}
-          snapPoints={snapPoints}
-          checkLists={checkLists}
-        />
-      </BottomSheetModalProvider>
+          <BottomSheetsOfDeletedCheckList
+            deletedCheckLists={deletedCheckLists}
+            setDeletedCheckLists={setDeletedCheckLists}
+            isEdit={isEdit}
+            setCheckLists={setCheckLists}
+            onAnimateHandler={onAnimateHandler}
+            onDismissHandler={onDismissHandler}
+            renderBackdrop={renderBackdrop}
+            bottomSheetModalRef={bottomSheetModalRef}
+            snapPoints={snapPoints}
+            checkLists={checkLists}
+          />
+        </BottomSheetModalProvider>
+      ) : (
+        <ActivityIndicator style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }} />
+      )}
     </>
   );
 }

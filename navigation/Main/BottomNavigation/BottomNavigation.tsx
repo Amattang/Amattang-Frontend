@@ -7,6 +7,7 @@ import Home from '../../../screens/bottomTab/Home';
 import Map from '../../../screens/bottomTab/Map';
 import { BottomTabParams, NestedProps } from '../../../types/navigationTypes';
 import styles from './styles';
+
 const Tab = createBottomTabNavigator<BottomTabParams>();
 
 function BottomNavigation() {
