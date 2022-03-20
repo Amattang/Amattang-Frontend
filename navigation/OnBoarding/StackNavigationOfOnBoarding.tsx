@@ -8,6 +8,7 @@ import Landing from '../../screens/Landing/Landing';
 import { Image, Pressable } from 'react-native';
 import Map from '../../screens/Landing/Map';
 import { useNavigation } from '@react-navigation/native';
+import FindAddress from '../../components/Map/FindAddress';
 
 const Stack = createNativeStackNavigator<OnBoardingStackParamsList>();
 
