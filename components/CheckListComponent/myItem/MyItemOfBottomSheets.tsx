@@ -92,6 +92,7 @@ function MyItemOfBottomSheets({
         <ScrollView>
           {clickedMyItem?.question?.map((clickedMyItemElements) => (
             <MyItemElementOfBottomSheets
+              key={clickedMyItemElements.questionId}
               isEdit={isEdit}
               setClickedMyItem={setClickedMyItem}
               clickedMyItem={clickedMyItem}

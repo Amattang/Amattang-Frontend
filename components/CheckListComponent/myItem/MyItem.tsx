@@ -63,6 +63,7 @@ function MyItem({ elementClickedHandler, myItem, eachMyItemHandler, isEdit }: IP
       {isMyItemClicked
         ? myItem.question.map((myItemElement) => (
             <MyItemElement
+              key={myItemElement.questionId}
               isEdit={isEdit}
               myItem={myItem}
               elementClickedHandler={elementClickedHandler}

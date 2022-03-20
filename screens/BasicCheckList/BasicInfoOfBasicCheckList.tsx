@@ -32,23 +32,26 @@ function BasicInfoOfBasicCheckList({
   const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>([]);
 
   const getServerData = async () => {
-    const serverResponse = checkListId
-      ? await axios.get(`/api/check-list/${checkListId}/common?mainCategory=기본정보`)
-      : await axios.get('/api/check-list/init');
-    console.log(serverResponse);
-    setCheckLists([
-      ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
-        ...item,
-        deleted: false,
-      })),
-    ]);
-    setDeletedCheckLists(
-      [...serverResponse.data.data.questionList].filter((item) => !item.visibility)
-    );
-    checkListId
-      ? setCheckListId(checkListId)
-      : setCheckListId(serverResponse.data.data.checkListId);
-    setOnServerData(true);
+    try {
+      const serverResponse = checkListId
+        ? await axios.get(`/api/check-list/${checkListId}/common?mainCategory=기본정보`)
+        : await axios.get('/api/check-list/init');
+      setCheckLists([
+        ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
+          ...item,
+          deleted: false,
+        })),
+      ]);
+      setDeletedCheckLists(
+        [...serverResponse.data.data.questionList].filter((item) => !item.visibility)
+      );
+      checkListId
+        ? setCheckListId(checkListId)
+        : setCheckListId(serverResponse.data.data.checkListId);
+      setOnServerData(true);
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {

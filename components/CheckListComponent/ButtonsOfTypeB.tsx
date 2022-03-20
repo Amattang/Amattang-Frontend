@@ -67,17 +67,19 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
     <>
       {checkList.answer.map((answer, index) => (
         <View style={styles.typeBBtnWrapper} key={`${checkList.questionId}-${index}`}>
-          <KeyboardAwareScrollView extraHeight={150}>
+          <KeyboardAwareScrollView style={{ padding: 0 }} extraHeight={150}>
             <TextInput
               autoCorrect={false}
               onChangeText={onEndEditing}
               onEndEditing={() => onChangeTextHandler(answer)}
               placeholder={'직접 입력'}
               value={newCheckListElement}
-              style={styles.typeDBtnWrapper}
+              style={[styles.typeDBtnWrapper]}
             />
           </KeyboardAwareScrollView>
-          <DefaultText style={styles.checkListGrayText}> {answer.description}</DefaultText>
+          <DefaultText style={[styles.checkListGrayText, { marginRight: 10 }]}>
+            {answer.description}
+          </DefaultText>
         </View>
       ))}
     </>

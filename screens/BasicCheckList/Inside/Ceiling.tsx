@@ -17,12 +17,12 @@ import {
   BottomSheetModalProvider,
 } from '@gorhom/bottom-sheet';
 
-import axios from 'axios';
 import { ActivityIndicator } from 'react-native';
 import { checkListTypes } from '../../../types/checkListTypes';
 import CheckListComponent from '../../../components/CheckListComponent/CheckListComponent';
 import ButtonOfBringBackDeletedCheckList from '../../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 import BottomSheetsOfDeletedCheckList from '../../../components/CheckListComponent/BottomSheetsOfDeletedCheckList';
+import { getCheckListServerData } from '../../../api/getCheckListServerData';
 
 interface IProps {
   isEdit: boolean;
@@ -37,27 +37,15 @@ function Ceiling({ isEdit, setIsBottomSheet, checkListId }: IProps) {
     checkLists.filter((CheckLists: checkListTypes) => !CheckLists.visibility)
   );
 
-  const getServerData = async () => {
-    const serverResponse = await axios.get(
-      `/api/check-list/${checkListId}/common?mainCategory=내부시설&subCategory=천장`
-    );
-    setCheckLists([
-      ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
-        ...item,
-      })),
-    ]);
-    setDeletedCheckLists(
-      [
-        ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
-          ...item,
-        })),
-      ].filter((item) => !item.visibility)
-    );
-    setOnServerData(true);
-  };
-
   useEffect(() => {
-    getServerData();
+    getCheckListServerData({
+      checkListId,
+      setCheckLists,
+      setDeletedCheckLists,
+      setOnServerData,
+      mainCategory: '외부시설',
+      subCategory: '천장',
+    });
   }, []);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);

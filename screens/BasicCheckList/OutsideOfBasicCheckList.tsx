@@ -20,6 +20,7 @@ import { checkListTypes } from '../../types/checkListTypes';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 import axios from 'axios';
 import { ActivityIndicator } from 'react-native';
+import { getCheckListServerData } from '../../api/getCheckListServerData';
 
 interface IProps {
   isEdit: boolean;
@@ -34,28 +35,15 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IPro
     checkLists.filter((CheckLists: checkListTypes) => !CheckLists.visibility)
   );
 
-  const getServerData = async () => {
-    const serverResponse = await axios.get(
-      `/api/check-list/${checkListId}/common?mainCategory=외부시설`
-    );
-
-    setCheckLists([
-      ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
-        ...item,
-      })),
-    ]);
-    setDeletedCheckLists(
-      [
-        ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
-          ...item,
-        })),
-      ].filter((item) => !item.visibility)
-    );
-    setOnServerData(true);
-  };
-
   useEffect(() => {
-    getServerData();
+    getCheckListServerData({
+      checkListId,
+      setCheckLists,
+      setDeletedCheckLists,
+      setOnServerData,
+      mainCategory: '외부시설',
+      subCategory: null,
+    });
   }, []);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -89,6 +77,7 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IPro
               .filter((item) => item.visibility)
               .map((mainQuestionItem: checkListTypes) => (
                 <CheckListComponent
+                  key={mainQuestionItem.questionId}
                   deletedCheckLists={deletedCheckLists}
                   setDeletedCheckLists={setDeletedCheckLists}
                   onBoarding={false}

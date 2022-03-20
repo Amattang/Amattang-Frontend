@@ -74,12 +74,10 @@ function CheckListComponent({
           <View style={styles.whiteCard} key={checkList.questionId}>
             <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
             <View style={styles.subTitles}>
-              {checkList.subCategory && (
+              {checkList.rule && (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>📘 </DefaultText>
-                  <DefaultText style={styles.checkListGrayText}>
-                    {checkList.subCategory}
-                  </DefaultText>
+                  <DefaultText style={styles.checkListGrayText}>{checkList.rule}</DefaultText>
                 </View>
               )}
               {checkList.description && (
