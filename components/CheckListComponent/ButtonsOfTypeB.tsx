@@ -26,6 +26,7 @@ function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps
   };
 
   const onEndEditing = async (answer: answerButtonType) => {
+    console.log(newCheckListElement);
     isEdit &&
       (await checkListContext?.setChoseCheckListByServer({
         ...checkListContext?.choseCheckListByServer,
@@ -34,10 +35,10 @@ function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps
           {
             questionId: checkList.questionId,
             answer: [
-              ...checkList.answer.map((answerItem) =>
-                answerItem.description === answer.description
-                  ? { ...answerItem, type: newCheckListElement }
-                  : { ...answerItem }
+              ...checkList.answer.map((item) =>
+                item.type === answer.type
+                  ? { description: newCheckListElement, type: item.type }
+                  : { ...item }
               ),
             ],
           },

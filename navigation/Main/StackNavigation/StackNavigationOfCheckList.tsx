@@ -42,18 +42,13 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
   const onSubmitHandler = async () => {
     try {
       await axios.put(
-        `api/check-list/${checkListContext?.checkListId}/common/question`,
+        `/api/check-list/${checkListContext?.checkListId}/common/question`,
         checkListContext?.choseCheckListByServer
       );
-      console.log(checkListContext?.choseCheckListByServer);
-    } catch (error) {
-      console.error(error);
-    }
-    try {
-      await axios.put(
-        `api/check-list/${checkListContext?.checkListId}/common/question/state`,
-        checkListContext?.deletedCheckListByServer
-      );
+      // await axios.put(
+      //   `/api/check-list/${checkListContext?.checkListId}/common/question/state`,
+      //   checkListContext?.deletedCheckListByServer
+      // );
     } catch (error) {
       console.error(error);
     }
