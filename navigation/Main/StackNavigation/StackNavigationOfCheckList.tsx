@@ -12,6 +12,7 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { checkListCtx } from '../../../Context/CheckListByServer';
+import axios from 'axios';
 
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
@@ -38,10 +39,25 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
     }
   };
 
-  const onSubmitHandler = () => {
+  const onSubmitHandler = async () => {
+    try {
+      await axios.put(
+        `api/check-list/${checkListContext?.checkListId}/common/question`,
+        checkListContext?.choseCheckListByServer
+      );
+      console.log(checkListContext?.choseCheckListByServer);
+    } catch (error) {
+      console.error(error);
+    }
+    try {
+      await axios.put(
+        `api/check-list/${checkListContext?.checkListId}/common/question/state`,
+        checkListContext?.deletedCheckListByServer
+      );
+    } catch (error) {
+      console.error(error);
+    }
     setIsEdit(false);
-    console.log(checkListContext?.choseCheckListByServer);
-    console.log(checkListContext?.deletedCheckListByServer);
   };
 
   const screenOptions: NativeStackNavigationOptions = {

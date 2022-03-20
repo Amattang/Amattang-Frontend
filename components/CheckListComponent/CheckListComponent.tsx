@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
@@ -13,6 +13,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
 
 interface IProps {
@@ -89,7 +91,6 @@ function CheckListComponent({
                 </View>
               )}
             </View>
-
             <View style={styles.buttonsOfCheckList}>
               {checkList.type === 'A' && (
                 <ButtonsOfTypeA

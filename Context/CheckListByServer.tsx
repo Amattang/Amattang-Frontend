@@ -6,6 +6,8 @@ interface contextType {
   setDeletedCheckListByServer: Dispatch<SetStateAction<deletedCheckListByServerType>>;
   choseCheckListByServer: choseCheckListByServerType;
   setChoseCheckListByServer: Dispatch<SetStateAction<choseCheckListByServerType>>;
+  checkListId: number;
+  setCheckListId: Dispatch<SetStateAction<number>>;
 }
 
 export const checkListCtx = createContext<contextType | null>(null);
@@ -19,6 +21,7 @@ const CheckListStore: React.FC = (props) => {
     typeD: [],
     typeM: [],
   });
+  const [checkListId, setCheckListId] = useState<number>(5354);
 
   return (
     <checkListCtx.Provider
@@ -27,6 +30,8 @@ const CheckListStore: React.FC = (props) => {
         setDeletedCheckListByServer,
         choseCheckListByServer,
         setChoseCheckListByServer,
+        checkListId,
+        setCheckListId,
       }}
     >
       {props.children}

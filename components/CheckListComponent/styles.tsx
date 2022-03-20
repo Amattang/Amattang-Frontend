@@ -157,6 +157,10 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
+  blankedMyItem: {
+    marginTop: 100,
+  },
+
   myItemMainTitle: {
     marginTop: 30,
   },

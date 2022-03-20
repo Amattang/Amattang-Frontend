@@ -2,6 +2,7 @@ import React, {
   Dispatch,
   SetStateAction,
   useCallback,
+  useContext,
   useEffect,
   useMemo,
   useRef,
@@ -18,17 +19,18 @@ import {
 } from '@gorhom/bottom-sheet';
 import { checkListTypes } from '../../types/checkListTypes';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
-import axios from 'axios';
 import { ActivityIndicator } from 'react-native';
-import { getCheckListServerData } from '../../api/getCheckListServerData';
+import { GetCheckListServerData } from '../../api/GetCheckListServerData';
+import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface IProps {
   isEdit: boolean;
   setIsBottomSheet: Dispatch<SetStateAction<boolean>>;
-  checkListId: number;
 }
 
-function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IProps) {
+function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
+  const checkListContext = useContext(checkListCtx);
+
   const [onServerData, setOnServerData] = useState(false);
   const [checkLists, setCheckLists] = useState<checkListTypes[]>([]);
   const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>(
@@ -36,11 +38,11 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IPro
   );
 
   useEffect(() => {
-    getCheckListServerData({
-      checkListId,
-      setCheckLists,
+    GetCheckListServerData({
       setDeletedCheckLists,
       setOnServerData,
+      setCheckLists,
+      checkListId: checkListContext?.checkListId,
       mainCategory: '외부시설',
       subCategory: null,
     });

@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { Alert, Pressable, TextInput } from 'react-native';
+import { Pressable, TextInput } from 'react-native';
 import {
   answerButtonType,
   checkListTypes,
@@ -7,7 +7,6 @@ import {
 } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface IProps {
@@ -97,16 +96,14 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
           </DefaultText>
         </Pressable>
       ))}
-      <KeyboardAwareScrollView extraHeight={150}>
-        <TextInput
-          autoCorrect={false}
-          onChangeText={onChangeTextHandler}
-          onEndEditing={onEndEditing}
-          placeholder={'+ 직접 입력'}
-          value={newCheckListElement}
-          style={[styles.typeDBtnWrapper, styles.typeDInputBtnWrapper]}
-        />
-      </KeyboardAwareScrollView>
+      <TextInput
+        autoCorrect={false}
+        onChangeText={onChangeTextHandler}
+        onEndEditing={onEndEditing}
+        placeholder={'+ 직접 입력'}
+        value={newCheckListElement}
+        style={[styles.typeDBtnWrapper, styles.typeDInputBtnWrapper]}
+      />
     </>
   );
 }

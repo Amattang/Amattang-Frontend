@@ -25,13 +25,13 @@ export interface checkListTypes extends answerListType {
 export interface myItemElementType {
   checked: boolean;
   content: string;
-  questionId: string;
+  questionId?: string;
 }
 
 export interface myItemType {
   categoryName: string;
-  categoryId: string | null;
-  question: myItemElementType[];
+  categoryId?: string | null;
+  questions: myItemElementType[];
 }
 
 export interface myItemClickHandlerType {

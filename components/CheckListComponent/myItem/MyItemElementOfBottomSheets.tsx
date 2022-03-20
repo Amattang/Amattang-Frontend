@@ -21,14 +21,14 @@ function MyItemElementOfBottomSheets({
     onChangedQuestionElement === ''
       ? setClickedMyItem({
           ...clickedMyItem,
-          question: clickedMyItem?.question.filter(
+          questions: clickedMyItem?.questions.filter(
             (newClickedMyItemElement) =>
               clickedMyItemElements.questionId !== newClickedMyItemElement.questionId
           ),
         } as myItemType)
       : setClickedMyItem({
           ...clickedMyItem,
-          question: clickedMyItem?.question.map((newClickedMyItemElement) =>
+          questions: clickedMyItem?.questions.map((newClickedMyItemElement) =>
             clickedMyItemElements?.questionId === newClickedMyItemElement.questionId
               ? { ...newClickedMyItemElement, content: onChangedQuestionElement }
               : { ...newClickedMyItemElement }
