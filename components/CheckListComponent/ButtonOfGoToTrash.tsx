@@ -45,7 +45,7 @@ function ButtonOfGoToTrash({
         await checkListContext?.setDeletedCheckListByServer({
           question: [
             ...checkListContext?.deletedCheckListByServer.question,
-            { id: checkList.questionId, visibility: false },
+            { questionId: checkList.questionId, visibility: false },
           ],
         });
       }, 500);

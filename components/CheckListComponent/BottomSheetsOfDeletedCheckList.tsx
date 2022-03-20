@@ -50,7 +50,7 @@ function BottomSheetsOfDeletedCheckList({
       checkListContext?.setDeletedCheckListByServer({
         question: [
           ...checkListContext?.deletedCheckListByServer.question,
-          ...deletedCheckLists.map((item) => ({ id: item.questionId, visibility: true })),
+          ...deletedCheckLists.map((item) => ({ questionId: item.questionId, visibility: true })),
         ],
       });
     }, 500);

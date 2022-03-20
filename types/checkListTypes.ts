@@ -3,7 +3,6 @@ export interface answerButtonType {
   redType?: boolean;
   description?: string;
   type?: string;
-  ans?: boolean;
 }
 
 export interface answerListType {
@@ -50,7 +49,7 @@ export interface deletedCheckListByServerType {
 }
 
 export interface deletedCheckListQuestionByServerType {
-  id: number;
+  questionId: number;
   visibility: boolean;
 }
 
