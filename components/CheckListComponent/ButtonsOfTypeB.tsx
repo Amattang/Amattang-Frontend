@@ -25,27 +25,18 @@ function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps
     isEdit && setNewCheckListElement(newElement);
   };
 
-  const onEndEditing = async (answer: answerButtonType) => {
-    console.log(newCheckListElement);
+  const onEndEditing = (answer: answerButtonType) => {
+    console.log({
+      answer: [
+        ...checkList.answer.map((item) =>
+          item.description === answer.description
+            ? { ...item, type: newCheckListElement }
+            : { ...item }
+        ),
+      ],
+    });
     isEdit &&
-      (await checkListContext?.setChoseCheckListByServer({
-        ...checkListContext?.choseCheckListByServer,
-        typeB: [
-          ...(checkListContext?.choseCheckListByServer.typeB as choseCheckListItemByServerType[]),
-          {
-            questionId: checkList.questionId,
-            answer: [
-              ...checkList.answer.map((item) =>
-                item.type === answer.type
-                  ? { description: newCheckListElement, type: item.type }
-                  : { ...item }
-              ),
-            ],
-          },
-        ],
-      }));
-    isEdit &&
-      (await setCheckLists(
+      setCheckLists(
         checkLists.map((questionItem) =>
           questionItem.questionId === checkList.questionId
             ? ({
@@ -60,7 +51,24 @@ function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps
               } as checkListTypes)
             : ({ ...questionItem } as checkListTypes)
         )
-      ));
+      );
+    isEdit &&
+      checkListContext?.setChoseCheckListByServer({
+        ...checkListContext?.choseCheckListByServer,
+        typeB: [
+          ...(checkListContext?.choseCheckListByServer.typeB as choseCheckListItemByServerType[]),
+          {
+            questionId: checkList.questionId,
+            answer: [
+              ...checkList.answer.map((item) =>
+                item.description === answer.description
+                  ? { ...item, type: newCheckListElement }
+                  : { ...item }
+              ),
+            ],
+          },
+        ],
+      });
     setNewCheckListElement('');
   };
 

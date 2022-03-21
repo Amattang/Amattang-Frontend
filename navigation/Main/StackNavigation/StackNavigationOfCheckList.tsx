@@ -52,6 +52,7 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
     } catch (error) {
       console.error(error);
     }
+    checkListContext?.setChoseCheckListByServer({ typeA: [], typeB: [], typeD: [], typeM: [] });
     setIsEdit(false);
   };
 

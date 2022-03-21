@@ -53,9 +53,9 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
     await setNewCheckListElement('');
   };
 
-  const onPressHandler = async (answer: answerButtonType) => {
+  const onPressHandler = (answer: answerButtonType) => {
     isEdit &&
-      (await checkListContext?.setChoseCheckListByServer({
+      checkListContext?.setChoseCheckListByServer({
         ...checkListContext?.choseCheckListByServer,
         typeD: [
           ...(checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]),
@@ -70,9 +70,9 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
             ],
           },
         ],
-      }));
+      });
     isEdit &&
-      (await setCheckLists(
+      setCheckLists(
         checkLists.map((questionItem) =>
           questionItem.questionId === checkList.questionId
             ? ({
@@ -87,7 +87,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
               } as checkListTypes)
             : ({ ...questionItem } as checkListTypes)
         )
-      ));
+      );
   };
 
   return (
