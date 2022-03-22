@@ -8,7 +8,9 @@ import CheckListComponent from '../../components/CheckListComponent/CheckListCom
 import { DefaultText } from '../../CustomText';
 import FloatingBtn from '../../components/CheckListComponent/FloatingBtn';
 import { requestPermission } from '../../utils/LocationPermission';
-import FindAddress from '../../components/Map/FindAddress';
+import ModalAddress from '../../components/Map/ModalAddress';
+import Geolocation from 'react-native-geolocation-service';
+import { IHere } from '../../types/mapTypes';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
   const [checkLists, setCheckLists] = useState<checkListTypes[]>(response);
@@ -17,11 +19,28 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
     navigation.navigate('login');
   };
 
+  // 현재위치 찾기
+  const goGeoLocation = (): void => {
+    Geolocation.getCurrentPosition(
+      (position) => {
+        navigation.navigate('map', {
+          activeType: true,
+          lat: position.coords.latitude,
+          long: position.coords.longitude,
+        });
+      },
+      (error) => {
+        console.error(error.message);
+      },
+      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
+    );
+  };
+
   // 허가 있어야 map으로 이동
   const onMapHandler = () => {
     requestPermission().then((result) => {
       if (result === 'granted') {
-        navigation.navigate('map', { activeType: true });
+        goGeoLocation();
       }
     });
   };
@@ -38,7 +57,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
           <View style={styles.whiteCard}>
             <DefaultText style={styles.checkListMainTitle}>주소를 입력하세요</DefaultText>
             <View style={styles.buttonsOfCheckList}>
-              <FindAddress />
+              <ModalAddress goGeoLocation={goGeoLocation} />
               <Pressable
                 onPress={onMapHandler}
                 style={[styles.mapInputOfAddress, styles.buttonOfCheckList]}
