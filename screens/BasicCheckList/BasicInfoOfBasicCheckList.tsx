@@ -38,12 +38,11 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
 
   const getServerData = async () => {
     try {
-      const serverResponse =
-        checkListContext?.checkListId !== 0
-          ? await axios.get(
-              `/api/check-list/${checkListContext?.checkListId}/common?mainCategory=기본정보`
-            )
-          : await axios.get('/api/check-list/init');
+      const serverResponse = checkListContext?.checkListId
+        ? await axios.get(
+            `/api/check-list/${checkListContext?.checkListId}/common?mainCategory=기본정보`
+          )
+        : await axios.get('/api/check-list/init');
       setCheckLists([
         ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
           ...item,

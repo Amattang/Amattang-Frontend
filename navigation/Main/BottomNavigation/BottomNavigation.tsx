@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, Text, View } from 'react-native';
@@ -7,11 +7,13 @@ import Home from '../../../screens/bottomTab/Home';
 import Map from '../../../screens/bottomTab/Map';
 import { BottomTabParams, NestedProps } from '../../../types/navigationTypes';
 import styles from './styles';
+import { checkListCtx } from '../../../Context/CheckListByServer';
 
 const Tab = createBottomTabNavigator<BottomTabParams>();
 
 function BottomNavigation() {
   const navigation = useNavigation<NestedProps>();
+  const checkListContext = useContext(checkListCtx);
 
   return (
     <Tab.Navigator>
@@ -23,7 +25,8 @@ function BottomNavigation() {
           title: '',
           headerRight: () => (
             <Pressable
-              onPress={() => {
+              onPress={async () => {
+                await checkListContext?.setCheckListId(false);
                 navigation.navigate('stack', { screen: 'profileSetting' });
               }}
             >
