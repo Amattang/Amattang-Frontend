@@ -1,13 +1,17 @@
 import React from 'react';
 import { ScrollView, View } from 'react-native';
 
-import { response } from '../../mockData/homeMockUpData';
 import { DefaultText } from '../../CustomText';
 import styles from './styles';
 import PinnedCheckList from './PinnedCheckList';
 import UnPinnedCheckList from './UnPinnedCheckList';
+import { homeScreenTypes } from '../../types/homeScreenTypes';
 
-function CheckListHome() {
+interface IProps {
+  homeCheckList: homeScreenTypes[];
+}
+
+function CheckListHome({ homeCheckList }: IProps) {
   return (
     <View style={styles.fullScreenWrapper}>
       <DefaultText style={[styles.welcomeTitle]}>
@@ -16,12 +20,18 @@ function CheckListHome() {
       </DefaultText>
       <View style={styles.unpinnedChecklistWrapper}>
         <ScrollView>
-          <DefaultText style={[styles.pinnedText]}>📌 고정된 리스트</DefaultText>
           <ScrollView horizontal={true}>
-            <PinnedCheckList response={response} />
+            {homeCheckList
+              .filter((item) => item.pinned)
+              .map((pinnedCheckList) => (
+                <PinnedCheckList key={pinnedCheckList.id} pinnedCheckList={pinnedCheckList} />
+              ))}
           </ScrollView>
-
-          <UnPinnedCheckList response={response} />
+          {homeCheckList
+            .filter((item) => !item.pinned)
+            .map((unPinnedCheckList) => (
+              <UnPinnedCheckList key={unPinnedCheckList.id} unPinnedCheckList={unPinnedCheckList} />
+            ))}
         </ScrollView>
       </View>
     </View>

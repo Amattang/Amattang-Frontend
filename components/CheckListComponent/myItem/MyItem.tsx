@@ -43,7 +43,7 @@ function MyItem({ elementClickedHandler, myItem, eachMyItemHandler, isEdit }: IP
                   : [styles.blueText, styles.myItemCount]
               }
             >
-              {myItem.question.length}
+              {myItem.questions.length}
             </DefaultText>
           </View>
         </Pressable>
@@ -61,8 +61,9 @@ function MyItem({ elementClickedHandler, myItem, eachMyItemHandler, isEdit }: IP
         </Pressable>
       </View>
       {isMyItemClicked
-        ? myItem.question.map((myItemElement) => (
+        ? myItem.questions.map((myItemElement, index) => (
             <MyItemElement
+              key={`${myItemElement.questionId}-${index}`}
               isEdit={isEdit}
               myItem={myItem}
               elementClickedHandler={elementClickedHandler}

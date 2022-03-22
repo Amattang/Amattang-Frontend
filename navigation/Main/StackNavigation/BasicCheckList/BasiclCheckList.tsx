@@ -8,7 +8,6 @@ import MyItemOfBasicCheckList from '../../../../screens/BasicCheckList/MyItemOfB
 import { mainLightBlue } from '../../../../color';
 import FloatingBtn from '../../../../components/CheckListComponent/FloatingBtn';
 import CameraAndGallery from '../../../../components/camera/CameraAndGallery';
-import { checkListTypes } from '../../../../types/checkListTypes';
 
 const Tab = createMaterialTopTabNavigator();
 
@@ -20,7 +19,6 @@ interface IProps {
 function BasicCheckList({ setIsEdit, isEdit }: IProps) {
   const [isBottomSheet, setIsBottomSheet] = useState(true);
   const [onModal, setOnModal] = useState(false);
-  const [checkListId, setCheckListId] = useState(0);
   const onEditHandler = () => {
     setIsEdit(true);
   };
@@ -37,23 +35,14 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
         <Tab.Screen
           name="basic"
           children={() => (
-            <BasicInfoOfBasicCheckList
-              isEdit={isEdit}
-              setIsBottomSheet={setIsBottomSheet}
-              checkListId={false}
-              setCheckListId={setCheckListId}
-            />
+            <BasicInfoOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
           )}
           options={{ title: '기본 정보' }}
         />
         <Tab.Screen
           name={'outside'}
           children={() => (
-            <OutsideOfBasicCheckList
-              isEdit={isEdit}
-              setIsBottomSheet={setIsBottomSheet}
-              checkListId={checkListId}
-            />
+            <OutsideOfBasicCheckList isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
           )}
           options={{ title: '외부 시설' }}
         />
@@ -64,7 +53,6 @@ function BasicCheckList({ setIsEdit, isEdit }: IProps) {
               isEdit={isEdit}
               setIsBottomSheet={setIsBottomSheet}
               isBottomSheet={isBottomSheet}
-              checkListId={checkListId}
             />
           )}
           options={{ title: '내부 시설' }}

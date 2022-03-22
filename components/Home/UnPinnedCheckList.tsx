@@ -1,51 +1,80 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { homeScreenTypes } from '../../types/homeScreenTypes';
 import { Image, Pressable, View } from 'react-native';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
+import { useNavigation } from '@react-navigation/native';
+import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface iProps {
-  response: homeScreenTypes[];
+  unPinnedCheckList: homeScreenTypes | null;
 }
 
-function UnPinnedCheckList({ response }: iProps) {
+function UnPinnedCheckList({ unPinnedCheckList }: iProps) {
+  const checkListContext = useContext(checkListCtx);
+  const navigation = useNavigation<any>();
+
+  const onCheckListMoveHandler = async () => {
+    await checkListContext?.setCheckListId(Number(unPinnedCheckList?.id));
+    navigation.navigate('stack', { screen: 'basicCheckList' });
+  };
   return (
     <>
-      {response
-        .filter((item) => !item.pinned)
-        .map((home) => (
-          <Pressable style={styles.unpinnedChecklistCard} key={home.id}>
+      {unPinnedCheckList ? (
+        <Pressable
+          onPress={onCheckListMoveHandler}
+          style={styles.unpinnedChecklistCard}
+          key={unPinnedCheckList.id}
+        >
+          {unPinnedCheckList.imgUri ? (
             <Image
               style={styles.unpinnedChecklistImg}
-              source={{ uri: home.imgUri }}
+              source={{ uri: unPinnedCheckList.imgUri }}
               resizeMode="cover"
             />
-            <View style={styles.unpinnedChecklistSummaryCard}>
-              <View>
-                <DefaultText style={[styles.unpinnedChecklistTitle]}>
-                  {home.mainTtle.length > 15 ? `${home.mainTtle.slice(0, 15)}...` : home.mainTtle}
-                </DefaultText>
-                <DefaultText style={styles.unpinnedChecklistAddress}>
-                  {home.address.length > 20 ? `${home.address.slice(0, 20)}...` : home.address}
-                </DefaultText>
-              </View>
-              <View style={styles.bottomElements}>
-                <View style={[styles.bottomElement]}>
+          ) : (
+            <Image
+              style={[styles.unpinnedChecklistImg]}
+              source={require('../../assets/images/home/mainLogo.png')}
+              resizeMode="contain"
+            />
+          )}
+          <View style={styles.unpinnedChecklistSummaryCard}>
+            <View>
+              <DefaultText style={[styles.unpinnedChecklistTitle]}>
+                {unPinnedCheckList.mainTitle
+                  ? unPinnedCheckList.mainTitle.length > 15
+                    ? `${unPinnedCheckList.mainTitle.slice(0, 15)}...`
+                    : unPinnedCheckList.mainTitle
+                  : '체크리스트 이름을 만들어주세요!'}
+              </DefaultText>
+              <DefaultText style={styles.unpinnedChecklistAddress}>
+                {unPinnedCheckList.address
+                  ? unPinnedCheckList.address.length > 20
+                    ? `${unPinnedCheckList.address.slice(0, 20)}...`
+                    : unPinnedCheckList.address
+                  : '해당 매물 위치를 입력해주세요!'}
+              </DefaultText>
+            </View>
+            <View style={styles.bottomElements}>
+              {unPinnedCheckList.roomType && unPinnedCheckList.area && (
+                <View style={[styles.bottomElement, styles.roomType]}>
                   <Image source={require('../../assets/images/home/roomTypeImg.png')} />
                   <DefaultText style={[styles.blueText, styles.bottomElementText]}>
-                    {home.roomType} / {home.area}
+                    {unPinnedCheckList.roomType} /{unPinnedCheckList.area}
                   </DefaultText>
                 </View>
-                <View style={[styles.bottomElement, styles.distanceWrapper]}>
-                  <Image source={require('../../assets/images/home/distanceImg.png')} />
-                  <DefaultText style={[styles.blueText, styles.bottomElementText]}>
-                    {home.distance}
-                  </DefaultText>
-                </View>
+              )}
+              <View style={[styles.bottomElement]}>
+                <Image source={require('../../assets/images/home/distanceImg.png')} />
+                <DefaultText style={[styles.blueText, styles.bottomElementText]}>
+                  {unPinnedCheckList.distance && unPinnedCheckList.distance}
+                </DefaultText>
               </View>
             </View>
-          </Pressable>
-        ))}
+          </View>
+        </Pressable>
+      ) : null}
     </>
   );
 }

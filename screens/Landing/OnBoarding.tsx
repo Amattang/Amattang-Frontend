@@ -1,5 +1,5 @@
-import React, { useEffect, useState } from 'react';
-import { Image, PermissionsAndroid, Platform, Pressable, ScrollView, View } from 'react-native';
+import React, { useState } from 'react';
+import { Image, Pressable, ScrollView, View } from 'react-native';
 import styles from './styles';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { checkListTypes } from '../../types/checkListTypes';
@@ -51,8 +51,9 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
               </Pressable>
             </View>
           </View>
-          {checkLists.map((checkList) => (
+          {checkLists.map((checkList, index) => (
             <CheckListComponent
+              key={index}
               onBoarding={true}
               checkList={checkList}
               isEdit={true}
