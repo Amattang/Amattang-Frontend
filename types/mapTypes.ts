@@ -8,6 +8,7 @@ export interface IHere {
   longitude: number | null;
 }
 
+// 체크리스트 매물들
 export interface ILocations {
   latlng: IPick;
   title: string;
@@ -15,4 +16,10 @@ export interface ILocations {
   text: string;
   id: number;
   center: boolean;
+}
+
+// 위치 좌표
+export interface ILocation {
+  latitude: number;
+  longitude: number;
 }

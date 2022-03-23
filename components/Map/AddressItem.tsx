@@ -3,7 +3,11 @@ import { Pressable, TextInput, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import { styles } from './AddressItem.style';
 
-const AddressItem = ({ address }: any) => {
+type Props = {
+  address: string | undefined;
+};
+
+const AddressItem = ({ address }: Props) => {
   const [specificAddress, onChangeText] = useState<string>('');
 
   return (

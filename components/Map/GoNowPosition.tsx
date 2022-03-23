@@ -1,9 +1,15 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Image, Pressable } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import { ILocation } from '../../types/mapTypes';
 import { styles } from './GoNowPosition.style';
 
-const GoNowPosition = ({ setLocation, coordToAddress }: any) => {
+type Props = {
+  setLocation: Dispatch<SetStateAction<ILocation | undefined>>;
+  coordToAddress: (x: string, y: string) => void;
+};
+
+const GoNowPosition = ({ setLocation, coordToAddress }: Props) => {
   // 현재위치 찾기
   const goGeoLocation = (): void => {
     Geolocation.getCurrentPosition(

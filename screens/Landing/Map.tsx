@@ -5,12 +5,13 @@ import AddressItem from '../../components/Map/AddressItem';
 import GoNowPosition from '../../components/Map/GoNowPosition';
 import MapTemplate from '../../components/Map/MapTemplate';
 import { DefaultText } from '../../CustomText';
+import { ILocation } from '../../types/mapTypes';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { OnBoardingStackParamsList } from '../../types/navigationTypes';
 
-interface ILocation {
-  latitude: number;
-  longitude: number;
-}
+// type Props = NativeStackScreenProps<OnBoardingStackParamsList, 'map'>;
 
+// 에라이 타입 에러
 function Map({ route }: any) {
   const { params } = route;
 
@@ -18,7 +19,7 @@ function Map({ route }: any) {
   const [location, setLocation] = useState<ILocation | undefined>(undefined);
 
   // map 하단에 넣을 도로명주소
-  const [doroAddress, setDoroAddress] = useState('');
+  const [doroAddress, setDoroAddress] = useState<string | undefined>('');
 
   // 좌표 -> 도로명주소
   // x : 경도, y : 위도
