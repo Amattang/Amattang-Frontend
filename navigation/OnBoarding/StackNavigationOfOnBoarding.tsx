@@ -58,7 +58,7 @@ function OnBoardingStack({ setIsLogin }: IProps) {
         component={Map}
         options={{
           animation: 'slide_from_bottom',
-          headerTitle: '지도에서 위치 확인',
+          title: '지도에서 위치 확인',
           headerTitleAlign: 'center',
           headerTintColor: '#22232B',
           headerLeft: () => (

@@ -3,7 +3,7 @@ import { Image, Pressable } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
 import { styles } from './GoNowPosition.style';
 
-const GoNowPosition = ({ setLocation, setDoroAddress, coordToAddress }: any) => {
+const GoNowPosition = ({ setLocation, coordToAddress }: any) => {
   // 현재위치 찾기
   const goGeoLocation = (): void => {
     Geolocation.getCurrentPosition(
@@ -13,7 +13,7 @@ const GoNowPosition = ({ setLocation, setDoroAddress, coordToAddress }: any) => 
           latitude,
           longitude,
         });
-        coordToAddress(latitude, longitude);
+        coordToAddress(longitude.toString(), latitude.toString());
       },
       (error) => {
         console.error(error.message);

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Pressable, Text, TextInput, View } from 'react-native';
+import { Pressable, TextInput, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import { styles } from './AddressItem.style';
 

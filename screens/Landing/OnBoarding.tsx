@@ -56,7 +56,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
           <View style={styles.whiteCard}>
             <DefaultText style={styles.checkListMainTitle}>주소를 입력하세요</DefaultText>
             <View style={styles.buttonsOfCheckList}>
-              <ModalAddress goGeoLocation={goGeoLocation} />
+              <ModalAddress />
               <Pressable
                 onPress={onMapHandler}
                 style={[styles.mapInputOfAddress, styles.buttonOfCheckList]}

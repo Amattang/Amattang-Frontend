@@ -1,10 +1,10 @@
 import React, { useEffect, useState } from 'react';
-import { Text, View } from 'react-native';
+import { View } from 'react-native';
 import axios from 'axios';
 import AddressItem from '../../components/Map/AddressItem';
-import MapCurrentLocationBtn from '../../components/Map/MapCurrentLocationBtn';
-import MapFindAddressBtn from '../../components/Map/MapFindAddressBtn';
 import GoNowPosition from '../../components/Map/GoNowPosition';
+import MapTemplate from '../../components/Map/MapTemplate';
+import { DefaultText } from '../../CustomText';
 
 interface ILocation {
   latitude: number;
@@ -35,10 +35,10 @@ function Map({ route }: any) {
         )
         .then((res) => {
           const location = res.data.documents[0];
-          setDoroAddress(location.address.address_name);
+          setDoroAddress(location ? location.address.address_name : 'undefined');
         })
         .catch((err) => {
-          console.error(`error : ${err}`);
+          console.error(`error1 : ${err}`);
         });
     } catch (error) {
       console.error(error);
@@ -82,18 +82,27 @@ function Map({ route }: any) {
 
   return (
     <View style={{ flex: 1 }}>
-      {params.activeType ? (
-        <MapCurrentLocationBtn lat={params.lat} long={params.long} />
-      ) : location ? (
-        <MapFindAddressBtn lat={location.latitude} long={location.longitude} />
-      ) : (
-        <Text>Loading...</Text>
-      )}
-      <GoNowPosition
-        setLocation={setLocation}
-        setDoroAddress={setDoroAddress}
-        coordToAddress={coordToAddress}
+      <MapTemplate
+        lat={
+          params.activeType ? (
+            params.lat
+          ) : location ? (
+            location.latitude
+          ) : (
+            <DefaultText>Loading...</DefaultText>
+          )
+        }
+        long={
+          params.activeType ? (
+            params.long
+          ) : location ? (
+            location.longitude
+          ) : (
+            <DefaultText>Loading...</DefaultText>
+          )
+        }
       />
+      <GoNowPosition setLocation={setLocation} coordToAddress={coordToAddress} />
       <AddressItem address={doroAddress} />
     </View>
   );

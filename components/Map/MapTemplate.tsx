@@ -6,14 +6,15 @@ type Props = {
   long: number;
 };
 
-const MapFindAddressBtn = ({ lat, long }: Props) => {
+// 좌표를 무조건 넘겨줘야 함
+const MapTemplate = ({ lat, long }: Props) => {
   return (
     <MapView
       style={{ flex: 1 }}
       provider={PROVIDER_GOOGLE}
       region={{
-        latitude: lat as number,
-        longitude: long as number,
+        latitude: lat,
+        longitude: long,
         latitudeDelta: 0.0122,
         longitudeDelta: 0.0021,
       }}
@@ -22,15 +23,15 @@ const MapFindAddressBtn = ({ lat, long }: Props) => {
     >
       <Marker
         coordinate={{
-          latitude: lat as number,
-          longitude: long as number,
+          latitude: lat,
+          longitude: long,
         }}
         title={'현재위치'}
         description={'현재위치'}
-        pinColor={'blue'}
+        image={require('../../assets/images/map/mapCenter3.png')}
       />
     </MapView>
   );
 };
 
-export default MapFindAddressBtn;
+export default MapTemplate;

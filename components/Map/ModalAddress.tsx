@@ -6,11 +6,7 @@ import styles from '../../screens/Landing/styles';
 import { useNavigation } from '@react-navigation/native';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 
-type Props = {
-  goGeoLocation: () => void;
-};
-
-const ModalAddress = ({ goGeoLocation }: Props) => {
+const ModalAddress = () => {
   const navigation = useNavigation<OnBoardingStackProps>();
 
   // @brief 주소검색창 - 데이터 조회
@@ -29,8 +25,8 @@ const ModalAddress = ({ goGeoLocation }: Props) => {
             console.error(err);
           }}
           onSelected={(data) => {
-            navigation.navigate('map', { activeType: false, address: data.address });
             setModal(false);
+            navigation.navigate('map', { activeType: false, address: data.address });
           }}
         />
       </Modal>
