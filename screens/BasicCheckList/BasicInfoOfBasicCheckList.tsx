@@ -38,11 +38,9 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
 
   const getServerData = async () => {
     try {
-      const serverResponse = checkListContext?.checkListId
-        ? await axios.get(
-            `/api/check-list/${checkListContext?.checkListId}/common?mainCategory=기본정보`
-          )
-        : await axios.get('/api/check-list/init');
+      const serverResponse = await axios.get(
+        `/api/check-list/${checkListContext?.checkListId}/common?mainCategory=기본정보`
+      );
       setCheckLists([
         ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
           ...item,
@@ -51,7 +49,6 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
       setDeletedCheckLists(
         [...serverResponse.data.data.questionList].filter((item) => !item.visibility)
       );
-      checkListContext?.setCheckListId(serverResponse.data.data.checkListId);
       setOnServerData(true);
     } catch (error) {
       console.error(error);
@@ -59,7 +56,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   };
 
   useEffect(() => {
-    checkLists && getServerData();
+    getServerData();
   }, []);
   // setCheckLists(response.data);
   // 바텀시트 동작을 위한 코드

@@ -48,7 +48,7 @@ function Kitchen({ isEdit, setIsBottomSheet }: IProps) {
       mainCategory: '내부시설',
       subCategory: '부엌',
     });
-  }, []);
+  }, [checkListContext?.checkListId]);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 

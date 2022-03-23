@@ -48,7 +48,7 @@ function Bathroom({ isEdit, setIsBottomSheet }: IProps) {
       mainCategory: '내부시설',
       subCategory: '화장실',
     });
-  }, []);
+  }, [checkListContext?.checkListId]);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 

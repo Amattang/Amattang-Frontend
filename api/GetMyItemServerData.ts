@@ -5,7 +5,7 @@ import { Dispatch, SetStateAction } from 'react';
 interface IProps {
   setMyItems: Dispatch<SetStateAction<myItemType[]>>;
   setOnServerData?: Dispatch<SetStateAction<boolean>>;
-  checkListId: number | undefined;
+  checkListId: number | false | undefined;
 }
 
 export const GetMyItemServerData = async ({ setMyItems, setOnServerData, checkListId }: IProps) => {

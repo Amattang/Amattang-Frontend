@@ -44,8 +44,7 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
       checkListId: checkListContext?.checkListId,
       setOnServerData,
     });
-  }, []);
-
+  }, [checkListContext?.checkListId]);
   const renderBackdrop = (props: BottomSheetBackgroundProps) => (
     <BottomSheetBackdrop {...props} opacity={0.7} />
   );

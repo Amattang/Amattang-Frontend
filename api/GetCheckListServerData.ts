@@ -6,7 +6,7 @@ interface IProps {
   setDeletedCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   setOnServerData: Dispatch<SetStateAction<boolean>>;
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
-  checkListId: number | undefined;
+  checkListId: number | false | undefined;
   mainCategory: '외부시설' | '내부시설';
   subCategory: '창문' | '천장' | '부엌' | '화장실' | '벽' | '현관' | '옵션' | null;
 }

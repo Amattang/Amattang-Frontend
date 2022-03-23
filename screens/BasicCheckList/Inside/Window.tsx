@@ -48,7 +48,7 @@ function Window({ isEdit, setIsBottomSheet }: IProps) {
       mainCategory: '내부시설',
       subCategory: '창문',
     });
-  }, []);
+  }, [checkListContext?.checkListId]);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 

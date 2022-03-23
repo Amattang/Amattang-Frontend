@@ -48,7 +48,7 @@ function Wall({ isEdit, setIsBottomSheet }: IProps) {
       mainCategory: '내부시설',
       subCategory: '벽',
     });
-  }, []);
+  }, [checkListContext?.checkListId]);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 

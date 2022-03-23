@@ -11,15 +11,18 @@ function Home() {
   const [homeCheckList, setHomeCheckList] = useState([]);
 
   const getHomeDataHandler = async () => {
-    await axios.get('/api/check-list').then((response) => setHomeCheckList(response.data.data));
+    try {
+      const response = await axios.get('/api/check-list');
+      setHomeCheckList(response.data.data);
+    } catch (error) {
+      console.error(error);
+    }
     setIsCheckList(true);
     setLoading(true);
   };
 
   useEffect(() => {
-    // 체크리스트 데이터 있으면 넣어주기
     getHomeDataHandler();
-    console.log(homeCheckList);
   }, []);
 
   return (
