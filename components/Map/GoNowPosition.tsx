@@ -1,9 +1,9 @@
 import React from 'react';
-import { Pressable } from 'react-native';
-import { DefaultText } from '../../CustomText';
+import { Image, Pressable } from 'react-native';
 import Geolocation from 'react-native-geolocation-service';
+import { styles } from './GoNowPosition.style';
 
-const GoNowPosition = ({ setLocation }: any) => {
+const GoNowPosition = ({ setLocation, setDoroAddress, coordToAddress }: any) => {
   // 현재위치 찾기
   const goGeoLocation = (): void => {
     Geolocation.getCurrentPosition(
@@ -13,6 +13,7 @@ const GoNowPosition = ({ setLocation }: any) => {
           latitude,
           longitude,
         });
+        coordToAddress(latitude, longitude);
       },
       (error) => {
         console.error(error.message);
@@ -24,7 +25,10 @@ const GoNowPosition = ({ setLocation }: any) => {
   return (
     <>
       <Pressable onPress={goGeoLocation}>
-        <DefaultText>현재위치로 가기</DefaultText>
+        <Image
+          source={require('../../assets/images/map/myPosition.png')}
+          style={styles.floatingBtn}
+        />
       </Pressable>
     </>
   );

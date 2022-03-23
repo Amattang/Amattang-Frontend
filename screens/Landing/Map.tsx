@@ -38,7 +38,7 @@ function Map({ route }: any) {
           setDoroAddress(location.address.address_name);
         })
         .catch((err) => {
-          console.error(err);
+          console.error(`error : ${err}`);
         });
     } catch (error) {
       console.error(error);
@@ -89,7 +89,11 @@ function Map({ route }: any) {
       ) : (
         <Text>Loading...</Text>
       )}
-      <GoNowPosition setLocation={setLocation} />
+      <GoNowPosition
+        setLocation={setLocation}
+        setDoroAddress={setDoroAddress}
+        coordToAddress={coordToAddress}
+      />
       <AddressItem address={doroAddress} />
     </View>
   );

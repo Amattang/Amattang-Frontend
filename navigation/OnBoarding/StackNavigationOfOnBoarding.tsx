@@ -8,7 +8,6 @@ import Landing from '../../screens/Landing/Landing';
 import { Image, Pressable } from 'react-native';
 import Map from '../../screens/Landing/Map';
 import { useNavigation } from '@react-navigation/native';
-import FindAddress from '../../components/Map/FindAddress';
 
 const Stack = createNativeStackNavigator<OnBoardingStackParamsList>();
 
@@ -60,6 +59,8 @@ function OnBoardingStack({ setIsLogin }: IProps) {
         options={{
           animation: 'slide_from_bottom',
           headerTitle: '지도에서 위치 확인',
+          headerTitleAlign: 'center',
+          headerTintColor: '#22232B',
           headerLeft: () => (
             <Pressable onPress={() => navigation.goBack()}>
               <Image source={require('../../assets/images/common/leftArrow.png')} />

@@ -10,7 +10,6 @@ import FloatingBtn from '../../components/CheckListComponent/FloatingBtn';
 import { requestPermission } from '../../utils/LocationPermission';
 import ModalAddress from '../../components/Map/ModalAddress';
 import Geolocation from 'react-native-geolocation-service';
-import { IHere } from '../../types/mapTypes';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
   const [checkLists, setCheckLists] = useState<checkListTypes[]>(response);

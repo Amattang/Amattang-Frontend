@@ -15,12 +15,7 @@ const ModalAddress = ({ goGeoLocation }: Props) => {
 
   // @brief 주소검색창 - 데이터 조회
   const [isModal, setModal] = useState<boolean>(false);
-  const [address, setAddress] = useState<string>('');
-  const [latlong, setlatLong] = useState({
-    latlong: 0,
-    longitude: 0,
-  });
-  1;
+
   return (
     <>
       <Modal visible={isModal}>
