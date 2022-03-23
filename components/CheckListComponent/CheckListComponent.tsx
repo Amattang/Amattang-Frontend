@@ -76,47 +76,47 @@ function CheckListComponent({
           <View style={styles.whiteCard} key={checkList.questionId}>
             <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
             <View style={styles.subTitles}>
-              {checkList.rule && (
+              {checkList.rule ? (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>📘 </DefaultText>
                   <DefaultText style={styles.checkListGrayText}>{checkList.rule}</DefaultText>
                 </View>
-              )}
-              {checkList.description && (
+              ) : null}
+              {checkList.description ? (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>👀 </DefaultText>
                   <DefaultText style={styles.checkListGrayText}>
                     {checkList.description}
                   </DefaultText>
                 </View>
-              )}
+              ) : null}
             </View>
             <View style={styles.buttonsOfCheckList}>
-              {checkList.type === 'A' && (
+              {checkList.type === 'A' ? (
                 <ButtonsOfTypeA
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              )}
-              {checkList.type === 'B' && (
+              ) : null}
+              {checkList.type === 'B' ? (
                 <ButtonsOfTypeB
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              )}
-              {checkList.type === 'C' && <DefaultText>c</DefaultText>}
-              {checkList.type === 'D' && (
+              ) : null}
+              {checkList.type === 'C' ? <DefaultText>c</DefaultText> : null}
+              {checkList.type === 'D' ? (
                 <ButtonsOfTypeD
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              )}
+              ) : null}
             </View>
           </View>
         </Animated.View>
