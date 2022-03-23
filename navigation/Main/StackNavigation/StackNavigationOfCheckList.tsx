@@ -40,23 +40,21 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
   };
 
   const onSubmitHandler = async () => {
+    console.log(checkListContext?.deletedCheckListByServer);
     try {
       await axios.put(
-        `api/check-list/${checkListContext?.checkListId}/common/question`,
+        `/api/check-list/${checkListContext?.checkListId}/common/question`,
         checkListContext?.choseCheckListByServer
       );
-      console.log(checkListContext?.choseCheckListByServer);
-    } catch (error) {
-      console.error(error);
-    }
-    try {
       await axios.put(
-        `api/check-list/${checkListContext?.checkListId}/common/question/state`,
+        `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
         checkListContext?.deletedCheckListByServer
       );
     } catch (error) {
       console.error(error);
     }
+    checkListContext?.setDeletedCheckListByServer({ question: [] });
+    checkListContext?.setChoseCheckListByServer({ typeA: [], typeB: [], typeD: [], typeM: [] });
     setIsEdit(false);
   };
 

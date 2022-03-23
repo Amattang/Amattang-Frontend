@@ -85,6 +85,7 @@ function BottomSheetsOfDeletedCheckList({
         <BottomSheetScrollView>
           {deletedCheckLists.map((deletedCheckList: checkListTypes) => (
             <Pressable
+              key={deletedCheckList.questionId}
               onPress={() => onUpdateCheckList(deletedCheckList)}
               style={
                 deletedCheckList.visibility

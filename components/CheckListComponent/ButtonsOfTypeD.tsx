@@ -3,6 +3,7 @@ import { Pressable, TextInput } from 'react-native';
 import {
   answerButtonType,
   checkListTypes,
+  choseCheckListByServerType,
   choseCheckListItemByServerType,
 } from '../../types/checkListTypes';
 import styles from './styles';
@@ -37,12 +38,24 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
             : ({ ...questionItem } as checkListTypes)
         )
       ));
+    newCheckListElement &&
+      (await checkListContext?.setChoseCheckListByServer({
+        ...checkListContext?.choseCheckListByServer,
+        typeD: [
+          ...(checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]),
+          {
+            questionId: checkList.questionId,
+            answer: [...checkList.answer, { type: newCheckListElement, val: true }],
+          },
+        ],
+      }));
+
     await setNewCheckListElement('');
   };
 
-  const onPressHandler = async (answer: answerButtonType) => {
+  const onPressHandler = (answer: answerButtonType) => {
     isEdit &&
-      (await checkListContext?.setChoseCheckListByServer({
+      checkListContext?.setChoseCheckListByServer({
         ...checkListContext?.choseCheckListByServer,
         typeD: [
           ...(checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]),
@@ -57,9 +70,9 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
             ],
           },
         ],
-      }));
+      });
     isEdit &&
-      (await setCheckLists(
+      setCheckLists(
         checkLists.map((questionItem) =>
           questionItem.questionId === checkList.questionId
             ? ({
@@ -74,7 +87,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
               } as checkListTypes)
             : ({ ...questionItem } as checkListTypes)
         )
-      ));
+      );
   };
 
   return (

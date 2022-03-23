@@ -8,7 +8,7 @@ export type OnBoardingStackParamsList = {
   landing: undefined;
   login: undefined;
   onBoarding: undefined;
-  map: undefined;
+  map: any;
 };
 export type OnBoardingStackProps = NativeStackScreenProps<OnBoardingStackParamsList, 'landing'>;
 
