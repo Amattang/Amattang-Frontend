@@ -46,7 +46,7 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
       mainCategory: '외부시설',
       subCategory: null,
     });
-  }, []);
+  }, [checkListContext?.checkListId]);
 
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
 
