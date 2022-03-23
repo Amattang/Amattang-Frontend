@@ -1,5 +1,14 @@
-import React, { Dispatch, SetStateAction, useCallback, useMemo, useRef, useState } from 'react';
-import { Alert, ScrollView, View } from 'react-native';
+import React, {
+  Dispatch,
+  SetStateAction,
+  useCallback,
+  useContext,
+  useEffect,
+  useMemo,
+  useRef,
+  useState,
+} from 'react';
+import { ActivityIndicator, ScrollView, View } from 'react-native';
 
 import BlankedMyItem from '../../components/CheckListComponent/myItem/BlankedMyItem';
 import ButtonOfAddMyItem from '../../components/CheckListComponent/myItem/ButtonOfAddMyItem';
@@ -14,6 +23,8 @@ import {
 import MyItem from '../../components/CheckListComponent/myItem/MyItem';
 import MyItemOfBottomSheets from '../../components/CheckListComponent/myItem/MyItemOfBottomSheets';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import { GetMyItemServerData } from '../../api/GetMyItemServerData';
+import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface IProps {
   isEdit: boolean;
@@ -21,9 +32,19 @@ interface IProps {
 }
 
 function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
+  const checkListContext = useContext(checkListCtx);
+  const [onServerData, setOnServerData] = useState(false);
+
   const [myItems, setMyItems] = useState<myItemType[]>(response);
   const [clickedMyItem, setClickedMyItem] = useState<myItemType | null>(null);
 
+  useEffect(() => {
+    GetMyItemServerData({
+      setMyItems,
+      checkListId: checkListContext?.checkListId,
+      setOnServerData,
+    });
+  }, [checkListContext?.checkListId]);
   const renderBackdrop = (props: BottomSheetBackgroundProps) => (
     <BottomSheetBackdrop {...props} opacity={0.7} />
   );
@@ -34,9 +55,7 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
     setIsBottomSheet(true);
   };
   const handlePresentModalPress = () => {
-    isEdit
-      ? bottomSheetModalRef.current?.present()
-      : Alert.alert('읽기상태입니다!', '오른쪽 아래 버튼을 눌러주세요');
+    isEdit && bottomSheetModalRef.current?.present();
   };
 
   const elementClickedHandler = ({ myItem, myItemElement }: myItemClickHandlerType) => {
@@ -45,7 +64,7 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
         myItem.categoryId === selectedItem.categoryId
           ? {
               ...selectedItem,
-              question: selectedItem.question.map((selectedItemElement) =>
+              questions: selectedItem.questions.map((selectedItemElement) =>
                 selectedItemElement.questionId === myItemElement.questionId
                   ? {
                       ...selectedItemElement,
@@ -75,43 +94,49 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
-      <BottomSheetModalProvider>
-        <KeyboardAwareScrollView extraHeight={150}>
-          <ScrollView>
-            <ButtonOfAddMyItem
-              isEdit={isEdit}
-              myItem={null}
-              eachMyItemHandler={eachMyItemHandler}
+    <>
+      {onServerData ? (
+        <View style={{ flex: 1 }}>
+          <BottomSheetModalProvider>
+            <KeyboardAwareScrollView extraHeight={150}>
+              <ScrollView>
+                <ButtonOfAddMyItem
+                  isEdit={isEdit}
+                  myItem={null}
+                  eachMyItemHandler={eachMyItemHandler}
+                  setMyItems={setMyItems}
+                />
+                {myItems.map((myItem) => (
+                  <MyItem
+                    isEdit={isEdit}
+                    elementClickedHandler={elementClickedHandler}
+                    myItems={myItems}
+                    myItem={myItem}
+                    eachMyItemHandler={eachMyItemHandler}
+                  />
+                ))}
+              </ScrollView>
+              {myItems.length === 0 && <BlankedMyItem />}
+            </KeyboardAwareScrollView>
+            <MyItemOfBottomSheets
+              handleSheetChanges={handleSheetChanges}
+              clickedMyItem={clickedMyItem}
+              setClickedMyItem={setClickedMyItem}
               setMyItems={setMyItems}
+              myItems={myItems}
+              isEdit={isEdit}
+              onAnimateHandler={onAnimateHandler}
+              onDismissHandler={onDismissHandler}
+              renderBackdrop={renderBackdrop}
+              bottomSheetModalRef={bottomSheetModalRef}
+              snapPoints={snapPoints}
             />
-            {myItems.map((myItem) => (
-              <MyItem
-                isEdit={isEdit}
-                elementClickedHandler={elementClickedHandler}
-                myItems={myItems}
-                myItem={myItem}
-                eachMyItemHandler={eachMyItemHandler}
-              />
-            ))}
-          </ScrollView>
-          {myItems.length === 0 && <BlankedMyItem />}
-        </KeyboardAwareScrollView>
-        <MyItemOfBottomSheets
-          handleSheetChanges={handleSheetChanges}
-          clickedMyItem={clickedMyItem}
-          setClickedMyItem={setClickedMyItem}
-          setMyItems={setMyItems}
-          myItems={myItems}
-          isEdit={isEdit}
-          onAnimateHandler={onAnimateHandler}
-          onDismissHandler={onDismissHandler}
-          renderBackdrop={renderBackdrop}
-          bottomSheetModalRef={bottomSheetModalRef}
-          snapPoints={snapPoints}
-        />
-      </BottomSheetModalProvider>
-    </View>
+          </BottomSheetModalProvider>
+        </View>
+      ) : (
+        <ActivityIndicator style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }} />
+      )}
+    </>
   );
 }
 

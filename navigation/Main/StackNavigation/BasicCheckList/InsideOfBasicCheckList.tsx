@@ -15,10 +15,9 @@ interface IProps {
   isEdit: boolean;
   setIsBottomSheet: Dispatch<SetStateAction<boolean>>;
   isBottomSheet?: boolean;
-  checkListId: number;
 }
 
-function InsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IProps) {
+function InsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   return (
     <>
       <Tab.Navigator
@@ -42,67 +41,37 @@ function InsideOfBasicCheckList({ isEdit, setIsBottomSheet, checkListId }: IProp
       >
         <Tab.Screen
           name={'window'}
-          children={() => (
-            <Window checkListId={checkListId} isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
-          )}
+          children={() => <Window isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />}
           options={{ title: '창문' }}
         />
         <Tab.Screen
           name={'ceiling'}
-          children={() => (
-            <Ceiling
-              checkListId={checkListId}
-              isEdit={isEdit}
-              setIsBottomSheet={setIsBottomSheet}
-            />
-          )}
+          children={() => <Ceiling isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />}
           options={{ title: '천장' }}
         />
         <Tab.Screen
           name={'kitchen'}
-          children={() => (
-            <Kitchen
-              checkListId={checkListId}
-              isEdit={isEdit}
-              setIsBottomSheet={setIsBottomSheet}
-            />
-          )}
+          children={() => <Kitchen isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />}
           options={{ title: '부엌' }}
         />
         <Tab.Screen
           name={'bathroom'}
-          children={() => (
-            <Bathroom
-              checkListId={checkListId}
-              isEdit={isEdit}
-              setIsBottomSheet={setIsBottomSheet}
-            />
-          )}
+          children={() => <Bathroom isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />}
           options={{ title: '화장실' }}
         />
         <Tab.Screen
           name={'wall'}
-          children={() => (
-            <Wall checkListId={checkListId} isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
-          )}
+          children={() => <Wall isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />}
           options={{ title: '벽' }}
         />
         <Tab.Screen
           name={'entrance'}
-          children={() => (
-            <Entrance
-              checkListId={checkListId}
-              isEdit={isEdit}
-              setIsBottomSheet={setIsBottomSheet}
-            />
-          )}
+          children={() => <Entrance isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />}
           options={{ title: '현관' }}
         />
         <Tab.Screen
           name={'option'}
-          children={() => (
-            <Option checkListId={checkListId} isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />
-          )}
+          children={() => <Option isEdit={isEdit} setIsBottomSheet={setIsBottomSheet} />}
           options={{ title: '옵션' }}
         />
       </Tab.Navigator>

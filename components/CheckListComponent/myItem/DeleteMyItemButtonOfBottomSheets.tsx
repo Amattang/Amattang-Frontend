@@ -1,8 +1,11 @@
-import React, { Dispatch, RefObject, SetStateAction } from 'react';
+import React, { Dispatch, RefObject, SetStateAction, useContext } from 'react';
 import { Image, Pressable } from 'react-native';
 import { myItemType } from '../../../types/checkListTypes';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
 import styles from '../styles';
+import { GetMyItemServerData } from '../../../api/GetMyItemServerData';
+import axios from 'axios';
+import { checkListCtx } from '../../../Context/CheckListByServer';
 
 interface IProps {
   clickedMyItem: myItemType | null;
@@ -19,10 +22,16 @@ function DeleteMyItemButtonOfBottomSheets({
   myItems,
   clickedMyItem,
 }: IProps) {
+  const checkListContext = useContext(checkListCtx);
   const onDeleteMyItemHandler = () => {
     isEdit && bottomSheetModalRef?.current?.dismiss();
     isEdit &&
-      setTimeout(() => {
+      setTimeout(async () => {
+        await axios.delete(
+          `api/check-list/${checkListContext?.checkListId}/custom?categoryId=${clickedMyItem?.categoryId}`
+        );
+
+        await GetMyItemServerData({ setMyItems, checkListId: checkListContext?.checkListId });
         setMyItems(myItems.filter((item) => item.categoryId !== clickedMyItem?.categoryId));
       }, 500);
   };
