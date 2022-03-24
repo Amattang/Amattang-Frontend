@@ -52,8 +52,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   bottomElementText: { marginLeft: 7, fontSize: 12 },
-  distanceWrapper: { marginLeft: 20 },
-
+  roomType: {
+    marginRight: 20,
+  },
   unpinnedChecklistWrapper: { flex: 3, marginLeft: 17 },
   unpinnedChecklistCard: { flexDirection: 'row', marginVertical: 8, height: 100 },
   unpinnedChecklistImg: { width: 136, height: 100, borderRadius: 6 },

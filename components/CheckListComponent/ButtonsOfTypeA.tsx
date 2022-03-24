@@ -19,26 +19,9 @@ interface IProps {
 function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
   const checkListContext = useContext(checkListCtx);
 
-  const onPressHandler = async (answer: answerButtonType) => {
+  const onPressHandler = (answer: answerButtonType) => {
     isEdit &&
-      (await checkListContext?.setChoseCheckListByServer({
-        ...checkListContext?.choseCheckListByServer,
-        typeA: [
-          ...(checkListContext?.choseCheckListByServer.typeA as choseCheckListItemByServerType[]),
-          {
-            questionId: checkList.questionId,
-            answer: [
-              ...checkList.answer.map((answerItem) =>
-                answerItem.type === answer.type
-                  ? { ...answerItem, val: true }
-                  : { ...answerItem, val: false }
-              ),
-            ],
-          },
-        ],
-      }));
-    isEdit &&
-      (await setCheckLists(
+      setCheckLists(
         checkLists.map((questionItem) =>
           questionItem.questionId === checkList.questionId
             ? ({
@@ -53,7 +36,24 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
               } as checkListTypes)
             : ({ ...questionItem } as checkListTypes)
         )
-      ));
+      );
+    isEdit &&
+      checkListContext?.setChoseCheckListByServer({
+        ...checkListContext?.choseCheckListByServer,
+        typeA: [
+          ...(checkListContext?.choseCheckListByServer.typeA as choseCheckListItemByServerType[]),
+          {
+            questionId: checkList.questionId,
+            answer: [
+              ...checkList.answer.map((answerItem) =>
+                answerItem.type === answer.type
+                  ? { ...answerItem, val: true }
+                  : { ...answerItem, val: false }
+              ),
+            ],
+          },
+        ],
+      });
   };
 
   return (

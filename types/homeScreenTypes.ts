@@ -1,7 +1,7 @@
 export interface homeScreenTypes {
   imgUri: string;
   id: string;
-  mainTtle: string;
+  mainTitle: string;
   address: string;
   distance: string;
   roomType: string;

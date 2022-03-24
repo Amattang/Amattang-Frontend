@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useCallback, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
@@ -13,6 +13,8 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
 
 interface IProps {
@@ -74,50 +76,47 @@ function CheckListComponent({
           <View style={styles.whiteCard} key={checkList.questionId}>
             <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
             <View style={styles.subTitles}>
-              {checkList.subCategory && (
+              {checkList.rule ? (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>📘 </DefaultText>
-                  <DefaultText style={styles.checkListGrayText}>
-                    {checkList.subCategory}
-                  </DefaultText>
+                  <DefaultText style={styles.checkListGrayText}>{checkList.rule}</DefaultText>
                 </View>
-              )}
-              {checkList.description && (
+              ) : null}
+              {checkList.description ? (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>👀 </DefaultText>
                   <DefaultText style={styles.checkListGrayText}>
                     {checkList.description}
                   </DefaultText>
                 </View>
-              )}
+              ) : null}
             </View>
-
             <View style={styles.buttonsOfCheckList}>
-              {checkList.type === 'A' && (
+              {checkList.type === 'A' ? (
                 <ButtonsOfTypeA
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              )}
-              {checkList.type === 'B' && (
+              ) : null}
+              {checkList.type === 'B' ? (
                 <ButtonsOfTypeB
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              )}
-              {checkList.type === 'C' && <DefaultText>c</DefaultText>}
-              {checkList.type === 'D' && (
+              ) : null}
+              {checkList.type === 'C' ? <DefaultText>c</DefaultText> : null}
+              {checkList.type === 'D' ? (
                 <ButtonsOfTypeD
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              )}
+              ) : null}
             </View>
           </View>
         </Animated.View>

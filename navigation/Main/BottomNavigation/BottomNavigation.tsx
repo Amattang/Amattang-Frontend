@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
 import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, Text, View } from 'react-native';
@@ -7,11 +7,24 @@ import Home from '../../../screens/bottomTab/Home';
 import Map from '../../../screens/bottomTab/Map';
 import { BottomTabParams, NestedProps } from '../../../types/navigationTypes';
 import styles from './styles';
+import { checkListCtx } from '../../../Context/CheckListByServer';
+import axios from 'axios';
 
 const Tab = createBottomTabNavigator<BottomTabParams>();
 
 function BottomNavigation() {
   const navigation = useNavigation<NestedProps>();
+  const checkListContext = useContext(checkListCtx);
+
+  const goCheckListHandler = async () => {
+    try {
+      const response = await axios.get('/api/check-list/init');
+      await checkListContext?.setCheckListId(response.data.data.checkListId);
+      navigation.navigate('stack', { screen: 'basicCheckList' });
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
   return (
     <Tab.Navigator>
@@ -56,7 +69,7 @@ function BottomNavigation() {
         listeners={() => ({
           tabPress: (e) => {
             e.preventDefault();
-            navigation.navigate('stack', { screen: 'basicCheckList' });
+            goCheckListHandler();
           },
         })}
         options={{

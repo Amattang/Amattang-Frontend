@@ -55,7 +55,11 @@ const styles = StyleSheet.create({
   checkListFocusedBlue: { backgroundColor: mainBlue },
   checkListFocusedOrange: { backgroundColor: mainOrange },
 
-  typeBBtnWrapper: { flexDirection: 'row', justifyContent: 'center', alignItems: 'center' },
+  typeBBtnWrapper: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
 
   floatingBtnWrapper: {
     width: 55,
@@ -151,6 +155,10 @@ const styles = StyleSheet.create({
   myItem: {
     justifyContent: 'center',
     alignItems: 'center',
+  },
+
+  blankedMyItem: {
+    marginTop: 100,
   },
 
   myItemMainTitle: {

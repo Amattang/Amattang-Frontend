@@ -5,7 +5,7 @@ import styles from '../styles';
 
 function BlankedMyItem() {
   return (
-    <View style={styles.myItem}>
+    <View style={[styles.myItem, styles.blankedMyItem]}>
       <Image source={require('../../../assets/images/checkList/myItemBlankedImg.png')} />
       <DefaultText style={[styles.checkListMainTitle, styles.blueText, styles.myItemMainTitle]}>
         내 항목이 없어요!

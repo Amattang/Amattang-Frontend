@@ -4,8 +4,7 @@ import {
   BottomSheetModal,
   BottomSheetTextInput,
 } from '@gorhom/bottom-sheet';
-import { ScrollView, TextInput, View } from 'react-native';
-import uuid from 'react-native-uuid';
+import { ScrollView, View } from 'react-native';
 
 import { myItemType } from '../../../types/checkListTypes';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -51,17 +50,14 @@ function MyItemOfBottomSheets({
   };
 
   const onCreateQuestionElementHandler = async () => {
-    newElement && clickedMyItem?.question
+    newElement && clickedMyItem?.questions
       ? setClickedMyItem({
           ...clickedMyItem,
-          question: [
-            ...clickedMyItem?.question,
-            { content: newElement, questionId: uuid.v4(), checked: false },
-          ],
+          questions: [...clickedMyItem?.questions, { content: newElement, checked: false }],
         } as myItemType)
       : setClickedMyItem({
           ...clickedMyItem,
-          question: [{ content: newElement, questionId: uuid.v4(), checked: false }],
+          questions: [{ content: newElement, checked: false }],
         } as myItemType);
     setNewElement('');
   };
@@ -90,8 +86,9 @@ function MyItemOfBottomSheets({
           onChangeText={(newCategoryName) => onCategoryNameHandler(newCategoryName)}
         />
         <ScrollView>
-          {clickedMyItem?.question?.map((clickedMyItemElements) => (
+          {clickedMyItem?.questions?.map((clickedMyItemElements) => (
             <MyItemElementOfBottomSheets
+              key={clickedMyItemElements.questionId}
               isEdit={isEdit}
               setClickedMyItem={setClickedMyItem}
               clickedMyItem={clickedMyItem}

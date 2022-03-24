@@ -7,7 +7,6 @@ import {
 } from '../../types/checkListTypes';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { checkListCtx } from '../../Context/CheckListByServer';
 
 interface IProps {
@@ -17,35 +16,27 @@ interface IProps {
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
+function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps) {
   const checkListContext = useContext(checkListCtx);
 
   const [newCheckListElement, setNewCheckListElement] = useState('');
 
-  const onEndEditing = (newElement: string) => {
+  const onChangeText = (newElement: string) => {
     isEdit && setNewCheckListElement(newElement);
   };
 
-  const onChangeTextHandler = async (answer: answerButtonType) => {
+  const onEndEditing = (answer: answerButtonType) => {
+    console.log({
+      answer: [
+        ...checkList.answer.map((item) =>
+          item.description === answer.description
+            ? { ...item, type: newCheckListElement }
+            : { ...item }
+        ),
+      ],
+    });
     isEdit &&
-      (await checkListContext?.setChoseCheckListByServer({
-        ...checkListContext?.choseCheckListByServer,
-        typeB: [
-          ...(checkListContext?.choseCheckListByServer.typeB as choseCheckListItemByServerType[]),
-          {
-            questionId: checkList.questionId,
-            answer: [
-              ...checkList.answer.map((answerItem) =>
-                answerItem.description === answer.description
-                  ? { ...answerItem, type: newCheckListElement }
-                  : { ...answerItem, val: false }
-              ),
-            ],
-          },
-        ],
-      }));
-    isEdit &&
-      (await setCheckLists(
+      setCheckLists(
         checkLists.map((questionItem) =>
           questionItem.questionId === checkList.questionId
             ? ({
@@ -54,34 +45,52 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
                   ...questionItem.answer.map((answerItem) =>
                     answerItem.description === answer.description
                       ? { ...answerItem, type: newCheckListElement }
-                      : { ...answerItem, val: false }
+                      : { ...answerItem }
                   ),
                 ],
               } as checkListTypes)
             : ({ ...questionItem } as checkListTypes)
         )
-      ));
+      );
+    isEdit &&
+      checkListContext?.setChoseCheckListByServer({
+        ...checkListContext?.choseCheckListByServer,
+        typeB: [
+          ...(checkListContext?.choseCheckListByServer.typeB as choseCheckListItemByServerType[]),
+          {
+            questionId: checkList.questionId,
+            answer: [
+              ...checkList.answer.map((item) =>
+                item.description === answer.description
+                  ? { ...item, type: newCheckListElement }
+                  : { ...item }
+              ),
+            ],
+          },
+        ],
+      });
+    setNewCheckListElement('');
   };
 
   return (
     <>
       {checkList.answer.map((answer, index) => (
         <View style={styles.typeBBtnWrapper} key={`${checkList.questionId}-${index}`}>
-          <KeyboardAwareScrollView extraHeight={150}>
-            <TextInput
-              autoCorrect={false}
-              onChangeText={onEndEditing}
-              onEndEditing={() => onChangeTextHandler(answer)}
-              placeholder={'직접 입력'}
-              value={newCheckListElement}
-              style={styles.typeDBtnWrapper}
-            />
-          </KeyboardAwareScrollView>
-          <DefaultText style={styles.checkListGrayText}> {answer.description}</DefaultText>
+          <TextInput
+            editable={isEdit}
+            autoCorrect={false}
+            onChangeText={onChangeText}
+            onEndEditing={() => onEndEditing(answer)}
+            placeholder={answer.type ? answer.type : '직접 입력'}
+            style={[styles.typeDBtnWrapper]}
+          />
+          <DefaultText style={[styles.checkListGrayText, { marginRight: 10 }]}>
+            {answer.description}
+          </DefaultText>
         </View>
       ))}
     </>
   );
 }
 
-export default ButtonsOfTypeA;
+export default ButtonsOfTypeB;
