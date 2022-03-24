@@ -8,8 +8,11 @@ import { DefaultText } from '../../CustomText';
 import { ILocation } from '../../types/mapTypes';
 import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { OnBoardingStackParamsList } from '../../types/navigationTypes';
+import { KAKAO_COORD_TO_ADDRESS_API_KEY } from 'react-native-dotenv';
 
 // type Props = NativeStackScreenProps<OnBoardingStackParamsList, 'map'>;
+
+console.log(KAKAO_COORD_TO_ADDRESS_API_KEY);
 
 // 에라이 타입 에러
 function Map({ route }: any) {
@@ -30,7 +33,7 @@ function Map({ route }: any) {
           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}&input_coord=WGS84`,
           {
             headers: {
-              Authorization: 'KakaoAK 918b29e2641545569013d1e5e6ba3611', // REST API 키. 연결 아직 안함
+              Authorization: `KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}`, // REST API 키. 연결 아직 안함
             },
           }
         )
@@ -52,7 +55,7 @@ function Map({ route }: any) {
       await axios
         .get(`https://dapi.kakao.com/v2/local/search/address.json?query=${doro}`, {
           headers: {
-            Authorization: 'KakaoAK 918b29e2641545569013d1e5e6ba3611',
+            Authorization: 'KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}',
           },
         })
         .then((res) => {
