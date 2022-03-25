@@ -5,6 +5,8 @@ import {
   checkListTypes,
   choseCheckListItemByServerType,
 } from '../../types/checkListTypes';
+import produce from 'immer';
+
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
 import { checkListCtx } from '../../Context/CheckListByServer';
@@ -26,15 +28,6 @@ function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps
   };
 
   const onEndEditing = (answer: answerButtonType) => {
-    console.log({
-      answer: [
-        ...checkList.answer.map((item) =>
-          item.description === answer.description
-            ? { ...item, type: newCheckListElement }
-            : { ...item }
-        ),
-      ],
-    });
     isEdit &&
       setCheckLists(
         checkLists.map((questionItem) =>
@@ -52,23 +45,46 @@ function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps
             : ({ ...questionItem } as checkListTypes)
         )
       );
-    isEdit &&
-      checkListContext?.setChoseCheckListByServer({
-        ...checkListContext?.choseCheckListByServer,
-        typeB: [
-          ...(checkListContext?.choseCheckListByServer.typeB as choseCheckListItemByServerType[]),
-          {
-            questionId: checkList.questionId,
-            answer: [
-              ...checkList.answer.map((item) =>
-                item.description === answer.description
-                  ? { ...item, type: newCheckListElement }
-                  : { ...item }
+
+    (checkListContext?.choseCheckListByServer.typeB as choseCheckListItemByServerType[]).some(
+      (item) => item.questionId === checkList.questionId
+    )
+      ? isEdit &&
+        checkListContext?.setChoseCheckListByServer({
+          ...checkListContext?.choseCheckListByServer,
+          typeB: [
+            ...(
+              checkListContext?.choseCheckListByServer.typeB as choseCheckListItemByServerType[]
+            ).map((item) =>
+              item.questionId === checkList.questionId
+                ? {
+                    ...item,
+                    answer: item.answer.map((answerItem) =>
+                      answerItem.description === answer.description
+                        ? { ...answerItem, type: newCheckListElement }
+                        : { ...answerItem }
+                    ),
+                  }
+                : { ...item }
+            ),
+          ],
+        })
+      : isEdit &&
+        checkListContext?.setChoseCheckListByServer({
+          ...checkListContext?.choseCheckListByServer,
+          typeB: [
+            ...(checkListContext?.choseCheckListByServer.typeB as choseCheckListItemByServerType[]),
+            {
+              questionId: checkList.questionId,
+              answer: checkList.answer.map((answerItem) =>
+                answerItem.description === answer.description
+                  ? { ...answerItem, type: newCheckListElement }
+                  : { ...answerItem }
               ),
-            ],
-          },
-        ],
-      });
+            },
+          ],
+        });
+    console.log(checkListContext?.choseCheckListByServer);
     setNewCheckListElement('');
   };
 
