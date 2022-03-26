@@ -6,16 +6,11 @@ import styles from '../../screens/Landing/styles';
 import { useNavigation } from '@react-navigation/native';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 
-const FindAddress = () => {
+const ModalAddress = () => {
   const navigation = useNavigation<OnBoardingStackProps>();
 
   // @brief 주소검색창 - 데이터 조회
-  const [isModal, setModal] = useState(false);
-  const [address, setAddress] = useState('');
-  const [latlong, setlatLong] = useState({
-    latlong: 0,
-    longitude: 0,
-  });
+  const [isModal, setModal] = useState<boolean>(false);
 
   return (
     <>
@@ -27,13 +22,11 @@ const FindAddress = () => {
           style={{ width: '100%', height: '100%' }}
           jsOptions={{ animation: true, hideMapBtn: true }}
           onError={(err) => {
-            console.log(`error: ${err}`);
+            console.error(err);
           }}
           onSelected={(data) => {
-            // console.log(JSON.stringify(data));
-            setAddress(data.address);
             setModal(false);
-            navigation.navigate('map', { activeType: false });
+            navigation.navigate('map', { activeType: false, address: data.address });
           }}
         />
       </Modal>
@@ -47,4 +40,4 @@ const FindAddress = () => {
   );
 };
 
-export default FindAddress;
+export default ModalAddress;

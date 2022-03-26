@@ -8,7 +8,8 @@ export type OnBoardingStackParamsList = {
   landing: undefined;
   login: undefined;
   onBoarding: undefined;
-  map: any;
+  map: { activeType: boolean; address?: string | undefined; lat?: number; long?: number }; // undefined에서 수정했는데 또 다시 수정해도 됨
+
 };
 export type OnBoardingStackProps = NativeStackScreenProps<OnBoardingStackParamsList, 'landing'>;
 
