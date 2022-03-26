@@ -12,8 +12,6 @@ import { KAKAO_COORD_TO_ADDRESS_API_KEY } from 'react-native-dotenv';
 
 // type Props = NativeStackScreenProps<OnBoardingStackParamsList, 'map'>;
 
-console.log(KAKAO_COORD_TO_ADDRESS_API_KEY);
-
 // 에라이 타입 에러
 function Map({ route }: any) {
   const { params } = route;
@@ -55,7 +53,7 @@ function Map({ route }: any) {
       await axios
         .get(`https://dapi.kakao.com/v2/local/search/address.json?query=${doro}`, {
           headers: {
-            Authorization: 'KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}',
+            Authorization: `KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}`,
           },
         })
         .then((res) => {
