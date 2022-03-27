@@ -525,7 +525,7 @@
 				CLANG_ENABLE_MODULES = YES;
 				CODE_SIGN_ENTITLEMENTS = amattang/amattang.entitlements;
 				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = BK8MHM4TGL;
+				DEVELOPMENT_TEAM = 69F5355JYF;
 				ENABLE_BITCODE = NO;
 				"EXCLUDED_ARCHS[sdk=iphonesimulator*]" = arm64;
 				INFOPLIST_FILE = amattang/Info.plist;
@@ -538,7 +538,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ninano.amattang.build;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ninano.amattang;
 				PRODUCT_NAME = amattang;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
 				SWIFT_VERSION = 5.0;
@@ -566,7 +566,7 @@
 					"-ObjC",
 					"-lc++",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.ninano.amattang.build;
+				PRODUCT_BUNDLE_IDENTIFIER = com.ninano.amattang;
 				PRODUCT_NAME = amattang;
 				SWIFT_VERSION = 5.0;
 				VERSIONING_SYSTEM = "apple-generic";
