@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
-import { Modal, Pressable } from 'react-native';
+import { Image, Modal, Pressable, Text, View } from 'react-native';
 import Postcode from '@actbase/react-daum-postcode';
 import { DefaultText } from '../../CustomText';
-import styles from '../../screens/Landing/styles';
 import { useNavigation } from '@react-navigation/native';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
+import { styles } from './Modal.style';
 
 const ModalAddress = () => {
   const navigation = useNavigation<OnBoardingStackProps>();
@@ -15,9 +15,12 @@ const ModalAddress = () => {
   return (
     <>
       <Modal visible={isModal}>
-        <Pressable onPress={() => setModal(false)}>
-          <DefaultText>닫기</DefaultText>
-        </Pressable>
+        <View style={styles.header}>
+          <Pressable onPress={() => setModal(false)}>
+            <Image style={styles.close} source={require('../../assets/images/map/mapClose.png')} />
+          </Pressable>
+          <DefaultText style={styles.title}>주소 설정</DefaultText>
+        </View>
         <Postcode
           style={{ width: '100%', height: '100%' }}
           jsOptions={{ animation: true, hideMapBtn: true }}
