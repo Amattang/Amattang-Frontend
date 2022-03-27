@@ -1,29 +1,54 @@
 import { StyleSheet } from 'react-native';
+import { mainBlue } from '../../color';
 
 export const styles = StyleSheet.create({
-  carCard: {
+  card: {
     backgroundColor: 'white',
-    borderRadius: 10,
-    height: 70,
-    width: 230,
+    borderRadius: 13,
+    height: 86,
+    width: 265,
     flexDirection: 'row',
-    alignItems: 'center',
-    padding: 10,
+    paddingHorizontal: 14,
+    paddingVertical: 13,
   },
-  carImage: {
-    flex: 1,
-    width: 50,
-    height: 50,
+  image: {
+    width: 64,
+    height: 60,
+    borderRadius: 6,
   },
-  carSubtext: {
+  mainTitle: {
+    width: 125,
+    height: 22,
+    top: 9,
+    left: 18,
+    fontSize: 18,
+    lineHeight: 21.6,
+    fontWeight: '500',
+  },
+  subTitle: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    alignContent: 'center',
+    top: 20,
+    left: 18,
   },
-  carText: {
-    flex: 2,
+  iconText: {
+    flexDirection: 'row',
+    alignContent: 'center',
+    bottom: 4,
   },
-  carTitle: {
-    fontSize: 20,
-    fontWeight: '800',
+  distanceIcon: {
+    width: 14.53,
+    height: 14.53,
+    marginRight: 6.73,
+  },
+  timeIcon: {
+    width: 12,
+    height: 14.49,
+    marginLeft: 20,
+    marginRight: 8,
+  },
+  text: {
+    fontSize: 10,
+    color: mainBlue,
   },
 });
