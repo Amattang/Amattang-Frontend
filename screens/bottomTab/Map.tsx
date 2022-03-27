@@ -81,8 +81,8 @@ const Map = () => {
               description={marker.description}
               image={
                 marker.center
-                  ? require('../../assets/images/map/mapCenter.png')
-                  : require('../../assets/images/map/mapPosition.png')
+                  ? require('../../assets/images/map/mapCenter3.png')
+                  : require('../../assets/images/map/mapPosition3.png')
               }
               key={idx}
             />

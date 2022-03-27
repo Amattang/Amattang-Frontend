@@ -1,56 +1,67 @@
 import React, { useEffect, useState } from 'react';
-import { Pressable, View } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import { DefaultText } from '../../CustomText';
+import { View } from 'react-native';
 import axios from 'axios';
-import { IHere } from '../../types/mapTypes';
-import Geolocation from 'react-native-geolocation-service';
 import AddressItem from '../../components/Map/AddressItem';
+import GoNowPosition from '../../components/Map/GoNowPosition';
+import MapTemplate from '../../components/Map/MapTemplate';
+import { DefaultText } from '../../CustomText';
+import { ILocation } from '../../types/mapTypes';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { OnBoardingStackParamsList } from '../../types/navigationTypes';
+import { KAKAO_COORD_TO_ADDRESS_API_KEY } from 'react-native-dotenv';
 
+// type Props = NativeStackScreenProps<OnBoardingStackParamsList, 'map'>;
+
+// 에라이 타입 에러
 function Map({ route }: any) {
   const { params } = route;
-  const [here, setHere] = useState<IHere>({
-    latitude: 37.498095,
-    longitude: 127.02761,
-  });
-  // 현위치 좌표 -> 도로명주소
-  const [address, setAddress] = useState('');
 
-  // 현재위치 찾기
-  const goGeoLocation = (): void => {
-    Geolocation.getCurrentPosition(
-      (position) => {
-        setHere({
-          latitude: position.coords.latitude,
-          longitude: position.coords.longitude,
-        });
-      },
-      (error) => {
-        console.error(error.message);
-      },
-      { enableHighAccuracy: true, timeout: 15000, maximumAge: 10000 }
-    );
-  };
+  // 지도 표시 위치
+  const [location, setLocation] = useState<ILocation | undefined>(undefined);
 
-  // here.latitude
-  // here.longitude
-  const x = 126.95000261443744;
-  const y = 37.39151960530102;
+  // map 하단에 넣을 도로명주소
+  const [doroAddress, setDoroAddress] = useState<string | undefined>('');
 
-  const coordToAddress = async () => {
+  // 좌표 -> 도로명주소
+  // x : 경도, y : 위도
+  const coordToAddress = async (x: string, y: string) => {
     try {
       await axios
         .get(
           `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}&input_coord=WGS84`,
           {
             headers: {
-              Authorization: 'KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}', // REST API 키. 연결 아직 안함
+              Authorization: `KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}`, // REST API 키. 연결 아직 안함
             },
           }
         )
         .then((res) => {
           const location = res.data.documents[0];
-          setAddress(location.address.address_name);
+          setDoroAddress(location ? location.address.address_name : 'undefined');
+        })
+        .catch((err) => {
+          console.error(`error1 : ${err}`);
+        });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+
+  // 도로명주소 -> 좌표
+  const addressToCoords = async (doro: string) => {
+    try {
+      await axios
+        .get(`https://dapi.kakao.com/v2/local/search/address.json?query=${doro}`, {
+          headers: {
+            Authorization: `KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}`,
+          },
+        })
+        .then((res) => {
+          const { x, y } = res.data.documents[0];
+          setLocation({
+            longitude: Number(x),
+            latitude: Number(y),
+          });
         })
         .catch((err) => {
           console.error(err);
@@ -61,43 +72,40 @@ function Map({ route }: any) {
   };
 
   useEffect(() => {
+    // 현재 위치 바로가기
     if (params.activeType) {
-      goGeoLocation();
-      console.log('true');
+      coordToAddress(params.long.toString(), params.lat.toString());
     } else {
-      console.log('false');
+      // 주소찾기
+      setDoroAddress(params.address);
+      addressToCoords(params.address);
     }
-    // coordToAddress();
   }, []);
 
   return (
     <View style={{ flex: 1 }}>
-      <MapView
-        style={{ flex: 1 }}
-        provider={PROVIDER_GOOGLE}
-        region={{
-          latitude: here.latitude as number,
-          longitude: here.longitude as number,
-          latitudeDelta: 0.0122,
-          longitudeDelta: 0.0021,
-        }}
-        zoomEnabled={true}
-        showsScale={true}
-      >
-        <Marker
-          coordinate={{
-            latitude: here.latitude as number,
-            longitude: here.longitude as number,
-          }}
-          title={'현재위치'}
-          description={'현재위치'}
-          pinColor={'blue'}
-        />
-      </MapView>
-      <Pressable onPress={goGeoLocation}>
-        <DefaultText>현재위치로 가기</DefaultText>
-      </Pressable>
-      <AddressItem />
+      <MapTemplate
+        lat={
+          params.activeType ? (
+            params.lat
+          ) : location ? (
+            location.latitude
+          ) : (
+            <DefaultText>Loading...</DefaultText>
+          )
+        }
+        long={
+          params.activeType ? (
+            params.long
+          ) : location ? (
+            location.longitude
+          ) : (
+            <DefaultText>Loading...</DefaultText>
+          )
+        }
+      />
+      <GoNowPosition setLocation={setLocation} coordToAddress={coordToAddress} />
+      <AddressItem address={doroAddress} />
     </View>
   );
 }
