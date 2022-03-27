@@ -5,6 +5,8 @@ import { Image, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import styles from '../../screens/Landing/styles';
 import jwtDecode from 'jwt-decode';
+import axios from 'axios';
+import { API_HOST } from '../../constant';
 
 interface tokenType {
   aud: string;
@@ -39,11 +41,21 @@ const AppleLoginBtn = ({ setIsLogin }: any) => {
       if (credentialState === appleAuth.State.AUTHORIZED) {
         const { identityToken, user } = appleAuthRequestResponse;
         const decodedToken: tokenType = jwtDecode(identityToken!);
-        console.log('email_from_decodedToken', decodedToken.email);
-        console.log('user', user);
         // user is authenticated
+
+        axios
+          .post(`${API_HOST}/login/apple`, {
+            email: decodedToken.email,
+            user: user,
+          })
+          .then((res) => {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.accessToken}`;
+            setIsLogin(true);
+          })
+          .catch((e) => {
+            console.log(e);
+          });
       }
-      setIsLogin(true);
     } catch (error: any) {
       if (error.code === appleAuth.Error.CANCELED) {
         // login canceled
