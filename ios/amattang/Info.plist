@@ -2,16 +2,6 @@
 <!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
 <plist version="1.0">
 <dict>
-	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
-	<string>Used to Location's Info always for Using Beacon.</string>
-	<key>NSLocationAlwaysUsageDescription</key>
-	<string>Used to Location's Info always for Using Beacon.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string/>
-	<key>NSCameraUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to use your camera</string>
-	<key>NSPhotoLibraryAddUsageDescription</key>
-	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>en</string>
 	<key>CFBundleDisplayName</key>
@@ -44,13 +34,13 @@
 	<key>CFBundleVersion</key>
 	<string>1</string>
 	<key>KAKAO_APP_KEY</key>
-    <string>3d5254ebc91a92469dde7bc04f9c74b1</string>
-    <key>LSApplicationQueriesSchemes</key>
-    <array>
-      <string>kakaokompassauth</string>
-      <string>storykompassauth</string>
-      <string>kakaolink</string>
-    </array>
+	<string>3d5254ebc91a92469dde7bc04f9c74b1</string>
+	<key>LSApplicationQueriesSchemes</key>
+	<array>
+		<string>kakaokompassauth</string>
+		<string>storykompassauth</string>
+		<string>kakaolink</string>
+	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -64,12 +54,16 @@
 			</dict>
 		</dict>
 	</dict>
+	<key>NSCameraUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to use your camera</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>Used to Location's Info always for Using Beacon.</string>
 	<key>NSLocationAlwaysUsageDescription</key>
 	<string>Used to Location's Info always for Using Beacon.</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
 	<string></string>
+	<key>NSPhotoLibraryAddUsageDescription</key>
+	<string>$(PRODUCT_NAME) would like to save photos to your photo gallery</string>
 	<key>UIAppFonts</key>
 	<array>
 		<string>AppleSDGothicNeoB00.ttf</string>
