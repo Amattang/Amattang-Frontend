@@ -1,105 +1,95 @@
-// import React, { Dispatch, useState, SetStateAction } from 'react';
-// import { Button, Image, Pressable, StyleSheet, View } from 'react-native';
-// import Modal from 'react-native-modal';
-// import { DemoButton, DemoResponse } from './CameraButtons';
-//
-// import * as ImagePicker from 'react-native-image-picker';
-// import { cameraTypes } from '../../types/cameraTypes';
-// import { mainBlue } from '../../color';
-//
-// /* toggle includeExtra */
-// const includeExtra = true;
-//
-// interface IProps {
-//   setOnModal: Dispatch<SetStateAction<boolean>>;
-//   onModal: boolean;
-// }
-//
-// function CameraAndGallery({ setOnModal, onModal }: IProps) {
-//   const [response, setResponse] = useState<any>(null);
-//
-//   const onButtonPress = React.useCallback((type, options) => {
-//     if (type === 'capture') {
-//       ImagePicker.launchCamera(options, setResponse);
-//     } else {
-//       ImagePicker.launchImageLibrary(options, setResponse);
-//     }
-//   }, []);
-//
-//   return (
-//     <Modal isVisible={true} onBackdropPress={() => setOnModal(!onModal)}>
-//       <View style={styles.buttonContainer}>
-//         {actions.map(({ title, type, options }) => {
-//           return (
-//             <DemoButton key={title} onPress={() => onButtonPress(type, options)}>
-//               {title}
-//             </DemoButton>
-//           );
-//         })}
-//       </View>
-//
-//       {response?.assets &&
-//         response?.assets.map(({ uri }: any) => (
-//           <View key={uri} style={styles.image}>
-//             <Image
-//               resizeMode="cover"
-//               resizeMethod="scale"
-//               style={{ width: 200, height: 200 }}
-//               source={{ uri: uri }}
-//             />
-//           </View>
-//         ))}
-//     </Modal>
-//   );
-// }
-//
-// const styles = StyleSheet.create({
-//   container: {
-//     height: 500,
-//     width: 300,
-//     backgroundColor: mainBlue,
-//   },
-//   buttonContainer: {
-//     flexDirection: 'row',
-//     flexWrap: 'wrap',
-//     marginVertical: 8,
-//   },
-//
-//   image: {
-//     marginVertical: 24,
-//     alignItems: 'center',
-//   },
-// });
-//
-// interface Action {
-//   title: string;
-//   type: 'capture' | 'library';
-//   options: ImagePicker.CameraOptions | ImagePicker.ImageLibraryOptions;
-// }
-//
-// const actions: Action[] = [
-//   {
-//     title: 'Take Image',
-//     type: 'capture',
-//     options: {
-//       saveToPhotos: true,
-//       mediaType: 'photo',
-//       includeBase64: false,
-//       includeExtra,
-//     },
-//   },
-//   {
-//     title: 'Select Image',
-//     type: 'library',
-//     options: {
-//       maxHeight: 200,
-//       maxWidth: 200,
-//       selectionLimit: 0,
-//       mediaType: 'photo',
-//       includeBase64: false,
-//       includeExtra,
-//     },
-//   },
-// ];
-//
-// export default CameraAndGallery;
+import React, { Dispatch, useState, SetStateAction, useContext } from 'react';
+import { Image, Pressable, StyleSheet, View } from 'react-native';
+import Modal from 'react-native-modal';
+import { mainBlue } from '../../color';
+import { DefaultText } from '../../CustomText';
+import ImagePicker from 'react-native-image-crop-picker';
+import axios from 'axios';
+import { checkListCtx } from '../../Context/CheckListByServer';
+
+interface IProps {
+  setOnModal: Dispatch<SetStateAction<boolean>>;
+  onModal: boolean;
+}
+
+function CameraAndGallery({ setOnModal, onModal }: IProps) {
+  const checkListContext = useContext(checkListCtx);
+
+  const [response, setResponse] = useState<any>(null);
+
+  const onPostImageDataHandler = async (images: any) => {
+    const imageData = new FormData();
+    await images.map((image: any) => imageData.append('image', image.sourceURL));
+
+    await axios
+      .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
+      .then((e) => {
+        console.log('t');
+        console.log(e);
+      })
+      .catch((e) => {
+        console.log('c');
+        console.log(e);
+      });
+  };
+
+  const onGallery = () =>
+    ImagePicker.openPicker({
+      // forceJPG: true,
+      // includeBase64: true,
+      multiple: true,
+    }).then((images) => {
+      onPostImageDataHandler(images);
+    });
+
+  const onCamera = () =>
+    ImagePicker.openCamera({
+      cropping: true,
+    }).then((image) => {
+      console.log(image);
+    });
+
+  return (
+    <Modal isVisible={true} onBackdropPress={() => setOnModal(!onModal)}>
+      <Pressable style={styles.floatingBtnWrapper} onPress={onGallery}>
+        <DefaultText>갤러릴</DefaultText>
+      </Pressable>
+
+      <Pressable onPress={onCamera}>
+        <Image source={require('../../assets/images/checkList/camera.png')} />
+      </Pressable>
+      <Pressable onPress={() => {}}>
+        <DefaultText>x</DefaultText>
+      </Pressable>
+
+      {response?.assets &&
+        response?.assets.map(({ uri }: any) => (
+          <View key={uri} style={styles.image}>
+            <Image
+              resizeMode="cover"
+              resizeMethod="scale"
+              style={{ width: 200, height: 200 }}
+              source={{ uri: uri }}
+            />
+          </View>
+        ))}
+    </Modal>
+  );
+}
+
+const styles = StyleSheet.create({
+  image: {
+    marginVertical: 24,
+    alignItems: 'center',
+  },
+  floatingBtnWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    width: 64,
+    height: 64,
+    backgroundColor: mainBlue,
+    borderRadius: 50,
+  },
+});
+
+export default CameraAndGallery;
