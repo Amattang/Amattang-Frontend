@@ -1,8 +1,3 @@
-export interface IPick {
-  latitude: number;
-  longitude: number;
-}
-
 // export interface IHere {
 //   latitude: number | null;
 //   longitude: number | null;
@@ -14,7 +9,7 @@ export interface ILocations {
   imgUri: null;
   mainTitle: string;
   address: string;
-  location: IPick;
+  location: ILocation;
   distance: string;
   roomType: string;
   area: string;

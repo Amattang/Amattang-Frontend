@@ -1,10 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { Button, Text, View, Platform, PermissionsAndroid, Dimensions, Image } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import Geolocation from 'react-native-geolocation-service';
 import Carousel from 'react-native-snap-carousel';
 import { styles } from './Map.style';
-import { IPick, ILocations } from '../../types/mapTypes';
+import { ILocations, ILocation } from '../../types/mapTypes';
 import SlideItem from '../../components/Map/SlideItem';
 import { ITEM_WIDTH, SLIDER_WIDTH } from '../../constants/Map.constant';
 import { requestPermission } from '../../utils/LocationPermission';
@@ -15,7 +14,7 @@ const Map = () => {
   const [locations, setLocations] = useState<ILocations[]>();
 
   // 슬라이드로 선택한 위치
-  const [pick, setPick] = useState<IPick>({
+  const [pick, setPick] = useState<ILocation>({
     latitude: 0,
     longitude: 0,
   });
@@ -24,10 +23,11 @@ const Map = () => {
     axios
       .get(`./api/check-list`)
       .then((res) => {
+        console.log(res.data.data);
         setLocations(res.data.data);
         requestPermission().then((result) => {
           if (result === 'granted') {
-            setPick(res.data.data[0].latlng);
+            setPick(res.data.data[0].location);
           }
         });
       })
