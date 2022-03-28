@@ -1,105 +1,77 @@
-// import React, { Dispatch, useState, SetStateAction } from 'react';
-// import { Button, Image, Pressable, StyleSheet, View } from 'react-native';
-// import Modal from 'react-native-modal';
-// import { DemoButton, DemoResponse } from './CameraButtons';
-//
-// import * as ImagePicker from 'react-native-image-picker';
-// import { cameraTypes } from '../../types/cameraTypes';
-// import { mainBlue } from '../../color';
-//
-// /* toggle includeExtra */
-// const includeExtra = true;
-//
-// interface IProps {
-//   setOnModal: Dispatch<SetStateAction<boolean>>;
-//   onModal: boolean;
-// }
-//
-// function CameraAndGallery({ setOnModal, onModal }: IProps) {
-//   const [response, setResponse] = useState<any>(null);
-//
-//   const onButtonPress = React.useCallback((type, options) => {
-//     if (type === 'capture') {
-//       ImagePicker.launchCamera(options, setResponse);
-//     } else {
-//       ImagePicker.launchImageLibrary(options, setResponse);
-//     }
-//   }, []);
-//
-//   return (
-//     <Modal isVisible={true} onBackdropPress={() => setOnModal(!onModal)}>
-//       <View style={styles.buttonContainer}>
-//         {actions.map(({ title, type, options }) => {
-//           return (
-//             <DemoButton key={title} onPress={() => onButtonPress(type, options)}>
-//               {title}
-//             </DemoButton>
-//           );
-//         })}
-//       </View>
-//
-//       {response?.assets &&
-//         response?.assets.map(({ uri }: any) => (
-//           <View key={uri} style={styles.image}>
-//             <Image
-//               resizeMode="cover"
-//               resizeMethod="scale"
-//               style={{ width: 200, height: 200 }}
-//               source={{ uri: uri }}
-//             />
-//           </View>
-//         ))}
-//     </Modal>
-//   );
-// }
-//
-// const styles = StyleSheet.create({
-//   container: {
-//     height: 500,
-//     width: 300,
-//     backgroundColor: mainBlue,
-//   },
-//   buttonContainer: {
-//     flexDirection: 'row',
-//     flexWrap: 'wrap',
-//     marginVertical: 8,
-//   },
-//
-//   image: {
-//     marginVertical: 24,
-//     alignItems: 'center',
-//   },
-// });
-//
-// interface Action {
-//   title: string;
-//   type: 'capture' | 'library';
-//   options: ImagePicker.CameraOptions | ImagePicker.ImageLibraryOptions;
-// }
-//
-// const actions: Action[] = [
-//   {
-//     title: 'Take Image',
-//     type: 'capture',
-//     options: {
-//       saveToPhotos: true,
-//       mediaType: 'photo',
-//       includeBase64: false,
-//       includeExtra,
-//     },
-//   },
-//   {
-//     title: 'Select Image',
-//     type: 'library',
-//     options: {
-//       maxHeight: 200,
-//       maxWidth: 200,
-//       selectionLimit: 0,
-//       mediaType: 'photo',
-//       includeBase64: false,
-//       includeExtra,
-//     },
-//   },
-// ];
-//
-// export default CameraAndGallery;
+import React, { Dispatch, SetStateAction, useContext } from 'react';
+import { Platform, Pressable, View } from 'react-native';
+import Modal from 'react-native-modal';
+import { DefaultText } from '../../CustomText';
+import ImagePicker from 'react-native-image-crop-picker';
+import axios from 'axios';
+import { checkListCtx } from '../../Context/CheckListByServer';
+import styles from './cameraAndGallery.styles';
+
+interface IProps {
+  setOnModal: Dispatch<SetStateAction<boolean>>;
+  onModal: boolean;
+}
+
+function CameraAndGallery({ setOnModal, onModal }: IProps) {
+  const checkListContext = useContext(checkListCtx);
+
+  const onPostImageDataHandler = async (images: any) => {
+    const imageData = new FormData();
+    images.map((image: any) =>
+      imageData.append('image', {
+        uri: Platform.OS === 'android' ? image.path : image.path.replace('file://', ''),
+        type: image.mime,
+        name: image.filename,
+      })
+    );
+
+    await axios
+      .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
+      .then((e) => {
+        console.log(e);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+
+  const onGallery = () =>
+    ImagePicker.openPicker({
+      multiple: true,
+    }).then((images: any) => {
+      onPostImageDataHandler(images);
+    });
+
+  const onCamera = () =>
+    ImagePicker.openCamera({
+      cropping: true,
+    }).then((images: any) => {
+      onPostImageDataHandler(images);
+    });
+
+  return (
+    <Modal isVisible={true} onBackdropPress={() => setOnModal(!onModal)}>
+      <Pressable style={styles.modalWrapper} onPress={() => setOnModal(!onModal)}>
+        <View style={styles.cameraModalElementBtnWrapper}>
+          <Pressable style={styles.cameraModalEachBtn} onPress={onCamera}>
+            <DefaultText style={styles.cameraModalInnerText}>카메라</DefaultText>
+          </Pressable>
+
+          <View style={styles.horizantalLine} />
+
+          <Pressable style={styles.cameraModalEachBtn} onPress={onGallery}>
+            <DefaultText style={styles.cameraModalInnerText}>앨범</DefaultText>
+          </Pressable>
+        </View>
+
+        <Pressable style={styles.cameraModalXBtn} onPress={() => setOnModal(!onModal)}>
+          <DefaultText style={[styles.cameraModalInnerText, styles.cameraModalBoldText]}>
+            취소
+          </DefaultText>
+        </Pressable>
+      </Pressable>
+    </Modal>
+  );
+}
+
+export default CameraAndGallery;
