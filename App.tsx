@@ -5,9 +5,12 @@ import 'react-native-gesture-handler';
 import RootNav from './navigation/Main/RootNav';
 import OnBoardingStack from './navigation/OnBoarding/StackNavigationOfOnBoarding';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { isLoggedIn } from 'react-native-axios-jwt';
+import { getAccessToken, getRefreshToken, isLoggedIn } from 'react-native-axios-jwt';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import CheckListStore from './Context/CheckListByServer';
+import AsyncStorage from '@react-native-async-storage/async-storage';
+import KakaoLoginBtn from './components/Login/KakaoLoginBtn';
+import axios from 'axios';
 
 const queryClient = new QueryClient();
 
@@ -19,14 +22,17 @@ function App() {
     setTimeout(() => SplashScreen.hide(), 1000);
   }, []);
 
-  // useEffect(() => {
-  //   async function handleLogin() {
-  //     if (await isLoggedIn()) {
-  //       setIsLogin(true);
-  //     }
-  //   }
-  //   handleLogin();
-  // }, []);
+  useEffect(() => {
+    async function handleLogin() {
+      const accessToken = await getAccessToken();
+      console.log(accessToken);
+      if (await isLoggedIn()) {
+        axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+        setIsLogin(true);
+      }
+    }
+    handleLogin();
+  }, []);
 
   return (
     <>
