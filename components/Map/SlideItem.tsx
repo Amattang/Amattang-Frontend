@@ -10,13 +10,27 @@ type Props = {
 
 const SlideItem = ({ item }: Props) => {
   return (
-    <View style={styles.carCard}>
-      <Image style={styles.carImage} source={require('../../assets/images/home/activeAll.png')} />
-      <View style={styles.carText}>
-        <Text style={styles.carTitle}>{item.title}</Text>
-        <View style={styles.carSubtext}>
-          <DefaultText>{item.text}</DefaultText>
-          <DefaultText>{item.description}</DefaultText>
+    <View style={styles.card}>
+      <Image style={styles.image} source={require('../../assets/images/home/activeAll.png')} />
+      <View>
+        <Text style={styles.mainTitle}>{item.mainTitle}</Text>
+        <View style={styles.subTitle}>
+          <View style={styles.iconText}>
+            <Image
+              style={styles.distanceIcon}
+              source={require('../../assets/images/map/mapDistance.png')}
+            />
+            <DefaultText style={styles.text}>
+              {item.roomType}/{item.area}
+            </DefaultText>
+          </View>
+          <View style={styles.iconText}>
+            <Image
+              style={styles.timeIcon}
+              source={require('../../assets/images/map/mapTime.png')}
+            />
+            <DefaultText style={styles.text}>도보{item.distance}</DefaultText>
+          </View>
         </View>
       </View>
     </View>

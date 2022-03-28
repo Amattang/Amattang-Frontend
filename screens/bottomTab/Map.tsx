@@ -4,7 +4,7 @@ import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Geolocation from 'react-native-geolocation-service';
 import Carousel from 'react-native-snap-carousel';
 import { styles } from './Map.style';
-import { IPick, ILocations } from '../../types/mapTypes';
+import { ILocation, ILocations } from '../../types/mapTypes';
 import SlideItem from '../../components/Map/SlideItem';
 import { ITEM_WIDTH, SLIDER_WIDTH } from '../../constants/Map.constant';
 import { requestPermission } from '../../utils/LocationPermission';
@@ -14,39 +14,59 @@ const Map = () => {
   const [locations, setLocations] = useState<ILocations[]>([
     {
       id: 0,
-      latlng: { latitude: 37.562516, longitude: 127.035679 },
-      title: '희망빌라',
-      description: '원룸 / 7평',
-      text: '도보 10분',
+      // imgUri:null,
+      mainTitle: '희망빌라',
+      address: '강남구 2039길',
+      location: { latitude: 37.562516, longitude: 127.035679 },
+      distance: '10분',
+      roomType: '원룸',
+      area: '4평',
+      form: '오픈형',
+      pinned: false,
       center: true,
     },
     {
       id: 1,
-      latlng: { latitude: 37.561255, longitude: 127.04456 },
-      title: '더샵',
-      description: '원룸 / 7평',
-      text: '도보 10분',
-      center: false,
+      // imgUri:null,
+      mainTitle: '더샵',
+      address: '강남구 2039길',
+      location: { latitude: 37.561255, longitude: 127.04456 },
+      distance: '10분',
+      roomType: '원룸',
+      area: '4평',
+      form: '오픈형',
+      pinned: false,
+      center: true,
     },
     {
       id: 2,
-      latlng: { latitude: 37.58071, longitude: 127.035978 },
-      title: '한양아파트',
-      description: '원룸 / 7평',
-      text: '도보 10분',
-      center: false,
+      // imgUri:null,
+      mainTitle: '한양아파트',
+      address: '강남구 2039길',
+      location: { latitude: 37.58071, longitude: 127.035978 },
+      distance: '10분',
+      roomType: '원룸',
+      area: '4평',
+      form: '오픈형',
+      pinned: false,
+      center: true,
     },
     {
       id: 3,
-      latlng: { latitude: 37.572162, longitude: 127.032171 },
-      title: '한양빌리지',
-      description: '원룸 / 7평',
-      text: '도보 10분',
-      center: false,
+      // imgUri:null,
+      mainTitle: '한양빌리지',
+      address: '강남구 2039길',
+      location: { latitude: 37.572162, longitude: 127.032171 },
+      distance: '10분',
+      roomType: '원룸',
+      area: '4평',
+      form: '오픈형',
+      pinned: false,
+      center: true,
     },
   ]);
   // 슬라이드로 선택한 위치
-  const [pick, setPick] = useState<IPick>({
+  const [pick, setPick] = useState<ILocation>({
     latitude: 0,
     longitude: 0,
   });
@@ -54,7 +74,7 @@ const Map = () => {
   useEffect(() => {
     requestPermission().then((result) => {
       if (result === 'granted') {
-        setPick(locations[0].latlng);
+        setPick(locations[0].location);
       }
     });
   }, []);
@@ -76,9 +96,9 @@ const Map = () => {
         >
           {locations.map((marker, idx) => (
             <Marker
-              coordinate={marker.latlng}
-              title={marker.title}
-              description={marker.description}
+              coordinate={marker.location}
+              title={marker.mainTitle}
+              // description={marker.description}
               image={
                 marker.center
                   ? require('../../assets/images/map/mapCenter3.png')
@@ -89,7 +109,7 @@ const Map = () => {
           ))}
         </MapView>
       )}
-      <View style={styles.carContainer}>
+      <View style={styles.container}>
         <Carousel
           data={locations}
           renderItem={SlideItem}
@@ -100,7 +120,7 @@ const Map = () => {
             setLocations(
               locations.map((marker) =>
                 marker.id === index
-                  ? (setPick(marker.latlng), { ...marker, center: true })
+                  ? (setPick(marker.location), { ...marker, center: true })
                   : { ...marker, center: false }
               )
             );
