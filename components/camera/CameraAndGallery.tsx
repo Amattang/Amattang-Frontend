@@ -1,11 +1,11 @@
-import React, { Dispatch, useState, SetStateAction, useContext } from 'react';
-import { Image, Pressable, StyleSheet, View } from 'react-native';
+import React, { Dispatch, SetStateAction, useContext } from 'react';
+import { Platform, Pressable, View } from 'react-native';
 import Modal from 'react-native-modal';
-import { mainBlue } from '../../color';
 import { DefaultText } from '../../CustomText';
 import ImagePicker from 'react-native-image-crop-picker';
 import axios from 'axios';
 import { checkListCtx } from '../../Context/CheckListByServer';
+import styles from './cameraAndGallery.styles';
 
 interface IProps {
   setOnModal: Dispatch<SetStateAction<boolean>>;
@@ -15,81 +15,64 @@ interface IProps {
 function CameraAndGallery({ setOnModal, onModal }: IProps) {
   const checkListContext = useContext(checkListCtx);
 
-  const [response, setResponse] = useState<any>(null);
-
   const onPostImageDataHandler = async (images: any) => {
     const imageData = new FormData();
-    await images.map((image: any) => imageData.append('image', image.sourceURL));
+    images.map((image: any) =>
+      imageData.append('image', {
+        uri: Platform.OS === 'android' ? image.path : image.path.replace('file://', ''),
+        type: image.mime,
+        name: image.filename,
+      })
+    );
 
     await axios
       .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
       .then((e) => {
-        console.log('t');
         console.log(e);
       })
       .catch((e) => {
-        console.log('c');
         console.log(e);
       });
   };
 
   const onGallery = () =>
     ImagePicker.openPicker({
-      // forceJPG: true,
-      // includeBase64: true,
       multiple: true,
-    }).then((images) => {
+    }).then((images: any) => {
       onPostImageDataHandler(images);
     });
 
   const onCamera = () =>
     ImagePicker.openCamera({
       cropping: true,
-    }).then((image) => {
-      console.log(image);
+    }).then((images: any) => {
+      onPostImageDataHandler(images);
     });
 
   return (
     <Modal isVisible={true} onBackdropPress={() => setOnModal(!onModal)}>
-      <Pressable style={styles.floatingBtnWrapper} onPress={onGallery}>
-        <DefaultText>갤러릴</DefaultText>
-      </Pressable>
+      <Pressable style={styles.modalWrapper} onPress={() => setOnModal(!onModal)}>
+        <View style={styles.cameraModalElementBtnWrapper}>
+          <Pressable style={styles.cameraModalEachBtn} onPress={onCamera}>
+            <DefaultText style={styles.cameraModalInnerText}>카메라</DefaultText>
+          </Pressable>
 
-      <Pressable onPress={onCamera}>
-        <Image source={require('../../assets/images/checkList/camera.png')} />
-      </Pressable>
-      <Pressable onPress={() => {}}>
-        <DefaultText>x</DefaultText>
-      </Pressable>
+          <View style={styles.horizantalLine} />
 
-      {response?.assets &&
-        response?.assets.map(({ uri }: any) => (
-          <View key={uri} style={styles.image}>
-            <Image
-              resizeMode="cover"
-              resizeMethod="scale"
-              style={{ width: 200, height: 200 }}
-              source={{ uri: uri }}
-            />
-          </View>
-        ))}
+          <Pressable style={styles.cameraModalEachBtn} onPress={onGallery}>
+            <DefaultText style={styles.cameraModalInnerText}>앨범</DefaultText>
+          </Pressable>
+        </View>
+
+        <Pressable style={styles.cameraModalXBtn} onPress={() => setOnModal(!onModal)}>
+          <DefaultText style={[styles.cameraModalInnerText, styles.cameraModalBoldText]}>
+            취소
+          </DefaultText>
+        </Pressable>
+      </Pressable>
     </Modal>
   );
 }
 
-const styles = StyleSheet.create({
-  image: {
-    marginVertical: 24,
-    alignItems: 'center',
-  },
-  floatingBtnWrapper: {
-    justifyContent: 'center',
-    alignItems: 'center',
-    width: 64,
-    height: 64,
-    backgroundColor: mainBlue,
-    borderRadius: 50,
-  },
-});
-
 export default CameraAndGallery;
+
