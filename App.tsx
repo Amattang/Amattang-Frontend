@@ -24,9 +24,8 @@ function App() {
 
   useEffect(() => {
     async function handleLogin() {
-      const accessToken = await getAccessToken();
-      console.log(accessToken);
       if (await isLoggedIn()) {
+        const accessToken = await getAccessToken();
         axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
         setIsLogin(true);
       }

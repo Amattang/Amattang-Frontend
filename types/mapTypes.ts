@@ -3,18 +3,23 @@ export interface IPick {
   longitude: number;
 }
 
-export interface IHere {
-  latitude: number | null;
-  longitude: number | null;
-}
+// export interface IHere {
+//   latitude: number | null;
+//   longitude: number | null;
+// }
 
 // 체크리스트 매물들
 export interface ILocations {
-  latlng: IPick;
-  title: string;
-  description: string;
-  text: string;
   id: number;
+  imgUri: null;
+  mainTitle: string;
+  address: string;
+  location: IPick;
+  distance: string;
+  roomType: string;
+  area: string;
+  form: string;
+  pinned: boolean;
   center: boolean;
 }
 
