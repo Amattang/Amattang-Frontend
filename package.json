@@ -24,7 +24,7 @@
     "@react-navigation/stack": "^6.1.1",
     "@types/react-native-dotenv": "^0.2.0",
     "@types/react-native-snap-carousel": "^3.8.5",
-    "axios": "^0.26.1",
+    "axios": "^0.24.0",
     "babel-plugin-module-resolver": "^4.1.0",
     "immer": "^9.0.12",
     "jwt-decode": "^3.1.2",
