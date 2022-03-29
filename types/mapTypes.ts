@@ -1,11 +1,7 @@
-// export interface IHere {
-//   latitude: number | null;
-//   longitude: number | null;
-// }
-
 // 체크리스트 매물들
 export interface ILocations {
   id: number;
+  order: number;
   imgUri: null;
   mainTitle: string;
   address: string;

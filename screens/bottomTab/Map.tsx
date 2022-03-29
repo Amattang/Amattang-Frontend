@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Text, View, Platform, PermissionsAndroid, Dimensions, Image } from 'react-native';
+import React, { useContext, useEffect, useState } from 'react';
+import { Text, View, Image, Pressable } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 import { styles } from './Map.style';
 import { ILocations, ILocation } from '../../types/mapTypes';
-import SlideItem from '../../components/Map/SlideItem';
 import { ITEM_WIDTH, SLIDER_WIDTH } from '../../constants/Map.constant';
 import { requestPermission } from '../../utils/LocationPermission';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
+import { checkListCtx } from '../../Context/CheckListByServer';
+import { DefaultText } from '../../CustomText';
 
 const Map = () => {
   // mockup data
@@ -18,6 +20,42 @@ const Map = () => {
     latitude: 0,
     longitude: 0,
   });
+  const checkListContext = useContext(checkListCtx);
+  const navigation = useNavigation<any>();
+
+  const onCheckListMoveHandler = async (item: any) => {
+    await checkListContext?.setCheckListId(item?.id);
+    navigation.navigate('stack', { screen: 'basicCheckList' });
+  };
+
+  const SlideItem = ({ item }: any) => {
+    return (
+      <Pressable onPress={() => onCheckListMoveHandler(item)} style={styles.card}>
+        <Image style={styles.image} source={{ uri: `${item.imgUri}` }} />
+        <View>
+          <Text style={styles.mainTitle}>{item.mainTitle}</Text>
+          <View style={styles.subTitle}>
+            <View style={styles.iconText}>
+              <Image
+                style={styles.distanceIcon}
+                source={require('../../assets/images/map/mapDistance.png')}
+              />
+              <DefaultText style={styles.text}>
+                {item.roomType}/{item.area}
+              </DefaultText>
+            </View>
+            <View style={styles.iconText}>
+              <Image
+                style={styles.timeIcon}
+                source={require('../../assets/images/map/mapTime.png')}
+              />
+              <DefaultText style={styles.text}>도보{item.distance}</DefaultText>
+            </View>
+          </View>
+        </View>
+      </Pressable>
+    );
+  };
 
   useEffect(() => {
     axios
@@ -77,7 +115,7 @@ const Map = () => {
             onSnapToItem={(index) => {
               setLocations(
                 locations.map((marker) =>
-                  marker.id === index
+                  marker.order === index
                     ? (setPick(marker.location), { ...marker, center: true })
                     : { ...marker, center: false }
                 )
