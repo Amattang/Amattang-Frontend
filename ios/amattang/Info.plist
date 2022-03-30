@@ -35,12 +35,6 @@
 	<string>1</string>
 	<key>KAKAO_APP_KEY</key>
 	<string>3d5254ebc91a92469dde7bc04f9c74b1</string>
-	<key>LSApplicationQueriesSchemes</key>
-	<array>
-		<string>kakaokompassauth</string>
-		<string>storykompassauth</string>
-		<string>kakaolink</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>

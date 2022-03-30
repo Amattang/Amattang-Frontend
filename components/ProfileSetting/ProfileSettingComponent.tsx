@@ -4,7 +4,6 @@ import { DefaultText } from '../../CustomText';
 import styles from './styles';
 
 function ProfileSettingComponent() {
-
   return (
     <>
       <ScrollView>
@@ -16,9 +15,10 @@ function ProfileSettingComponent() {
 
             <View>
               <View style={styles.horizontalLine} />
+
               <DefaultText style={styles.profileSettingTitle}>고객센터</DefaultText>
               <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
+                onPress={() => Linking.openURL('http://pf.kakao.com/_Numxeb')}
                 style={styles.profileSettingEachElementWrapper}
               >
                 <DefaultText style={styles.profileSettingEachElementText}>
@@ -26,8 +26,9 @@ function ProfileSettingComponent() {
                 </DefaultText>
                 <Image source={require('../../assets/images/common/rightArrow.png')} />
               </Pressable>
+
               <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
+                onPress={() => Linking.openURL('https://www.instagram.com/a_ma_ttang/')}
                 style={styles.profileSettingEachElementWrapper}
               >
                 <DefaultText style={styles.profileSettingEachElementText}>
@@ -35,11 +36,15 @@ function ProfileSettingComponent() {
                 </DefaultText>
                 <Image source={require('../../assets/images/common/rightArrow.png')} />
               </Pressable>
+
               <View style={styles.horizontalLine} />
 
               <DefaultText style={styles.profileSettingTitle}>고객센터</DefaultText>
+
               <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
+                onPress={() =>
+                  Linking.openURL('https://www.notion.so/2caa1719b6f74f228137d662d32dd374')
+                }
                 style={styles.profileSettingEachElementWrapper}
               >
                 <DefaultText style={styles.profileSettingEachElementText}>
@@ -48,7 +53,9 @@ function ProfileSettingComponent() {
                 <Image source={require('../../assets/images/common/rightArrow.png')} />
               </Pressable>
               <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
+                onPress={() =>
+                  Linking.openURL('https://www.notion.so/85d38b79533142c9afa20a92614d9803')
+                }
                 style={styles.profileSettingEachElementWrapper}
               >
                 <DefaultText style={styles.profileSettingEachElementText}>
@@ -56,15 +63,15 @@ function ProfileSettingComponent() {
                 </DefaultText>
                 <Image source={require('../../assets/images/common/rightArrow.png')} />
               </Pressable>
-              <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
-                style={styles.profileSettingEachElementWrapper}
-              >
-                <DefaultText style={styles.profileSettingEachElementText}>
-                  오픈소스 라이선스
-                </DefaultText>
-                <Image source={require('../../assets/images/common/rightArrow.png')} />
-              </Pressable>
+              {/*<Pressable*/}
+              {/*  onPress={() => Linking.openURL('https://www.naver.com')}*/}
+              {/*  style={styles.profileSettingEachElementWrapper}*/}
+              {/*>*/}
+              {/*  <DefaultText style={styles.profileSettingEachElementText}>*/}
+              {/*    오픈소스 라이선스*/}
+              {/*  </DefaultText>*/}
+              {/*  <Image source={require('../../assets/images/common/rightArrow.png')} />*/}
+              {/*</Pressable>*/}
               <View style={styles.profileSettingBottomElements}>
                 <Pressable style={styles.profileSettingEachElementWrapper}>
                   <DefaultText style={styles.profileSettingEachElementText}>
