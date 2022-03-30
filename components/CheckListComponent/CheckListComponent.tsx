@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import React, { Dispatch, SetStateAction, useEffect } from 'react';
 import { View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
@@ -15,11 +15,8 @@ import Animated, {
 } from 'react-native-reanimated';
 
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
-<<<<<<< HEAD
 import ButtonsOfTypeM from './ButtonsOfTypeM';
-=======
 import ButtonsOfTypeC from './ButtonsOfTypeC';
->>>>>>> 183b88d (fix: camera)
 
 interface IProps {
   modal?: boolean;

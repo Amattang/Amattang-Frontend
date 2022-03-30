@@ -25,6 +25,7 @@ import MyItemOfBottomSheets from '../../components/CheckListComponent/myItem/MyI
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { GetMyItemServerData } from '../../api/GetMyItemServerData';
 import { checkListCtx } from '../../Context/CheckListByServer';
+import axios from 'axios';
 
 interface IProps {
   isEdit: boolean;
@@ -76,6 +77,21 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
           : { ...selectedItem }
       )
     );
+    try {
+      axios.put(`/api/check-list/${checkListContext?.checkListId}/custom`, {
+        ...myItem,
+        questions: myItem.questions.map((selectedItemElement) =>
+          selectedItemElement.questionId === myItemElement.questionId
+            ? {
+                ...selectedItemElement,
+                checked: !selectedItemElement.checked,
+              }
+            : { ...selectedItemElement }
+        ),
+      });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   // ref

@@ -12,7 +12,6 @@ interface IProps {
 }
 
 function ButtonsOfTypeC({ setModal, modal, checkList }: IProps) {
-  console.log(checkList);
   return (
     <>
       <View style={styles.imageWrapper}>

@@ -29,7 +29,11 @@ function CreateMyItemButtonOfBottomSheets({
     bottomSheetModalRef?.current?.dismiss();
     // id 있으면 수정하는 로직으로 구성
     try {
-      axios.post(`/api/check-list/${checkListContext?.checkListId}/custom`, clickedMyItem);
+      if (clickedMyItem?.categoryId) {
+        axios.put(`/api/check-list/${checkListContext?.checkListId}/custom`, clickedMyItem);
+      } else {
+        axios.post(`/api/check-list/${checkListContext?.checkListId}/custom`, clickedMyItem);
+      }
     } catch (error) {
       console.error(error);
     }
