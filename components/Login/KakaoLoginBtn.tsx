@@ -4,7 +4,7 @@ import { DefaultText } from '../../CustomText';
 import styles from '../../screens/Landing/styles';
 import { login, KakaoOAuthToken } from '@react-native-seoul/kakao-login';
 import axios from 'axios';
-import { setAuthTokens } from 'react-native-axios-jwt';
+import { setAuthTokens, setAccessToken, getRefreshToken } from 'react-native-axios-jwt';
 import { axiosInstance } from './LoginToken';
 
 // return된 access, refresh ->
@@ -16,10 +16,10 @@ type Props = {
 };
 
 const KakaoLoginBtn = ({ setIsLogin }: Props) => {
-  const onLogin = async (): Promise<void> => {
+  const onKakaoLoginHandler = async (): Promise<void> => {
     const access: KakaoOAuthToken = await login();
 
-    console.log(`accessToken : ${access.accessToken}`);
+    console.log(`kakao accessToken : ${access.accessToken}`);
 
     axiosInstance
       .post(`/login`, {
@@ -30,7 +30,7 @@ const KakaoLoginBtn = ({ setIsLogin }: Props) => {
       .catch(catchError);
   };
 
-  const requestRefresh = (refreshToken: string) => {
+  const requestRefresh = (refreshToken: any) => {
     axios
       .post(`/issue/re`, {
         request: 'access / refresh',
@@ -42,16 +42,25 @@ const KakaoLoginBtn = ({ setIsLogin }: Props) => {
 
   const onLoginSuccess = (res: any) => {
     const res_data = res.data.data;
-    console.log(`Bearer : ${res_data.accessToken}`);
-    axios.defaults.headers.common['Authorization'] = `Bearer ${res_data.accessToken}`;
-    // AsyncStorage.setItem
-    setAuthTokens({
-      accessToken: res_data.accessToken,
-      refreshToken: res_data.refreshToken,
-    });
+    let accessToken: string = '';
+    let acessTokenExpiresIn: number = 0;
+    if (Object.keys(res_data).includes('token')) {
+      // 재접속
+      accessToken = res_data.token;
+      setAccessToken(accessToken);
+    } else {
+      // 처음 호출
+      accessToken = res_data.accessToken;
+      setAuthTokens({
+        accessToken: accessToken,
+        refreshToken: res_data.refreshToken,
+      });
+    }
+    axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     setIsLogin(true);
+    const refreshToken = getRefreshToken().then((refreshToken) => console.log(refreshToken));
     // accessToken 만료하기 1분 전에 로그인 연장
-    setTimeout(() => requestRefresh(res_data.refreshToken), res_data.accessExpiresIn - 60000);
+    setTimeout(() => requestRefresh(refreshToken), acessTokenExpiresIn - 60000);
   };
 
   const catchError = (err: any) => {
@@ -66,7 +75,7 @@ const KakaoLoginBtn = ({ setIsLogin }: Props) => {
   };
 
   return (
-    <Pressable onPress={onLogin} style={[styles.kakaoLoginBtn, styles.bottomBtn]}>
+    <Pressable onPress={onKakaoLoginHandler} style={[styles.kakaoLoginBtn, styles.bottomBtn]}>
       <View style={styles.bottomImg}>
         <Image source={require('../../assets/images/landing/kakao.png')} />
       </View>

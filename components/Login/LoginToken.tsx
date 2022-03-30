@@ -16,4 +16,4 @@ export const axiosInstance = axios.create({ baseURL: API_HOST });
 
 // applyAuthTokenInterceptor(axiosInstance, { requestRefresh });
 
-// // 리프레시 만료됐을 때 login api
+// // 리프레시 만료됐을 때 -> 다시 로그인 api 요청
