@@ -9,13 +9,7 @@ function ProfileSettingComponent() {
       <ScrollView>
         <View style={styles.profileSettingOuterWrapper}>
           <View style={styles.profileSettingInnerWrapper}>
-            <DefaultText style={styles.profileSettingName}>name: 최봉수</DefaultText>
-
-            <View style={styles.horizontalLine} />
-
             <View>
-              <View style={styles.horizontalLine} />
-
               <DefaultText style={styles.profileSettingTitle}>고객센터</DefaultText>
               <Pressable
                 onPress={() => Linking.openURL('http://pf.kakao.com/_Numxeb')}

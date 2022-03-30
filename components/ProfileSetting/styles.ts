@@ -1,8 +1,10 @@
-import { StyleSheet } from 'react-native';
+import { Dimensions, StyleSheet } from 'react-native';
 import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 
+const windowHeight = Dimensions.get('window').height;
+
 const styles = StyleSheet.create({
-  profileSettingOuterWrapper: { backgroundColor: 'white', flex: 1 },
+  profileSettingOuterWrapper: { backgroundColor: 'white', flex: 1, height: windowHeight },
 
   profileSettingName: {
     color: mainBlue,
@@ -14,7 +16,6 @@ const styles = StyleSheet.create({
   profileSettingInnerWrapper: {
     backgroundColor: mainLightBlue,
     margin: 17,
-    flex: 1,
     borderRadius: 16,
   },
   profileSettingTitle: {
