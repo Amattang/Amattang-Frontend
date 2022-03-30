@@ -19,7 +19,7 @@ const CheckListStore: React.FC = (props) => {
     typeA: [],
     typeB: [],
     typeD: [],
-    typeM: [],
+    typeM: {},
   });
   const [checkListId, setCheckListId] = useState<number | false>(false);
 

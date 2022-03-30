@@ -2,10 +2,6 @@ import { StyleSheet } from 'react-native';
 import { mainBlue } from '../../color';
 
 export const styles = StyleSheet.create({
-  container: {
-    position: 'absolute',
-    bottom: 100,
-  },
   card: {
     backgroundColor: 'white',
     borderRadius: 13,

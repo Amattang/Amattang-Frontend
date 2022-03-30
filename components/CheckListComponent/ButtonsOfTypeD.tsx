@@ -38,39 +38,81 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
             : ({ ...questionItem } as checkListTypes)
         )
       ));
-    newCheckListElement &&
-      (await checkListContext?.setChoseCheckListByServer({
-        ...checkListContext?.choseCheckListByServer,
-        typeD: [
-          ...(checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]),
-          {
-            questionId: checkList.questionId,
-            answer: [...checkList.answer, { type: newCheckListElement, val: true }],
-          },
-        ],
-      }));
+    (checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]).some(
+      (item) => item.questionId === checkList.questionId
+    )
+      ? newCheckListElement &&
+        (await checkListContext?.setChoseCheckListByServer({
+          ...checkListContext?.choseCheckListByServer,
+          typeD: [
+            ...(
+              checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]
+            ).map((item) =>
+              item.questionId === checkList.questionId
+                ? {
+                    questionId: checkList.questionId,
+                    answer: [...checkList.answer, { type: newCheckListElement, val: true }],
+                  }
+                : { ...item }
+            ),
+          ],
+        }))
+      : newCheckListElement &&
+        (await checkListContext?.setChoseCheckListByServer({
+          ...checkListContext?.choseCheckListByServer,
+          typeD: [
+            ...(checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]),
+            {
+              questionId: checkList.questionId,
+              answer: [...checkList.answer, { type: newCheckListElement, val: true }],
+            },
+          ],
+        }));
 
     await setNewCheckListElement('');
   };
 
   const onPressHandler = (answer: answerButtonType) => {
-    isEdit &&
-      checkListContext?.setChoseCheckListByServer({
-        ...checkListContext?.choseCheckListByServer,
-        typeD: [
-          ...(checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]),
-          {
-            questionId: checkList.questionId,
-            answer: [
-              ...checkList.answer.map((answerItem) =>
-                answerItem.type === answer.type
-                  ? { ...answerItem, val: !answerItem.val }
-                  : { ...answerItem }
-              ),
-            ],
-          },
-        ],
-      });
+    (checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]).some(
+      (item) => item.questionId === checkList.questionId
+    )
+      ? isEdit &&
+        checkListContext?.setChoseCheckListByServer({
+          ...checkListContext?.choseCheckListByServer,
+          typeD: [
+            ...(
+              checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]
+            ).map((item) =>
+              item.questionId === checkList.questionId
+                ? {
+                    ...item,
+                    answer: item.answer.map((answerItem) =>
+                      answerItem.type === answer.type
+                        ? { ...answerItem, val: !answerItem.val }
+                        : { ...answerItem }
+                    ),
+                  }
+                : { ...item }
+            ),
+          ],
+        })
+      : isEdit &&
+        checkListContext?.setChoseCheckListByServer({
+          ...checkListContext?.choseCheckListByServer,
+          typeD: [
+            ...(checkListContext?.choseCheckListByServer.typeD as choseCheckListItemByServerType[]),
+            {
+              questionId: checkList.questionId,
+              answer: [
+                ...checkList.answer.map((answerItem) =>
+                  answerItem.type === answer.type
+                    ? { ...answerItem, val: !answerItem.val }
+                    : { ...answerItem }
+                ),
+              ],
+            },
+          ],
+        });
     isEdit &&
       setCheckLists(
         checkLists.map((questionItem) =>
@@ -88,6 +130,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
             : ({ ...questionItem } as checkListTypes)
         )
       );
+    console.log(checkListContext?.choseCheckListByServer);
   };
 
   return (

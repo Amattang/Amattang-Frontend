@@ -16,6 +16,7 @@ import Animated, {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
+import ButtonsOfTypeM from './ButtonsOfTypeM';
 
 interface IProps {
   deletedCheckLists?: checkListTypes[];
@@ -111,6 +112,14 @@ function CheckListComponent({
               {checkList.type === 'C' ? <DefaultText>c</DefaultText> : null}
               {checkList.type === 'D' ? (
                 <ButtonsOfTypeD
+                  isEdit={isEdit}
+                  checkList={checkList}
+                  setCheckLists={setCheckLists}
+                  checkLists={checkLists}
+                />
+              ) : null}
+              {checkList.type === 'M' ? (
+                <ButtonsOfTypeM
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}

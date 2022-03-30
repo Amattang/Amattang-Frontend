@@ -53,11 +53,18 @@ export interface deletedCheckListQuestionByServerType {
   visibility: boolean;
 }
 
+export interface typeM {
+  questionId: number;
+  address: string;
+  latitude: number;
+  longitude: number;
+}
+
 export interface choseCheckListByServerType {
   typeA?: choseCheckListItemByServerType[];
   typeB?: choseCheckListItemByServerType[];
   typeD?: choseCheckListItemByServerType[];
-  typeM?: choseCheckListItemByServerType[];
+  typeM?: typeM | {};
 }
 
 export interface choseCheckListItemByServerType extends answerListType {

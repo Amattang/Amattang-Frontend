@@ -37,23 +37,48 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
             : ({ ...questionItem } as checkListTypes)
         )
       );
-    isEdit &&
-      checkListContext?.setChoseCheckListByServer({
-        ...checkListContext?.choseCheckListByServer,
-        typeA: [
-          ...(checkListContext?.choseCheckListByServer.typeA as choseCheckListItemByServerType[]),
-          {
-            questionId: checkList.questionId,
-            answer: [
-              ...checkList.answer.map((answerItem) =>
-                answerItem.type === answer.type
-                  ? { ...answerItem, val: true }
-                  : { ...answerItem, val: false }
-              ),
-            ],
-          },
-        ],
-      });
+
+    (checkListContext?.choseCheckListByServer.typeA as choseCheckListItemByServerType[]).some(
+      (item) => item.questionId === checkList.questionId
+    )
+      ? isEdit &&
+        checkListContext?.setChoseCheckListByServer({
+          ...checkListContext?.choseCheckListByServer,
+          typeA: [
+            ...(
+              checkListContext?.choseCheckListByServer.typeA as choseCheckListItemByServerType[]
+            ).map((item) =>
+              item.questionId === checkList.questionId
+                ? {
+                    ...item,
+                    answer: item.answer.map((answerItem) =>
+                      answerItem.type === answer.type
+                        ? { ...answerItem, val: true }
+                        : { ...answerItem, val: false }
+                    ),
+                  }
+                : { ...item }
+            ),
+          ],
+        })
+      : isEdit &&
+        checkListContext?.setChoseCheckListByServer({
+          ...checkListContext?.choseCheckListByServer,
+          typeA: [
+            ...(checkListContext?.choseCheckListByServer.typeA as choseCheckListItemByServerType[]),
+            {
+              questionId: checkList.questionId,
+              answer: [
+                ...checkList.answer.map((answerItem) =>
+                  answerItem.type === answer.type
+                    ? { ...answerItem, val: true }
+                    : { ...answerItem, val: false }
+                ),
+              ],
+            },
+          ],
+        });
+    console.log(checkListContext?.choseCheckListByServer);
   };
 
   return (
