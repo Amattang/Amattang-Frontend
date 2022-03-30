@@ -4,6 +4,31 @@ import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+  summaryPinImg: { position: 'absolute', zIndex: 1000, top: 30, right: 15 },
+  summaryMainImg: { width: windowWidth - 34, height: 260, borderRadius: 10, marginTop: 15 },
+  summaryContentImg: { marginRight: 5 },
+  distanceImg: { marginRight: 9 },
+  summaryRightContents: { flexDirection: 'row' },
+  summaryWrapper: { justifyContent: 'center', alignItems: 'center' },
+  summaryContentAddress: { color: '#8C8CA1' },
+  summaryContentTitle: { fontSize: 18 },
+  summaryWhiteCardWrapper: {
+    position: 'relative',
+    marginBottom: -30,
+    backgroundColor: 'white',
+    width: windowWidth - 68,
+    bottom: 50,
+    padding: 19,
+    borderRadius: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  summaryContentText: { fontSize: 12, lineHeight: 18 },
+  summayWhiteCardContentWrapper: {
+    justifyContent: 'space-between',
+    height: 50,
+    lineHeight: 18,
+  },
   selectMainImageText: { fontSize: 16, color: mainBlue, fontFamily: 'AppleSDGothicNeoEB00' },
   imageModal: { position: 'absolute', right: -17 },
   selectedimageCancleButton: {

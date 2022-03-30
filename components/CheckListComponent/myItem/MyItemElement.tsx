@@ -18,8 +18,6 @@ interface IProps {
 }
 
 function MyItemElement({ myItemElement, elementClickedHandler, myItem, isEdit }: IProps) {
-  const checkListContext = useContext(checkListCtx);
-
   const myItemElementOnPressHandler = () => {
     isEdit && elementClickedHandler({ myItem, myItemElement });
   };

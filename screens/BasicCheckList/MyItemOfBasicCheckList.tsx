@@ -124,6 +124,7 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
                 />
                 {myItems.map((myItem) => (
                   <MyItem
+                    key={myItem.categoryId}
                     isEdit={isEdit}
                     elementClickedHandler={elementClickedHandler}
                     myItems={myItems}
