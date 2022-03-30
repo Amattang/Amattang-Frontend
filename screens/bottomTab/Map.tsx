@@ -3,12 +3,7 @@ import { Text, View, Image, Pressable } from 'react-native';
 import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
 import Carousel from 'react-native-snap-carousel';
 import { styles } from './Map.style';
-<<<<<<< HEAD
 import { ILocations, ILocation } from '../../types/mapTypes';
-=======
-import { ILocation, ILocations } from '../../types/mapTypes';
-import SlideItem from '../../components/Map/SlideItem';
->>>>>>> 0d4a6808b28901476b2ade5b1aecd17dc27c18e6
 import { ITEM_WIDTH, SLIDER_WIDTH } from '../../constants/Map.constant';
 import { requestPermission } from '../../utils/LocationPermission';
 import axios from 'axios';
@@ -18,65 +13,8 @@ import { DefaultText } from '../../CustomText';
 
 const Map = () => {
   // mockup data
-<<<<<<< HEAD
   const [locations, setLocations] = useState<ILocations[]>();
 
-=======
-  const [locations, setLocations] = useState<ILocations[]>([
-    {
-      id: 0,
-      // imgUri:null,
-      mainTitle: '희망빌라',
-      address: '강남구 2039길',
-      location: { latitude: 37.562516, longitude: 127.035679 },
-      distance: '10분',
-      roomType: '원룸',
-      area: '4평',
-      form: '오픈형',
-      pinned: false,
-      center: true,
-    },
-    {
-      id: 1,
-      // imgUri:null,
-      mainTitle: '더샵',
-      address: '강남구 2039길',
-      location: { latitude: 37.561255, longitude: 127.04456 },
-      distance: '10분',
-      roomType: '원룸',
-      area: '4평',
-      form: '오픈형',
-      pinned: false,
-      center: true,
-    },
-    {
-      id: 2,
-      // imgUri:null,
-      mainTitle: '한양아파트',
-      address: '강남구 2039길',
-      location: { latitude: 37.58071, longitude: 127.035978 },
-      distance: '10분',
-      roomType: '원룸',
-      area: '4평',
-      form: '오픈형',
-      pinned: false,
-      center: true,
-    },
-    {
-      id: 3,
-      // imgUri:null,
-      mainTitle: '한양빌리지',
-      address: '강남구 2039길',
-      location: { latitude: 37.572162, longitude: 127.032171 },
-      distance: '10분',
-      roomType: '원룸',
-      area: '4평',
-      form: '오픈형',
-      pinned: false,
-      center: true,
-    },
-  ]);
->>>>>>> 0d4a6808b28901476b2ade5b1aecd17dc27c18e6
   // 슬라이드로 선택한 위치
   const [pick, setPick] = useState<ILocation>({
     latitude: 0,
@@ -120,7 +58,6 @@ const Map = () => {
   };
 
   useEffect(() => {
-<<<<<<< HEAD
     axios
       .get(`./api/check-list`)
       .then((res) => {
@@ -135,13 +72,6 @@ const Map = () => {
       .catch((err) => {
         console.error(err);
       });
-=======
-    requestPermission().then((result) => {
-      if (result === 'granted') {
-        setPick(locations[0].location);
-      }
-    });
->>>>>>> 0d4a6808b28901476b2ade5b1aecd17dc27c18e6
   }, []);
 
   return (
@@ -163,11 +93,7 @@ const Map = () => {
             <Marker
               coordinate={marker.location}
               title={marker.mainTitle}
-<<<<<<< HEAD
               description={marker.address}
-=======
-              // description={marker.description}
->>>>>>> 0d4a6808b28901476b2ade5b1aecd17dc27c18e6
               image={
                 marker.center
                   ? require('../../assets/images/map/mapCenter3.png')
@@ -178,7 +104,6 @@ const Map = () => {
           ))}
         </MapView>
       )}
-<<<<<<< HEAD
       {locations && (
         <View style={styles.carContainer}>
           <Carousel
@@ -199,26 +124,6 @@ const Map = () => {
           />
         </View>
       )}
-=======
-      <View style={styles.container}>
-        <Carousel
-          data={locations}
-          renderItem={SlideItem}
-          itemWidth={ITEM_WIDTH}
-          sliderWidth={SLIDER_WIDTH}
-          layout={'default'}
-          onSnapToItem={(index) => {
-            setLocations(
-              locations.map((marker) =>
-                marker.id === index
-                  ? (setPick(marker.location), { ...marker, center: true })
-                  : { ...marker, center: false }
-              )
-            );
-          }}
-        />
-      </View>
->>>>>>> 0d4a6808b28901476b2ade5b1aecd17dc27c18e6
     </View>
   );
 };

@@ -2,7 +2,7 @@ import { StyleSheet } from 'react-native';
 import { mainBlue } from '../../color';
 
 export const styles = StyleSheet.create({
-  container: {
+  carContainer: {
     position: 'absolute',
     bottom: 100,
   },
