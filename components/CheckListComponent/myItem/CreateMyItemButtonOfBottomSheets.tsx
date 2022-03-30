@@ -33,16 +33,18 @@ function CreateMyItemButtonOfBottomSheets({
     } catch (error) {
       console.error(error);
     }
-    // clickedMyItem?.categoryId
-    //   ? setTimeout(() => {
-    //       setMyItems([
-    //         ...myItems.map((elements) =>
-    //           elements.categoryId === clickedMyItem?.categoryId
-    //             ? { ...clickedMyItem }
-    //             : { ...elements }
-    //         ),
-    //       ]);
-    //     }, 500)
+
+    clickedMyItem?.categoryId
+      ? setTimeout(() => {
+          setMyItems([
+            ...myItems.map((elements) =>
+              elements.categoryId === clickedMyItem?.categoryId
+                ? { ...clickedMyItem }
+                : { ...elements }
+            ),
+          ]);
+        }, 500)
+      : null;
     setTimeout(() => {
       GetMyItemServerData({ setMyItems, checkListId: checkListContext?.checkListId });
     }, 500);

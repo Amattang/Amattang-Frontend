@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
 import { View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
@@ -13,12 +13,17 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
+<<<<<<< HEAD
 import ButtonsOfTypeM from './ButtonsOfTypeM';
+=======
+import ButtonsOfTypeC from './ButtonsOfTypeC';
+>>>>>>> 183b88d (fix: camera)
 
 interface IProps {
+  modal?: boolean;
+  setModal?: Dispatch<SetStateAction<boolean>>;
   deletedCheckLists?: checkListTypes[];
   setDeletedCheckLists?: Dispatch<SetStateAction<checkListTypes[]>>;
   handlePresentModalPress?: () => void;
@@ -30,6 +35,8 @@ interface IProps {
 }
 
 function CheckListComponent({
+  modal,
+  setModal,
   deletedCheckLists,
   setDeletedCheckLists,
   isEdit,
@@ -109,7 +116,9 @@ function CheckListComponent({
                   checkLists={checkLists}
                 />
               ) : null}
-              {checkList.type === 'C' ? <DefaultText>c</DefaultText> : null}
+              {checkList.type === 'C' ? (
+                <ButtonsOfTypeC setModal={setModal} modal={modal} checkList={checkList} />
+              ) : null}
               {checkList.type === 'D' ? (
                 <ButtonsOfTypeD
                   isEdit={isEdit}

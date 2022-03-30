@@ -45,15 +45,11 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
         `/api/check-list/${checkListContext?.checkListId}/common/question`,
         checkListContext?.choseCheckListByServer
       );
-      // await axios.put(
-      //   `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
-      //   checkListContext?.deletedCheckListByServer
-      // );
-      console.log('-----------------------------------------------');
-      console.log(checkListContext?.choseCheckListByServer);
-      console.log('-----------------------------------------------');
+      await axios.put(
+        `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
+        checkListContext?.deletedCheckListByServer
+      );
     } catch (error) {
-      console.log(error);
       console.error(error);
     }
 
@@ -82,6 +78,14 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
     <>
       <NativeStack.Navigator screenOptions={screenOptions}>
         <NativeStack.Screen
+          name={'profileSetting'}
+          component={ProfileSetting}
+          options={() => ({
+            title: '설정',
+            headerStyle: { backgroundColor: 'white' },
+          })}
+        />
+        <NativeStack.Screen
           name="basicCheckList"
           children={() => <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />}
           options={() => ({
@@ -98,14 +102,6 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
                   <Image source={require('../../../assets/images/checkList/share.png')} />
                 </Pressable>
               ),
-          })}
-        />
-        <NativeStack.Screen
-          name={'profileSetting'}
-          component={ProfileSetting}
-          options={() => ({
-            title: '설정',
-            headerStyle: { backgroundColor: 'white' },
           })}
         />
       </NativeStack.Navigator>

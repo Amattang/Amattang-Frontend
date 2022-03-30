@@ -4,10 +4,58 @@ import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+  selectMainImageText: { fontSize: 16, color: mainBlue, fontFamily: 'AppleSDGothicNeoEB00' },
+  imageModal: { position: 'absolute', right: -17 },
+  selectedimageCancleButton: {
+    alignItems: 'flex-end',
+    width: windowWidth,
+    padding: 20,
+    marginBottom: 100,
+  },
+  selectedImageWrapper: { justifyContent: 'center', alignItems: 'center' },
+  selectedImage: { width: windowWidth, height: windowWidth },
+  imageSelectButtonWrapper: {
+    marginHorizontal: 17,
+    backgroundColor: 'white',
+    marginTop: 100,
+    paddingVertical: 20,
+    width: windowWidth - 34,
+    alignItems: 'center',
+    borderRadius: 10,
+  },
+  imageWrapper: {
+    flexDirection: 'row',
+    flex: 3,
+    flexWrap: 'wrap',
+    justifyContent: 'space-between',
+  },
+  eachImageElement: {
+    flex: 1,
+    width: windowWidth / 3 - 37,
+    height: windowWidth / 3 - 37,
+    marginVertical: 5,
+    borderRadius: 4,
+  },
   checkListWrapper: {
+    zIndex: 1,
     flexDirection: 'row',
     marginVertical: 8,
     marginHorizontal: 17,
+  },
+  mainImageWrapper: {
+    borderBottomLeftRadius: 4,
+    borderBottomRightRadius: 4,
+    width: windowWidth / 3 - 37,
+    height: 25,
+    backgroundColor: mainBlue,
+    position: 'absolute',
+    bottom: 4,
+    justifyContent: 'center',
+    alignItems: 'center',
+  },
+  mainImageText: {
+    color: 'white',
+    fontSize: 12,
   },
 
   whiteCard: {
@@ -105,7 +153,7 @@ const styles = StyleSheet.create({
     marginVertical: 8,
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 40,
+    marginBottom: 140,
     paddingVertical: 20,
   },
   blueText: {
