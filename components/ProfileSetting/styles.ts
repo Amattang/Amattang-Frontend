@@ -47,7 +47,7 @@ const styles = StyleSheet.create({
     fontSize: 18,
   },
   profileSettingBottomElements: {
-    marginTop: 30,
+    marginTop: 15,
     marginBottom: 30,
   },
   redText: {

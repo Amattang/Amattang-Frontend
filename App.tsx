@@ -5,11 +5,9 @@ import 'react-native-gesture-handler';
 import RootNav from './navigation/Main/RootNav';
 import OnBoardingStack from './navigation/OnBoarding/StackNavigationOfOnBoarding';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
-import { getAccessToken, getRefreshToken, isLoggedIn } from 'react-native-axios-jwt';
+import { getAccessToken, isLoggedIn } from 'react-native-axios-jwt';
 import { QueryClient, QueryClientProvider } from 'react-query';
 import CheckListStore from './Context/CheckListByServer';
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import KakaoLoginBtn from './components/Login/KakaoLoginBtn';
 import axios from 'axios';
 
 const queryClient = new QueryClient();

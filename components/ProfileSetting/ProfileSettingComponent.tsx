@@ -66,6 +66,8 @@ function ProfileSettingComponent() {
               {/*  </DefaultText>*/}
               {/*  <Image source={require('../../assets/images/common/rightArrow.png')} />*/}
               {/*</Pressable>*/}
+              <View style={styles.horizontalLine} />
+
               <View style={styles.profileSettingBottomElements}>
                 <Pressable style={styles.profileSettingEachElementWrapper}>
                   <DefaultText style={styles.profileSettingEachElementText}>
