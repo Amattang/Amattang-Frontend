@@ -16,8 +16,10 @@ interface IProps {
 }
 
 function MyItemElement({ myItemElement, elementClickedHandler, myItem, isEdit }: IProps) {
-  const myItemElementOnPressHandler = () =>
+  const myItemElementOnPressHandler = () => {
     isEdit && elementClickedHandler({ myItem, myItemElement });
+    console.log(myItemElement);
+  };
   return (
     <Pressable onPress={myItemElementOnPressHandler} style={styles.myItemDetailElementWrapper}>
       {myItemElement.checked ? (

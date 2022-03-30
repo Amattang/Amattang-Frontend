@@ -33,7 +33,7 @@ function CheckListImage({ checkList, setModal, modal }: IProps) {
       setModal ? setModal(false) : null;
     }
   };
-  console.log(index);
+
   const renderItem = ({ item }: any) => {
     return (
       <View style={styles.selectedImageWrapper}>
@@ -44,6 +44,7 @@ function CheckListImage({ checkList, setModal, modal }: IProps) {
       </View>
     );
   };
+
   return (
     <>
       <Modal style={styles.imageModal} backdropOpacity={1} isVisible={modal}>
