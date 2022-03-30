@@ -13,12 +13,14 @@ import Animated, {
   useSharedValue,
   withTiming,
 } from 'react-native-reanimated';
-import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 import ButtonOfGoToTrash from './ButtonOfGoToTrash';
 import ButtonsOfTypeM from './ButtonsOfTypeM';
+import ButtonsOfTypeC from './ButtonsOfTypeC';
 
 interface IProps {
+  modal?: boolean;
+  setModal?: Dispatch<SetStateAction<boolean>>;
   deletedCheckLists?: checkListTypes[];
   setDeletedCheckLists?: Dispatch<SetStateAction<checkListTypes[]>>;
   handlePresentModalPress?: () => void;
@@ -30,6 +32,8 @@ interface IProps {
 }
 
 function CheckListComponent({
+  modal,
+  setModal,
   deletedCheckLists,
   setDeletedCheckLists,
   isEdit,
@@ -109,7 +113,9 @@ function CheckListComponent({
                   checkLists={checkLists}
                 />
               ) : null}
-              {checkList.type === 'C' ? <DefaultText>c</DefaultText> : null}
+              {checkList.type === 'C' ? (
+                <ButtonsOfTypeC setModal={setModal} modal={modal} checkList={checkList} />
+              ) : null}
               {checkList.type === 'D' ? (
                 <ButtonsOfTypeD
                   isEdit={isEdit}

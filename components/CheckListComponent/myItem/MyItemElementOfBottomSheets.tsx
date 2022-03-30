@@ -3,6 +3,7 @@ import { myItemElementType, myItemType } from '../../../types/checkListTypes';
 import { Image, View } from 'react-native';
 import styles from '../styles';
 import { BottomSheetTextInput } from '@gorhom/bottom-sheet';
+import { DefaultText } from '../../../CustomText';
 
 interface IProps {
   setClickedMyItem: Dispatch<SetStateAction<myItemType | null>>;

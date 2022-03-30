@@ -3,6 +3,9 @@ export interface answerButtonType {
   redType?: boolean;
   description?: string;
   type?: string;
+  id?: number;
+  main?: boolean;
+  url?: string;
 }
 
 export interface answerListType {

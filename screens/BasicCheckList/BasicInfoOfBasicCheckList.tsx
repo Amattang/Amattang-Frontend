@@ -20,7 +20,7 @@ import BottomSheetsOfDeletedCheckList from '../../components/CheckListComponent/
 import { checkListTypes } from '../../types/checkListTypes';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 import axios from 'axios';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, View } from 'react-native';
 import { checkListCtx } from '../../Context/CheckListByServer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
@@ -31,6 +31,7 @@ interface IProps {
 
 function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const checkListContext = useContext(checkListCtx);
+  const [modal, setModal] = useState(false);
 
   const [onServerData, setOnServerData] = useState(false);
   const [checkLists, setCheckLists] = useState<checkListTypes[]>([]);
@@ -57,7 +58,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
 
   useEffect(() => {
     getServerData();
-  }, []);
+  }, [modal]);
   // setCheckLists(response.data);
   // 바텀시트 동작을 위한 코드
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -80,44 +81,50 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   return (
     <>
       {onServerData ? (
-        <BottomSheetModalProvider>
-          <KeyboardAwareScrollView extraHeight={150}>
-            <ScrollView>
-              {checkLists
-                .filter((item) => item.visibility)
-                .map((mainQuestionItem: checkListTypes) => (
-                  <CheckListComponent
-                    key={mainQuestionItem.questionId}
-                    deletedCheckLists={deletedCheckLists}
-                    setDeletedCheckLists={setDeletedCheckLists}
-                    onBoarding={false}
-                    checkLists={checkLists}
-                    isEdit={isEdit}
-                    checkList={mainQuestionItem}
-                    setCheckLists={setCheckLists}
-                  />
-                ))}
+        <View>
+          <BottomSheetModalProvider>
+            <KeyboardAwareScrollView extraHeight={150}>
+              <ScrollView>
+                <View>
+                  {checkLists
+                    .filter((item) => item.visibility)
+                    .map((mainQuestionItem: checkListTypes) => (
+                      <CheckListComponent
+                        modal={modal}
+                        setModal={setModal}
+                        key={mainQuestionItem.questionId}
+                        deletedCheckLists={deletedCheckLists}
+                        setDeletedCheckLists={setDeletedCheckLists}
+                        onBoarding={false}
+                        checkLists={checkLists}
+                        isEdit={isEdit}
+                        checkList={mainQuestionItem}
+                        setCheckLists={setCheckLists}
+                      />
+                    ))}
 
-              {deletedCheckLists.length !== 0 && (
-                <ButtonOfBringBackDeletedCheckList
-                  handlePresentModalPress={handlePresentModalPress}
-                />
-              )}
-            </ScrollView>
-          </KeyboardAwareScrollView>
-          <BottomSheetsOfDeletedCheckList
-            deletedCheckLists={deletedCheckLists}
-            setDeletedCheckLists={setDeletedCheckLists}
-            isEdit={isEdit}
-            setCheckLists={setCheckLists}
-            onAnimateHandler={onAnimateHandler}
-            onDismissHandler={onDismissHandler}
-            renderBackdrop={renderBackdrop}
-            bottomSheetModalRef={bottomSheetModalRef}
-            snapPoints={snapPoints}
-            checkLists={checkLists}
-          />
-        </BottomSheetModalProvider>
+                  {deletedCheckLists.length !== 0 && (
+                    <ButtonOfBringBackDeletedCheckList
+                      handlePresentModalPress={handlePresentModalPress}
+                    />
+                  )}
+                </View>
+              </ScrollView>
+            </KeyboardAwareScrollView>
+            <BottomSheetsOfDeletedCheckList
+              deletedCheckLists={deletedCheckLists}
+              setDeletedCheckLists={setDeletedCheckLists}
+              isEdit={isEdit}
+              setCheckLists={setCheckLists}
+              onAnimateHandler={onAnimateHandler}
+              onDismissHandler={onDismissHandler}
+              renderBackdrop={renderBackdrop}
+              bottomSheetModalRef={bottomSheetModalRef}
+              snapPoints={snapPoints}
+              checkLists={checkLists}
+            />
+          </BottomSheetModalProvider>
+        </View>
       ) : (
         <ActivityIndicator style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }} />
       )}
