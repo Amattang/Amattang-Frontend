@@ -1,5 +1,5 @@
 import React from 'react';
-import { ScrollView, View } from 'react-native';
+import { RefreshControl, ScrollView, View } from 'react-native';
 
 import { DefaultText } from '../../CustomText';
 import styles from './styles';
@@ -9,9 +9,11 @@ import { homeScreenTypes } from '../../types/homeScreenTypes';
 
 interface IProps {
   homeCheckList: homeScreenTypes[];
+  onRefresh: any;
+  refreshing: boolean;
 }
 
-function CheckListHome({ homeCheckList }: IProps) {
+function CheckListHome({ homeCheckList, refreshing, onRefresh }: IProps) {
   return (
     <View style={styles.fullScreenWrapper}>
       <DefaultText style={[styles.welcomeTitle]}>
@@ -19,7 +21,11 @@ function CheckListHome({ homeCheckList }: IProps) {
         home sweet home 🏠
       </DefaultText>
       <View style={styles.unpinnedChecklistWrapper}>
-        <ScrollView>
+        <ScrollView
+          refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+        >
+          <DefaultText style={[styles.pinnedText]}>📌 고정된 리스트</DefaultText>
+
           <ScrollView horizontal={true}>
             {homeCheckList
               .filter((item) => item.pinned)

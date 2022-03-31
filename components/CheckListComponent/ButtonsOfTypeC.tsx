@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { DefaultText } from '../../CustomText';
 import { checkListTypes } from '../../types/checkListTypes';
 import { Image, Pressable, View } from 'react-native';
@@ -12,6 +12,7 @@ interface IProps {
 }
 
 function ButtonsOfTypeC({ setModal, modal, checkList }: IProps) {
+  const [order, setOrder] = useState<number | undefined>(0);
   return (
     <>
       <View style={styles.imageWrapper}>
@@ -21,6 +22,7 @@ function ButtonsOfTypeC({ setModal, modal, checkList }: IProps) {
               key={item.id}
               onPress={() => {
                 setModal ? setModal(true) : null;
+                setOrder(item.order);
               }}
             >
               <Image
@@ -38,7 +40,12 @@ function ButtonsOfTypeC({ setModal, modal, checkList }: IProps) {
         ))}
       </View>
       {checkList?.answer?.some((item) => item.id) ? (
-        <CheckListImage checkList={checkList.answer} setModal={setModal} modal={modal} />
+        <CheckListImage
+          order={order}
+          checkList={checkList.answer}
+          setModal={setModal}
+          modal={modal}
+        />
       ) : null}
     </>
   );

@@ -157,6 +157,7 @@ function ButtonsOfTypeD({ isEdit, checkList, setCheckLists, checkLists }: IProps
         onChangeText={onChangeTextHandler}
         onEndEditing={onEndEditing}
         placeholder={'+ 직접 입력'}
+        placeholderTextColor={'#D6D4D4'}
         value={newCheckListElement}
         style={[styles.typeDBtnWrapper, styles.typeDInputBtnWrapper]}
       />

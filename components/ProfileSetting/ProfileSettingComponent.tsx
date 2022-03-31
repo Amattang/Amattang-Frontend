@@ -1,24 +1,26 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { View, Image, Pressable, Linking, ScrollView } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import styles from './styles';
+import { clearAuthTokens } from 'react-native-axios-jwt';
+interface IProps {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+}
 
-function ProfileSettingComponent() {
-
+function ProfileSettingComponent({ setIsLogin }: IProps) {
+  const onLogoutHandler = () => {
+    clearAuthTokens();
+    setIsLogin(false);
+  };
   return (
     <>
       <ScrollView>
         <View style={styles.profileSettingOuterWrapper}>
           <View style={styles.profileSettingInnerWrapper}>
-            <DefaultText style={styles.profileSettingName}>name: 최봉수</DefaultText>
-
-            <View style={styles.horizontalLine} />
-
             <View>
-              <View style={styles.horizontalLine} />
               <DefaultText style={styles.profileSettingTitle}>고객센터</DefaultText>
               <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
+                onPress={() => Linking.openURL('http://pf.kakao.com/_Numxeb')}
                 style={styles.profileSettingEachElementWrapper}
               >
                 <DefaultText style={styles.profileSettingEachElementText}>
@@ -26,8 +28,9 @@ function ProfileSettingComponent() {
                 </DefaultText>
                 <Image source={require('../../assets/images/common/rightArrow.png')} />
               </Pressable>
+
               <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
+                onPress={() => Linking.openURL('https://www.instagram.com/a_ma_ttang/')}
                 style={styles.profileSettingEachElementWrapper}
               >
                 <DefaultText style={styles.profileSettingEachElementText}>
@@ -35,11 +38,15 @@ function ProfileSettingComponent() {
                 </DefaultText>
                 <Image source={require('../../assets/images/common/rightArrow.png')} />
               </Pressable>
+
               <View style={styles.horizontalLine} />
 
               <DefaultText style={styles.profileSettingTitle}>고객센터</DefaultText>
+
               <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
+                onPress={() =>
+                  Linking.openURL('https://www.notion.so/2caa1719b6f74f228137d662d32dd374')
+                }
                 style={styles.profileSettingEachElementWrapper}
               >
                 <DefaultText style={styles.profileSettingEachElementText}>
@@ -48,7 +55,9 @@ function ProfileSettingComponent() {
                 <Image source={require('../../assets/images/common/rightArrow.png')} />
               </Pressable>
               <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
+                onPress={() =>
+                  Linking.openURL('https://www.notion.so/85d38b79533142c9afa20a92614d9803')
+                }
                 style={styles.profileSettingEachElementWrapper}
               >
                 <DefaultText style={styles.profileSettingEachElementText}>
@@ -56,22 +65,27 @@ function ProfileSettingComponent() {
                 </DefaultText>
                 <Image source={require('../../assets/images/common/rightArrow.png')} />
               </Pressable>
-              <Pressable
-                onPress={() => Linking.openURL('https://www.naver.com')}
-                style={styles.profileSettingEachElementWrapper}
-              >
-                <DefaultText style={styles.profileSettingEachElementText}>
-                  오픈소스 라이선스
-                </DefaultText>
-                <Image source={require('../../assets/images/common/rightArrow.png')} />
-              </Pressable>
+              {/*<Pressable*/}
+              {/*  onPress={() => Linking.openURL('https://www.naver.com')}*/}
+              {/*  style={styles.profileSettingEachElementWrapper}*/}
+              {/*>*/}
+              {/*  <DefaultText style={styles.profileSettingEachElementText}>*/}
+              {/*    오픈소스 라이선스*/}
+              {/*  </DefaultText>*/}
+              {/*  <Image source={require('../../assets/images/common/rightArrow.png')} />*/}
+              {/*</Pressable>*/}
+              <View style={styles.horizontalLine} />
+
               <View style={styles.profileSettingBottomElements}>
                 <Pressable style={styles.profileSettingEachElementWrapper}>
                   <DefaultText style={styles.profileSettingEachElementText}>
                     버전정보 1.0
                   </DefaultText>
                 </Pressable>
-                <Pressable style={styles.profileSettingEachElementWrapper}>
+                <Pressable
+                  style={styles.profileSettingEachElementWrapper}
+                  onPress={onLogoutHandler}
+                >
                   <DefaultText style={styles.profileSettingEachElementText}>로그아웃</DefaultText>
                 </Pressable>
                 <Pressable style={styles.profileSettingEachElementWrapper}>

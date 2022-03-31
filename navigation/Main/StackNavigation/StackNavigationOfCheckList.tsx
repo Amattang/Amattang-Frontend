@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Image, Pressable, Share } from 'react-native';
 
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
@@ -13,10 +13,16 @@ import {
 } from '@react-navigation/native-stack';
 import { checkListCtx } from '../../../Context/CheckListByServer';
 import axios from 'axios';
+import { useNavigation } from '@react-navigation/native';
 
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
-function CheckListStackNav({ navigation }: CheckListStackProps) {
+interface IProps {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+}
+
+function CheckListStackNav({ setIsLogin }: IProps) {
+  const navigation = useNavigation();
   const checkListContext = useContext(checkListCtx);
 
   const [isEdit, setIsEdit] = useState(true);
@@ -40,21 +46,27 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
   };
 
   const onSubmitHandler = async () => {
-    try {
-      await axios.put(
-        `/api/check-list/${checkListContext?.checkListId}/common/question`,
-        checkListContext?.choseCheckListByServer
-      );
-      await axios.put(
+    await axios
+      .put(
         `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
         checkListContext?.deletedCheckListByServer
-      );
-    } catch (error) {
-      console.error(error);
-    }
+      )
+      .then(() => checkListContext?.setDeletedCheckListByServer({ question: [] }));
 
-    checkListContext?.setDeletedCheckListByServer({ question: [] });
-    checkListContext?.setChoseCheckListByServer({ typeA: [], typeB: [], typeD: [], typeM: {} });
+    await axios
+      .put(
+        `/api/check-list/${checkListContext?.checkListId}/common/question`,
+        checkListContext?.choseCheckListByServer
+      )
+      .then(() =>
+        checkListContext?.setChoseCheckListByServer({
+          typeA: [],
+          typeB: [],
+          typeD: [],
+          typeM: {},
+        })
+      );
+
     setIsEdit(false);
   };
 
@@ -79,7 +91,7 @@ function CheckListStackNav({ navigation }: CheckListStackProps) {
       <NativeStack.Navigator screenOptions={screenOptions}>
         <NativeStack.Screen
           name={'profileSetting'}
-          component={ProfileSetting}
+          children={() => <ProfileSetting setIsLogin={setIsLogin} />}
           options={() => ({
             title: '설정',
             headerStyle: { backgroundColor: 'white' },

@@ -23,6 +23,7 @@ import axios from 'axios';
 import { ActivityIndicator, View } from 'react-native';
 import { checkListCtx } from '../../Context/CheckListByServer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
+import CheckListSummaryComponenet from '../../components/CheckListComponent/CheckListSummaryComponenet';
 
 interface IProps {
   isEdit: boolean;
@@ -36,12 +37,14 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const [onServerData, setOnServerData] = useState(false);
   const [checkLists, setCheckLists] = useState<checkListTypes[]>([]);
   const [deletedCheckLists, setDeletedCheckLists] = useState<checkListTypes[]>([]);
+  const [checkListSummary, setCheckListSummary] = useState<any>({});
 
   const getServerData = async () => {
     try {
       const serverResponse = await axios.get(
         `/api/check-list/${checkListContext?.checkListId}/common?mainCategory=기본정보`
       );
+      setCheckListSummary(serverResponse.data.data.information);
       setCheckLists([
         ...serverResponse.data.data.questionList.map((item: checkListTypes) => ({
           ...item,
@@ -85,30 +88,29 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
           <BottomSheetModalProvider>
             <KeyboardAwareScrollView extraHeight={150}>
               <ScrollView>
-                <View>
-                  {checkLists
-                    .filter((item) => item.visibility)
-                    .map((mainQuestionItem: checkListTypes) => (
-                      <CheckListComponent
-                        modal={modal}
-                        setModal={setModal}
-                        key={mainQuestionItem.questionId}
-                        deletedCheckLists={deletedCheckLists}
-                        setDeletedCheckLists={setDeletedCheckLists}
-                        onBoarding={false}
-                        checkLists={checkLists}
-                        isEdit={isEdit}
-                        checkList={mainQuestionItem}
-                        setCheckLists={setCheckLists}
-                      />
-                    ))}
-
-                  {deletedCheckLists.length !== 0 && (
-                    <ButtonOfBringBackDeletedCheckList
-                      handlePresentModalPress={handlePresentModalPress}
+                <CheckListSummaryComponenet checkListSummary={checkListSummary} />
+                {checkLists
+                  .filter((item) => item.visibility)
+                  .map((mainQuestionItem: checkListTypes) => (
+                    <CheckListComponent
+                      modal={modal}
+                      setModal={setModal}
+                      key={mainQuestionItem.questionId}
+                      deletedCheckLists={deletedCheckLists}
+                      setDeletedCheckLists={setDeletedCheckLists}
+                      onBoarding={false}
+                      checkLists={checkLists}
+                      isEdit={isEdit}
+                      checkList={mainQuestionItem}
+                      setCheckLists={setCheckLists}
                     />
-                  )}
-                </View>
+                  ))}
+
+                {deletedCheckLists.length !== 0 && (
+                  <ButtonOfBringBackDeletedCheckList
+                    handlePresentModalPress={handlePresentModalPress}
+                  />
+                )}
               </ScrollView>
             </KeyboardAwareScrollView>
             <BottomSheetsOfDeletedCheckList

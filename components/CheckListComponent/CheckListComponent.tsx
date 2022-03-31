@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Pressable, View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import ButtonsOfTypeA from './ButtonsOfTypeA';
@@ -30,6 +30,10 @@ interface IProps {
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   onBoarding: boolean;
 }
+type ContextType = {
+  translateX: number;
+  translateY: number;
+};
 
 function CheckListComponent({
   modal,
@@ -43,10 +47,20 @@ function CheckListComponent({
   onBoarding,
 }: IProps) {
   const translateX = useSharedValue(0);
+  const translateY = useSharedValue(0);
 
-  const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onActive: (event) => {
-      translateX.value = event.translationX;
+  const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, ContextType>({
+    onStart: (event, context) => {
+      context.translateX = translateX.value;
+      context.translateY = translateY.value;
+    },
+    onActive: (event, context) => {
+      translateX.value = event.translationX + context.translateX;
+      translateY.value = event.translationY;
+
+      if (event.translationX + context.translateX > 0) {
+        translateX.value = 0;
+      }
     },
     onEnd: () => {
       const shouldBeDismissed = translateX.value > -40;
@@ -67,18 +81,18 @@ function CheckListComponent({
   }));
 
   useEffect(() => {
-    translateX.value = 0;
-  }, [isEdit]);
+    translateX.value = withTiming(0);
+  });
 
   return (
     <View style={styles.checkListWrapper}>
       <PanGestureHandler
         enabled={!onBoarding && isEdit}
         onGestureEvent={panGesture}
-        activeOffsetX={[-0, 100]}
+        activeOffsetX={[-10, 10]}
       >
         <Animated.View style={[rStyle]}>
-          <View style={styles.whiteCard} key={checkList.questionId}>
+          <Pressable style={styles.whiteCard} key={checkList.questionId}>
             <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
             <View style={styles.subTitles}>
               {checkList.rule ? (
@@ -133,7 +147,7 @@ function CheckListComponent({
                 />
               ) : null}
             </View>
-          </View>
+          </Pressable>
         </Animated.View>
       </PanGestureHandler>
       <ButtonOfGoToTrash

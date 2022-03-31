@@ -20,7 +20,6 @@ function PinnedCheckList({ pinnedCheckList }: iProps) {
   };
   return (
     <>
-      <DefaultText style={[styles.pinnedText]}>📌 고정된 리스트</DefaultText>
       {pinnedCheckList ? (
         <Pressable
           onPress={onCheckListMoveHandler}

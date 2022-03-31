@@ -4,6 +4,31 @@ import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+  summaryPinImg: { position: 'absolute', zIndex: 1000, top: 30, right: 15 },
+  summaryMainImg: { width: windowWidth - 34, height: 260, borderRadius: 10, marginTop: 15 },
+  summaryContentImg: { marginRight: 5 },
+  distanceImg: { marginRight: 9 },
+  summaryRightContents: { flexDirection: 'row' },
+  summaryWrapper: { justifyContent: 'center', alignItems: 'center' },
+  summaryContentAddress: { color: '#8C8CA1' },
+  summaryContentTitle: { fontSize: 18 },
+  summaryWhiteCardWrapper: {
+    position: 'relative',
+    marginBottom: -30,
+    backgroundColor: 'white',
+    width: windowWidth - 68,
+    bottom: 50,
+    padding: 19,
+    borderRadius: 10,
+    justifyContent: 'space-between',
+    flexDirection: 'row',
+  },
+  summaryContentText: { fontSize: 12, lineHeight: 18 },
+  summayWhiteCardContentWrapper: {
+    justifyContent: 'space-between',
+    height: 50,
+    lineHeight: 18,
+  },
   selectMainImageText: { fontSize: 16, color: mainBlue, fontFamily: 'AppleSDGothicNeoEB00' },
   imageModal: { position: 'absolute', right: -17 },
   selectedimageCancleButton: {
@@ -17,7 +42,7 @@ const styles = StyleSheet.create({
   imageSelectButtonWrapper: {
     marginHorizontal: 17,
     backgroundColor: 'white',
-    marginTop: 100,
+    marginTop: 80,
     paddingVertical: 20,
     width: windowWidth - 34,
     alignItems: 'center',
@@ -65,7 +90,7 @@ const styles = StyleSheet.create({
     width: windowWidth - 34,
     borderRadius: 14,
   },
-  checkListMainTitle: { fontSize: 20 },
+  checkListMainTitle: { fontSize: 20, lineHeight: 32 },
   buttonsOfCheckList: {
     marginTop: 40,
     flexDirection: 'row',
@@ -79,7 +104,7 @@ const styles = StyleSheet.create({
   },
 
   subTitles: { marginTop: 14 },
-  checkListSubTitle: { flexDirection: 'row' },
+  checkListSubTitle: { flexDirection: 'row', marginRight: 15 },
   checkListGrayText: { color: '#7C7C7C', lineHeight: 24 },
   checkListWhiteText: { color: 'white', lineHeight: 24 },
   typeABtnWrapper: {
