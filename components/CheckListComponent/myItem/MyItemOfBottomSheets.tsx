@@ -81,6 +81,7 @@ function MyItemOfBottomSheets({
         <BottomSheetTextInput
           style={styles.myItemCategoryName}
           value={clickedMyItem?.categoryName}
+          placeholderTextColor={'#D6D4D4'}
           placeholder={'새 그룹'}
           editable={isEdit}
           onChangeText={(newCategoryName) => onCategoryNameHandler(newCategoryName)}
@@ -98,6 +99,7 @@ function MyItemOfBottomSheets({
           <BottomSheetTextInput
             style={styles.addMyItemEachElementOfBottomSheets}
             placeholder={'+ 항목 추가'}
+            placeholderTextColor={'#999999'}
             value={newElement}
             editable={isEdit}
             onChangeText={(elementText) => onCreateQuestionElementTextHandler(elementText)}

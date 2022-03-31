@@ -98,6 +98,7 @@ function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps
             onChangeText={onChangeText}
             onEndEditing={() => onEndEditing(answer)}
             placeholder={answer.type ? answer.type : '직접 입력'}
+            placeholderTextColor={'#D6D4D4'}
             style={[styles.typeDBtnWrapper]}
           />
           <DefaultText style={[styles.checkListGrayText, { marginRight: 10 }]}>

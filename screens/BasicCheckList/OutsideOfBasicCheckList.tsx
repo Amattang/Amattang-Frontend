@@ -22,6 +22,7 @@ import ButtonOfBringBackDeletedCheckList from '../../components/CheckListCompone
 import { ActivityIndicator } from 'react-native';
 import { GetCheckListServerData } from '../../api/GetCheckListServerData';
 import { checkListCtx } from '../../Context/CheckListByServer';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   isEdit: boolean;
@@ -74,29 +75,31 @@ function OutsideOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
     <>
       {onServerData ? (
         <BottomSheetModalProvider>
-          <ScrollView>
-            {checkLists
-              .filter((item) => item.visibility)
-              .map((mainQuestionItem: checkListTypes) => (
-                <CheckListComponent
-                  key={mainQuestionItem.questionId}
-                  deletedCheckLists={deletedCheckLists}
-                  setDeletedCheckLists={setDeletedCheckLists}
-                  onBoarding={false}
-                  checkLists={checkLists}
-                  handlePresentModalPress={handlePresentModalPress}
-                  isEdit={isEdit}
-                  checkList={mainQuestionItem}
-                  setCheckLists={setCheckLists}
-                />
-              ))}
+          <KeyboardAwareScrollView extraHeight={150}>
+            <ScrollView>
+              {checkLists
+                .filter((item) => item.visibility)
+                .map((mainQuestionItem: checkListTypes) => (
+                  <CheckListComponent
+                    key={mainQuestionItem.questionId}
+                    deletedCheckLists={deletedCheckLists}
+                    setDeletedCheckLists={setDeletedCheckLists}
+                    onBoarding={false}
+                    checkLists={checkLists}
+                    handlePresentModalPress={handlePresentModalPress}
+                    isEdit={isEdit}
+                    checkList={mainQuestionItem}
+                    setCheckLists={setCheckLists}
+                  />
+                ))}
 
-            {deletedCheckLists.length !== 0 && (
-              <ButtonOfBringBackDeletedCheckList
-                handlePresentModalPress={handlePresentModalPress}
-              />
-            )}
-          </ScrollView>
+              {deletedCheckLists.length !== 0 && (
+                <ButtonOfBringBackDeletedCheckList
+                  handlePresentModalPress={handlePresentModalPress}
+                />
+              )}
+            </ScrollView>
+          </KeyboardAwareScrollView>
           <BottomSheetsOfDeletedCheckList
             deletedCheckLists={deletedCheckLists}
             setDeletedCheckLists={setDeletedCheckLists}

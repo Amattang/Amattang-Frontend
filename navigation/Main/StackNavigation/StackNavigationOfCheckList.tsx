@@ -46,22 +46,27 @@ function CheckListStackNav({ setIsLogin }: IProps) {
   };
 
   const onSubmitHandler = async () => {
-    console.log(checkListContext?.choseCheckListByServer);
-    try {
-      await axios.put(
+    await axios
+      .put(
         `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
         checkListContext?.deletedCheckListByServer
-      );
-      await axios.put(
+      )
+      .then(() => checkListContext?.setDeletedCheckListByServer({ question: [] }));
+
+    await axios
+      .put(
         `/api/check-list/${checkListContext?.checkListId}/common/question`,
         checkListContext?.choseCheckListByServer
+      )
+      .then(() =>
+        checkListContext?.setChoseCheckListByServer({
+          typeA: [],
+          typeB: [],
+          typeD: [],
+          typeM: {},
+        })
       );
-    } catch (error) {
-      console.error(error);
-    }
 
-    checkListContext?.setDeletedCheckListByServer({ question: [] });
-    checkListContext?.setChoseCheckListByServer({ typeA: [], typeB: [], typeD: [], typeM: {} });
     setIsEdit(false);
   };
 
