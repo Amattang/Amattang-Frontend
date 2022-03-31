@@ -42,7 +42,7 @@ const styles = StyleSheet.create({
   imageSelectButtonWrapper: {
     marginHorizontal: 17,
     backgroundColor: 'white',
-    marginTop: 100,
+    marginTop: 80,
     paddingVertical: 20,
     width: windowWidth - 34,
     alignItems: 'center',
