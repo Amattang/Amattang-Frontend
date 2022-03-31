@@ -90,7 +90,7 @@ const styles = StyleSheet.create({
     width: windowWidth - 34,
     borderRadius: 14,
   },
-  checkListMainTitle: { fontSize: 20 },
+  checkListMainTitle: { fontSize: 20, lineHeight: 32 },
   buttonsOfCheckList: {
     marginTop: 40,
     flexDirection: 'row',
@@ -104,7 +104,7 @@ const styles = StyleSheet.create({
   },
 
   subTitles: { marginTop: 14 },
-  checkListSubTitle: { flexDirection: 'row' },
+  checkListSubTitle: { flexDirection: 'row', marginRight: 15 },
   checkListGrayText: { color: '#7C7C7C', lineHeight: 24 },
   checkListWhiteText: { color: 'white', lineHeight: 24 },
   typeABtnWrapper: {
