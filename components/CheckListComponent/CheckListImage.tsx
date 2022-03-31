@@ -12,13 +12,12 @@ interface IProps {
   checkList: answerButtonType[];
   setModal?: Dispatch<SetStateAction<boolean>>;
   modal?: boolean;
-  order: number;
+  order: number | undefined;
 }
 const windowWidth = Dimensions.get('window').width;
 
 function CheckListImage({ checkList, setModal, modal, order }: IProps) {
   const checkListContext = useContext(checkListCtx);
-  const [index, setIndex] = useState(0);
   const isCarousel = useRef(null);
 
   const mainImageHandler = async (item: answerButtonType) => {
@@ -62,6 +61,7 @@ function CheckListImage({ checkList, setModal, modal, order }: IProps) {
           <Image source={require('../../assets/images/common/X.png')} />
         </Pressable>
         <Carousel
+          keyExtractor={(item) => item.toString()}
           firstItem={order}
           ref={isCarousel}
           data={checkList}

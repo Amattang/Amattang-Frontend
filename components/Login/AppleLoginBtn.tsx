@@ -7,6 +7,7 @@ import styles from '../../screens/Landing/styles';
 import jwtDecode from 'jwt-decode';
 import axios from 'axios';
 import { API_HOST } from '../../constant';
+import { setAccessToken, setAuthTokens } from 'react-native-axios-jwt';
 
 interface tokenType {
   aud: string;
@@ -25,6 +26,24 @@ interface tokenType {
 
 const AppleLoginBtn = ({ setIsLogin }: any) => {
   const onAppleLoginHandler = async () => {
+    const onLoginSuccess = (res: any) => {
+      const res_data = res.data.data;
+      let accessToken: string = '';
+      if (Object.keys(res_data).includes('token')) {
+        // 재접속
+        accessToken = res_data.token;
+        setAccessToken(accessToken);
+      } else {
+        // 처음 호출
+        accessToken = res_data.accessToken;
+        setAuthTokens({
+          accessToken: accessToken,
+          refreshToken: res_data.refreshToken,
+        });
+      }
+      axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
+      setIsLogin(true);
+    };
     try {
       // performs login request
       const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -48,10 +67,7 @@ const AppleLoginBtn = ({ setIsLogin }: any) => {
             email: decodedToken.email,
             user: user,
           })
-          .then((res) => {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${res.data.data.accessToken}`;
-            setIsLogin(true);
-          })
+          .then(onLoginSuccess)
           .catch((e) => {
             console.log(e);
           });

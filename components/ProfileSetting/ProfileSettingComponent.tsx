@@ -1,9 +1,17 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { View, Image, Pressable, Linking, ScrollView } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import styles from './styles';
+import { clearAuthTokens } from 'react-native-axios-jwt';
+interface IProps {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+}
 
-function ProfileSettingComponent() {
+function ProfileSettingComponent({ setIsLogin }: IProps) {
+  const onLogoutHandler = () => {
+    clearAuthTokens();
+    setIsLogin(false);
+  };
   return (
     <>
       <ScrollView>
@@ -74,7 +82,10 @@ function ProfileSettingComponent() {
                     버전정보 1.0
                   </DefaultText>
                 </Pressable>
-                <Pressable style={styles.profileSettingEachElementWrapper}>
+                <Pressable
+                  style={styles.profileSettingEachElementWrapper}
+                  onPress={onLogoutHandler}
+                >
                   <DefaultText style={styles.profileSettingEachElementText}>로그아웃</DefaultText>
                 </Pressable>
                 <Pressable style={styles.profileSettingEachElementWrapper}>

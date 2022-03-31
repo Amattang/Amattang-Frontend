@@ -37,7 +37,11 @@ function App() {
         <NavigationContainer independent={true}>
           <BottomSheetModalProvider>
             <QueryClientProvider client={queryClient}>
-              {isLogin ? <RootNav /> : <OnBoardingStack setIsLogin={setIsLogin} />}
+              {isLogin ? (
+                <RootNav setIsLogin={setIsLogin} />
+              ) : (
+                <OnBoardingStack setIsLogin={setIsLogin} />
+              )}
             </QueryClientProvider>
           </BottomSheetModalProvider>
         </NavigationContainer>
