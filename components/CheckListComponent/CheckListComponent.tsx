@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, useEffect } from 'react';
-import { View } from 'react-native';
+import React, { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Pressable, View } from 'react-native';
 import { checkListTypes } from '../../types/checkListTypes';
 import styles from './styles';
 import ButtonsOfTypeA from './ButtonsOfTypeA';
@@ -30,6 +30,9 @@ interface IProps {
   setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   onBoarding: boolean;
 }
+type ContextType = {
+  translateX: number;
+};
 
 function CheckListComponent({
   modal,
@@ -43,13 +46,16 @@ function CheckListComponent({
   onBoarding,
 }: IProps) {
   const translateX = useSharedValue(0);
+  const [isDelete, setIsDelete] = useState(false);
 
-  const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
-    onActive: (event) => {
-      translateX.value = event.translationX;
-      console.log(event.translationX);
-      if (event.translationX > 0) {
-        return;
+  const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, ContextType>({
+    onStart: (event, context) => {
+      context.translateX = translateX.value;
+    },
+    onActive: (event, context) => {
+      translateX.value = event.translationX + context.translateX;
+      if (event.translationX + context.translateX > 0) {
+        translateX.value = 0;
       }
     },
     onEnd: () => {
@@ -71,18 +77,24 @@ function CheckListComponent({
   }));
 
   useEffect(() => {
-    translateX.value = 0;
-  }, [isEdit]);
+    translateX.value = withTiming(0);
+  }, [isEdit, isDelete]);
 
   return (
     <View style={styles.checkListWrapper}>
       <PanGestureHandler
         enabled={!onBoarding && isEdit}
         onGestureEvent={panGesture}
-        activeOffsetX={[-0, 100]}
+        failOffsetX={[-10, 0]}
       >
         <Animated.View style={[rStyle]}>
-          <View style={styles.whiteCard} key={checkList.questionId}>
+          <Pressable
+            onTouchMove={() => {
+              setIsDelete(!isDelete);
+            }}
+            style={styles.whiteCard}
+            key={checkList.questionId}
+          >
             <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
             <View style={styles.subTitles}>
               {checkList.rule ? (
@@ -137,7 +149,7 @@ function CheckListComponent({
                 />
               ) : null}
             </View>
-          </View>
+          </Pressable>
         </Animated.View>
       </PanGestureHandler>
       <ButtonOfGoToTrash
