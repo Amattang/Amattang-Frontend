@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Image, Pressable, useWindowDimensions, View } from 'react-native';
+import { Image, Platform, Pressable, useWindowDimensions, View } from 'react-native';
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
 import KakaoLoginBtn from '../../components/Login/KakaoLoginBtn';
@@ -21,7 +21,7 @@ function Login({ setIsLogin }: any) {
         <Image source={require('../../assets/images/landing/loginImage.png')} />
       </View>
       <View style={styles.lowerElement}>
-        <AppleLoginBtn setIsLogin={setIsLogin} />
+        {Platform.OS === 'ios' ? <AppleLoginBtn setIsLogin={setIsLogin} /> : null}
         <KakaoLoginBtn setIsLogin={setIsLogin} />
       </View>
     </View>

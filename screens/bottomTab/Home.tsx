@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from 'react';
 import EmptyHome from '../../components/Home/EmptyHome';
 import CheckListHome from '../../components/Home/CheckListHome';
 import axios from 'axios';
-import { ActivityIndicator } from 'react-native';
+import { ActivityIndicator, RefreshControl, ScrollView } from 'react-native';
 
 function Home() {
   const [loading, setLoading] = useState(false);
@@ -22,16 +22,16 @@ function Home() {
     try {
       const response = await axios.get('/api/check-list');
       setHomeCheckList(response.data.data);
+      if (response.data.data.length !== 0) setIsCheckList(true);
     } catch (error) {
       console.error(error);
     }
-    setIsCheckList(true);
     setLoading(true);
   };
 
   useEffect(() => {
     getHomeDataHandler();
-  }, []);
+  });
 
   return (
     <>
@@ -43,7 +43,11 @@ function Home() {
             refreshing={refreshing}
           />
         ) : (
-          <EmptyHome />
+          <ScrollView
+            refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
+          >
+            <EmptyHome />
+          </ScrollView>
         )
       ) : (
         <ActivityIndicator style={{ flex: 1, justifyContent: 'center', flexDirection: 'row' }} />

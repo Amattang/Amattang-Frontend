@@ -6,11 +6,8 @@ import RootNav from './navigation/Main/RootNav';
 import OnBoardingStack from './navigation/OnBoarding/StackNavigationOfOnBoarding';
 import { BottomSheetModalProvider } from '@gorhom/bottom-sheet';
 import { getAccessToken, isLoggedIn } from 'react-native-axios-jwt';
-import { QueryClient, QueryClientProvider } from 'react-query';
 import CheckListStore from './Context/CheckListByServer';
 import axios from 'axios';
-
-const queryClient = new QueryClient();
 
 function App() {
   const [isLogin, setIsLogin] = useState(false);
@@ -36,13 +33,11 @@ function App() {
       <CheckListStore>
         <NavigationContainer independent={true}>
           <BottomSheetModalProvider>
-            <QueryClientProvider client={queryClient}>
-              {isLogin ? (
-                <RootNav setIsLogin={setIsLogin} />
-              ) : (
-                <OnBoardingStack setIsLogin={setIsLogin} />
-              )}
-            </QueryClientProvider>
+            {isLogin ? (
+              <RootNav setIsLogin={setIsLogin} />
+            ) : (
+              <OnBoardingStack setIsLogin={setIsLogin} />
+            )}
           </BottomSheetModalProvider>
         </NavigationContainer>
       </CheckListStore>
