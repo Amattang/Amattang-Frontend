@@ -32,6 +32,7 @@ interface IProps {
 }
 type ContextType = {
   translateX: number;
+  translateY: number;
 };
 
 function CheckListComponent({
@@ -46,14 +47,17 @@ function CheckListComponent({
   onBoarding,
 }: IProps) {
   const translateX = useSharedValue(0);
-  const [isDelete, setIsDelete] = useState(false);
+  const translateY = useSharedValue(0);
 
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent, ContextType>({
     onStart: (event, context) => {
       context.translateX = translateX.value;
+      context.translateY = translateY.value;
     },
     onActive: (event, context) => {
       translateX.value = event.translationX + context.translateX;
+      translateY.value = event.translationY;
+
       if (event.translationX + context.translateX > 0) {
         translateX.value = 0;
       }
@@ -78,23 +82,17 @@ function CheckListComponent({
 
   useEffect(() => {
     translateX.value = withTiming(0);
-  }, [isEdit, isDelete]);
+  });
 
   return (
     <View style={styles.checkListWrapper}>
       <PanGestureHandler
         enabled={!onBoarding && isEdit}
         onGestureEvent={panGesture}
-        failOffsetX={[-10, 0]}
+        activeOffsetX={[-10, 10]}
       >
         <Animated.View style={[rStyle]}>
-          <Pressable
-            onTouchMove={() => {
-              setIsDelete(!isDelete);
-            }}
-            style={styles.whiteCard}
-            key={checkList.questionId}
-          >
+          <Pressable style={styles.whiteCard} key={checkList.questionId}>
             <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
             <View style={styles.subTitles}>
               {checkList.rule ? (
