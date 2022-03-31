@@ -47,6 +47,10 @@ function CheckListComponent({
   const panGesture = useAnimatedGestureHandler<PanGestureHandlerGestureEvent>({
     onActive: (event) => {
       translateX.value = event.translationX;
+      console.log(event.translationX);
+      if (event.translationX > 0) {
+        return;
+      }
     },
     onEnd: () => {
       const shouldBeDismissed = translateX.value > -40;

@@ -33,7 +33,6 @@ function CheckListImage({ checkList, setModal, modal, order }: IProps) {
       setModal ? setModal(false) : null;
     }
   };
-  console.log(checkList);
 
   const renderItem = ({ item }: any) => {
     return (

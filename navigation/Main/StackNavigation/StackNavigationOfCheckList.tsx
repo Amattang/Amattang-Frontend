@@ -46,14 +46,15 @@ function CheckListStackNav({ setIsLogin }: IProps) {
   };
 
   const onSubmitHandler = async () => {
+    console.log(checkListContext?.choseCheckListByServer);
     try {
-      await axios.put(
-        `/api/check-list/${checkListContext?.checkListId}/common/question`,
-        checkListContext?.choseCheckListByServer
-      );
       await axios.put(
         `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
         checkListContext?.deletedCheckListByServer
+      );
+      await axios.put(
+        `/api/check-list/${checkListContext?.checkListId}/common/question`,
+        checkListContext?.choseCheckListByServer
       );
     } catch (error) {
       console.error(error);
