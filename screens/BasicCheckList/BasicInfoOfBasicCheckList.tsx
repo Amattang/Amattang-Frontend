@@ -87,7 +87,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
         <View>
           <BottomSheetModalProvider>
             <KeyboardAwareScrollView extraHeight={150}>
-              <ScrollView>
+              <ScrollView contentContainerStyle={{ marginBottom: 80 }}>
                 <CheckListSummaryComponenet checkListSummary={checkListSummary} />
                 {checkLists
                   .filter((item) => item.visibility)
