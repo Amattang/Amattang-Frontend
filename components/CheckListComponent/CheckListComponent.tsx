@@ -93,20 +93,38 @@ function CheckListComponent({
       >
         <Animated.View style={[rStyle]}>
           <Pressable style={styles.whiteCard} key={checkList.questionId}>
-            <DefaultText style={styles.checkListMainTitle}>{checkList.question}</DefaultText>
+            <View style={styles.textWrapWrapper}>
+              {checkList.question.split(' ').map((word) => (
+                <DefaultText style={[styles.checkListMainTitle, styles.textWrap]}>
+                  {word}{' '}
+                </DefaultText>
+              ))}
+            </View>
+
             <View style={styles.subTitles}>
               {checkList.rule ? (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>📘 </DefaultText>
-                  <DefaultText style={styles.checkListGrayText}>{checkList.rule}</DefaultText>
+                  <View style={styles.textWrapWrapper}>
+                    {checkList.rule.split(' ').map((word) => (
+                      <DefaultText style={[styles.checkListGrayText, styles.textWrap]}>
+                        {word}&nbsp;
+                      </DefaultText>
+                    ))}
+                  </View>
                 </View>
               ) : null}
               {checkList.description ? (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>👀 </DefaultText>
-                  <DefaultText style={styles.checkListGrayText}>
-                    {checkList.description}
-                  </DefaultText>
+
+                  <View style={styles.textWrapWrapper}>
+                    {checkList.description.split(' ').map((word) => (
+                      <DefaultText style={[styles.checkListGrayText, styles.textWrap]}>
+                        {word}&nbsp;
+                      </DefaultText>
+                    ))}
+                  </View>
                 </View>
               ) : null}
             </View>

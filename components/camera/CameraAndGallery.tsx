@@ -40,6 +40,7 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
       multiple: true,
     }).then((images: any) => {
       onPostImageDataHandler(images);
+      setOnModal(!onModal);
     });
 
   const onCamera = () =>
@@ -47,6 +48,7 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
       cropping: true,
     }).then((images: any) => {
       onPostImageDataHandler(images);
+      setOnModal(!onModal);
     });
 
   return (
