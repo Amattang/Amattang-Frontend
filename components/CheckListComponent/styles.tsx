@@ -4,6 +4,11 @@ import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+  textWrap: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  textWrapWrapper: { flexDirection: 'row', flexWrap: 'wrap' },
   summaryPinImg: { position: 'absolute', zIndex: 1000, top: 30, right: 15 },
   summaryMainImg: { width: windowWidth - 34, height: 260, borderRadius: 10, marginTop: 15 },
   summaryContentImg: { marginRight: 5 },
@@ -87,6 +92,7 @@ const styles = StyleSheet.create({
     zIndex: 99,
     backgroundColor: 'white',
     padding: 30,
+
     width: windowWidth - 34,
     borderRadius: 14,
   },
@@ -103,12 +109,13 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
 
-  subTitles: { marginTop: 14 },
-  checkListSubTitle: { flexDirection: 'row', marginRight: 15 },
+  subTitles: { flex: 1, marginTop: 14 },
+  checkListSubTitle: { flexDirection: 'row' },
   checkListGrayText: { color: '#7C7C7C', lineHeight: 24 },
   checkListWhiteText: { color: 'white', lineHeight: 24 },
   typeABtnWrapper: {
     marginRight: 19,
+
     borderRadius: 4,
     width: 100,
     height: 44,

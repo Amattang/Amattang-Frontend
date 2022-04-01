@@ -56,7 +56,7 @@ function ProfileSettingComponent({ setIsLogin }: IProps) {
 
               <Pressable
                 onPress={() =>
-                  Linking.openURL('https://www.notion.so/2caa1719b6f74f228137d662d32dd374')
+                  Linking.openURL('https://ninth-ceramic-fb9.notion.site/682290c00bc843a7be307c5784dfa767')
                 }
                 style={styles.profileSettingEachElementWrapper}
               >
@@ -67,7 +67,7 @@ function ProfileSettingComponent({ setIsLogin }: IProps) {
               </Pressable>
               <Pressable
                 onPress={() =>
-                  Linking.openURL('https://www.notion.so/85d38b79533142c9afa20a92614d9803')
+                  Linking.openURL('https://ninth-ceramic-fb9.notion.site/973338c94f9a4e92ac202bad64363bd2')
                 }
                 style={styles.profileSettingEachElementWrapper}
               >
