@@ -1,13 +1,18 @@
-import React, { useState } from 'react';
+import { useNavigation } from '@react-navigation/native';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Pressable, TextInput, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import { styles } from './AddressItem.style';
 
 type Props = {
   address: string | undefined;
+  // setFullAddress :  Dispatch<SetStateAction<string>>;
 };
 
-const AddressItem = ({ address }: Props) => {
+const AddressItem = ({ address}: Props) => {
+
+  const navigation = useNavigation();
+
   const [specificAddress, onChangeText] = useState<string>('');
 
   return (
@@ -20,7 +25,10 @@ const AddressItem = ({ address }: Props) => {
         style={styles.detailAddress}
       />
       <Pressable
-        onPress={() => console.log('주소 등록')}
+        onPress={() => {
+          // setFullAddress(`${address} ${specificAddress}`)
+          navigation.goBack()
+        }}
         style={[styles.addressBtn, styles.bottomBtn]}
       >
         <DefaultText style={styles.settingText}>이 위치로 주소 설정</DefaultText>

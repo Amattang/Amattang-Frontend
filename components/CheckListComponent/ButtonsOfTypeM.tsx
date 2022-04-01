@@ -6,9 +6,12 @@ import styles from '../../screens/Landing/styles';
 import { requestPermission } from '../../utils/LocationPermission';
 import Geolocation from 'react-native-geolocation-service';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
+import { useNavigation } from '@react-navigation/native';
 
-const ButtonsOfTypeM = ({ navigation }: OnBoardingStackProps) => {
+const ButtonsOfTypeM = () => {
   // 현재위치 찾기
+  const navigation = useNavigation();
+
   const goGeoLocation = (): void => {
     Geolocation.getCurrentPosition(
       (position) => {

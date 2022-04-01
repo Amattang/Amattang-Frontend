@@ -17,8 +17,8 @@ const Map = () => {
 
   // 슬라이드로 선택한 위치
   const [pick, setPick] = useState<ILocation>({
-    latitude: 0,
-    longitude: 0,
+    latitude: 37.498095,
+    longitude: 127.027610,
   });
   const checkListContext = useContext(checkListCtx);
   const navigation = useNavigation<any>();

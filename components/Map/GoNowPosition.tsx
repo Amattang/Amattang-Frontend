@@ -30,10 +30,10 @@ const GoNowPosition = ({ setLocation, coordToAddress }: Props) => {
 
   return (
     <>
-      <Pressable onPress={goGeoLocation}>
+      <Pressable onPress={goGeoLocation} style={styles.floatingBtnWrapper}>
         <Image
           source={require('../../assets/images/map/myPosition.png')}
-          style={styles.floatingBtn}
+          // style={styles.floatingBtn}
         />
       </Pressable>
     </>

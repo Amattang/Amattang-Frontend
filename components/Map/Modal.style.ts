@@ -17,9 +17,15 @@ export const styles = StyleSheet.create({
     height: 102,
   },
   close: {
+    // position: 'absolute',
+    // left: 27.58,
+    // top: 56.58,
+    // zIndex:1,
+    justifyContent: 'center',
+    alignItems: 'center',
     position: 'absolute',
-    left: 27.58,
-    top: 56.58,
+    left: 26.58,
+    top:56.58,
   },
   title: {
     fontSize: 17,
