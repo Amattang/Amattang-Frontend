@@ -1,12 +1,12 @@
 import { StyleSheet } from 'react-native';
 
 export const styles = StyleSheet.create({
-  floatingBtn: {
+  floatingBtnWrapper: {
     justifyContent: 'center',
     alignItems: 'center',
     borderRadius: 55,
     position: 'absolute',
     right: 20,
-    bottom: 24,
+    bottom:234,
   },
 });
