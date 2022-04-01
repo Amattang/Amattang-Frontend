@@ -91,27 +91,6 @@ function Map({ route }: any) {
       ) : (
         <DefaultText>Loading...</DefaultText>
       )}
-      {/* 아래코드 왜 버그 존재? */}
-      {/* <MapTemplate
-        lat={
-          params.activeType ? (
-            params.lat
-          ) : location ? (
-            location.latitude
-          ) : (
-            <DefaultText>Loading...</DefaultText>
-          )
-        }
-        long={
-          params.activeType ? (
-            params.long
-          ) : location ? (
-            location.longitude
-          ) : (
-            <DefaultText>Loading...</DefaultText>
-          )
-        }
-      /> */}
       <GoNowPosition setLocation={setLocation} coordToAddress={coordToAddress} />
       <AddressItem address={doroAddress} />
     </View>

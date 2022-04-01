@@ -10,15 +10,15 @@ import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import { checkListCtx } from '../../Context/CheckListByServer';
 import { DefaultText } from '../../CustomText';
+import EmptyHome from '../../components/Home/EmptyHome';
 
 const Map = () => {
-  // mockup data
   const [locations, setLocations] = useState<ILocations[]>();
 
   // 슬라이드로 선택한 위치
   const [pick, setPick] = useState<ILocation>({
     latitude: 37.498095,
-    longitude: 127.027610,
+    longitude: 127.02761,
   });
   const checkListContext = useContext(checkListCtx);
   const navigation = useNavigation<any>();
@@ -76,7 +76,7 @@ const Map = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {pick && locations && (
+      {locations && locations?.length !== 0 ? (
         <MapView
           style={{ flex: 1 }}
           provider={PROVIDER_GOOGLE}
@@ -103,8 +103,10 @@ const Map = () => {
             />
           ))}
         </MapView>
+      ) : (
+        <EmptyHome />
       )}
-      {locations && (
+      {locations && locations?.length !== 0 && (
         <View style={styles.carContainer}>
           <Carousel
             data={locations}
