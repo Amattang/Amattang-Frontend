@@ -7,6 +7,7 @@ import { requestPermission } from '../../utils/LocationPermission';
 import Geolocation from 'react-native-geolocation-service';
 import { useNavigation } from '@react-navigation/native';
 import { checkListTypes } from '../../types/checkListTypes';
+import { CheckListStackProps } from '../../types/navigationTypes';
 
 interface IProps {
   checkList: checkListTypes;
@@ -14,7 +15,7 @@ interface IProps {
 
 const ButtonsOfTypeM = ({ checkList }: IProps) => {
   // 현재위치 찾기
-  const navigation = useNavigation();
+  const navigation = useNavigation<CheckListStackProps>();
 
   const goGeoLocation = (): void => {
     Geolocation.getCurrentPosition(

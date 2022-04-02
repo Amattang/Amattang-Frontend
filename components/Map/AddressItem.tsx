@@ -27,7 +27,7 @@ const AddressItem = ({ address, checkList, latitude, longitude }: Props) => {
     checkListContext?.setChoseCheckListByServer({
       ...checkListContext?.choseCheckListByServer,
       typeM: {
-        questionId: checkList.questionId,
+        questionId: checkList?.questionId,
         address,
         latitude,
         longitude,
