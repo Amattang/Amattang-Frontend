@@ -1,131 +1,107 @@
-import React, { useContext, useEffect, useState } from 'react';
-import { Text, View, Image, Pressable } from 'react-native';
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps';
-import Carousel from 'react-native-snap-carousel';
-import { styles } from './Map.style';
-import { ILocations, ILocation } from '../../types/mapTypes';
-import { ITEM_WIDTH, SLIDER_WIDTH } from '../../constants/Map.constant';
-import { requestPermission } from '../../utils/LocationPermission';
+import React, { useEffect, useState } from 'react';
+import { View } from 'react-native';
 import axios from 'axios';
-import { useNavigation } from '@react-navigation/native';
-import { checkListCtx } from '../../Context/CheckListByServer';
+import AddressItem from '../../components/Map/AddressItem';
+import GoNowPosition from '../../components/Map/GoNowPosition';
+import MapTemplate from '../../components/Map/MapTemplate';
 import { DefaultText } from '../../CustomText';
+import { ILocation } from '../../types/mapTypes';
+import { NativeStackScreenProps } from '@react-navigation/native-stack';
+import { OnBoardingStackParamsList } from '../../types/navigationTypes';
+import { KAKAO_COORD_TO_ADDRESS_API_KEY } from 'react-native-dotenv';
 
-const Map = () => {
-  // mockup data
-  const [locations, setLocations] = useState<ILocations[]>();
+// type Props = NativeStackScreenProps<OnBoardingStackParamsList, 'map'>;
 
-  // 슬라이드로 선택한 위치
-  const [pick, setPick] = useState<ILocation>({
-    latitude: 37.498095,
-    longitude: 127.027610,
-  });
-  const checkListContext = useContext(checkListCtx);
-  const navigation = useNavigation<any>();
+// 에라이 타입 에러
+function Map({ route }: any) {
+  const { params } = route;
 
-  const onCheckListMoveHandler = async (item: any) => {
-    await checkListContext?.setCheckListId(item?.id);
-    navigation.navigate('stack', { screen: 'basicCheckList' });
+  // 지도 표시 위치
+  const [location, setLocation] = useState<ILocation | undefined>(undefined);
+
+  // map 하단에 넣을 도로명주소
+  const [doroAddress, setDoroAddress] = useState<string | undefined>('');
+
+  // 좌표 -> 도로명주소
+  // x : 경도, y : 위도
+  const coordToAddress = async (x: string, y: string) => {
+    try {
+      await axios
+        .get(
+          `https://dapi.kakao.com/v2/local/geo/coord2address.json?x=${x}&y=${y}&input_coord=WGS84`,
+          {
+            headers: {
+              Authorization: `KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}`, // REST API 키. 연결 아직 안함
+            },
+          }
+        )
+        .then((res) => {
+          const location = res.data.documents[0];
+          setDoroAddress(location ? location.address.address_name : 'undefined');
+        })
+        .catch((err) => {
+          console.error(`error1 : ${err}`);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
-  const SlideItem = ({ item }: any) => {
-    return (
-      <Pressable onPress={() => onCheckListMoveHandler(item)} style={styles.card}>
-        <Image style={styles.image} source={{ uri: `${item.imgUri}` }} />
-        <View>
-          <Text style={styles.mainTitle}>{item.mainTitle}</Text>
-          <View style={styles.subTitle}>
-            <View style={styles.iconText}>
-              <Image
-                style={styles.distanceIcon}
-                source={require('../../assets/images/map/mapDistance.png')}
-              />
-              <DefaultText style={styles.text}>
-                {item.roomType}/{item.area}
-              </DefaultText>
-            </View>
-            <View style={styles.iconText}>
-              <Image
-                style={styles.timeIcon}
-                source={require('../../assets/images/map/mapTime.png')}
-              />
-              <DefaultText style={styles.text}>도보{item.distance}</DefaultText>
-            </View>
-          </View>
-        </View>
-      </Pressable>
-    );
+  // 도로명주소 -> 좌표
+  const addressToCoords = async (doro: string) => {
+    try {
+      await axios
+        .get(`https://dapi.kakao.com/v2/local/search/address.json?query=${doro}`, {
+          headers: {
+            Authorization: `KakaoAK ${KAKAO_COORD_TO_ADDRESS_API_KEY}`,
+          },
+        })
+        .then((res) => {
+          const { x, y } = res.data.documents[0];
+          setLocation({
+            longitude: Number(x),
+            latitude: Number(y),
+          });
+        })
+        .catch((err) => {
+          console.error(err);
+        });
+    } catch (error) {
+      console.error(error);
+    }
   };
 
   useEffect(() => {
-    axios
-      .get(`./api/check-list`)
-      .then((res) => {
-        console.log(res.data.data);
-        setLocations(res.data.data);
-        requestPermission().then((result) => {
-          if (result === 'granted') {
-            setPick(res.data.data[0].location);
-          }
-        });
-      })
-      .catch((err) => {
-        console.error(err);
-      });
+    // 현재 위치 바로가기
+    if (params.activeType) {
+      coordToAddress(params.long.toString(), params.lat.toString());
+    } else {
+      // 주소찾기
+      setDoroAddress(params.address);
+      addressToCoords(params.address);
+    }
   }, []);
+  const latitude = params.activeType ? params.lat : location?.latitude;
+  const longitude = params.activeType ? params.long : location?.longitude;
 
   return (
     <View style={{ flex: 1 }}>
-      {pick && locations && (
-        <MapView
-          style={{ flex: 1 }}
-          provider={PROVIDER_GOOGLE}
-          region={{
-            latitude: pick.latitude,
-            longitude: pick.longitude,
-            latitudeDelta: 0.0122,
-            longitudeDelta: 0.0021,
-          }}
-          zoomEnabled={true}
-          showsScale={true}
-        >
-          {locations.map((marker, idx) => (
-            <Marker
-              coordinate={marker.location}
-              title={marker.mainTitle}
-              description={marker.address}
-              image={
-                marker.center
-                  ? require('../../assets/images/map/mapCenter3.png')
-                  : require('../../assets/images/map/mapPosition3.png')
-              }
-              key={idx}
-            />
-          ))}
-        </MapView>
+      {params.activeType ? (
+        <MapTemplate lat={params.lat} long={params.long} />
+      ) : location ? (
+        <MapTemplate lat={location.latitude} long={location.longitude} />
+      ) : (
+        <DefaultText>Loading...</DefaultText>
       )}
-      {locations && (
-        <View style={styles.carContainer}>
-          <Carousel
-            data={locations}
-            renderItem={SlideItem}
-            itemWidth={ITEM_WIDTH}
-            sliderWidth={SLIDER_WIDTH}
-            layout={'default'}
-            onSnapToItem={(index) => {
-              setLocations(
-                locations.map((marker) =>
-                  marker.order === index
-                    ? (setPick(marker.location), { ...marker, center: true })
-                    : { ...marker, center: false }
-                )
-              );
-            }}
-          />
-        </View>
-      )}
+      <GoNowPosition setLocation={setLocation} coordToAddress={coordToAddress} />
+      <AddressItem
+        address={doroAddress}
+        checkList={params.checkList}
+        latitude={latitude}
+        longitude={longitude}
+      />
     </View>
   );
-};
+}
 
 export default Map;

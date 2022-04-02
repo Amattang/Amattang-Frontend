@@ -156,13 +156,7 @@ function CheckListComponent({
                   checkLists={checkLists}
                 />
               ) : null}
-              {checkList.type === 'M' ? (
-                <ButtonsOfTypeM
-                // checkList={checkList}
-                // setCheckLists={setCheckLists}
-                // checkLists={checkLists}
-                />
-              ) : null}
+              {checkList.type === 'M' ? <ButtonsOfTypeM checkList={checkList} /> : null}
             </View>
           </Pressable>
         </Animated.View>

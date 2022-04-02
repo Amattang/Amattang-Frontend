@@ -1,21 +1,16 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import ModalAddress from '../Map/ModalAddress';
 import styles from '../../screens/Landing/styles';
 import { requestPermission } from '../../utils/LocationPermission';
 import Geolocation from 'react-native-geolocation-service';
+import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { useNavigation } from '@react-navigation/native';
-import { checkListTypes } from '../../types/checkListTypes';
-import { CheckListStackProps } from '../../types/navigationTypes';
 
-interface IProps {
-  checkList: checkListTypes;
-}
-
-const ButtonsOfTypeM = ({ checkList }: IProps) => {
+const ButtonOfMap = () => {
   // 현재위치 찾기
-  const navigation = useNavigation<CheckListStackProps>();
+  const navigation = useNavigation();
 
   const goGeoLocation = (): void => {
     Geolocation.getCurrentPosition(
@@ -24,7 +19,6 @@ const ButtonsOfTypeM = ({ checkList }: IProps) => {
           activeType: true,
           lat: position.coords.latitude,
           long: position.coords.longitude,
-          checkList,
         });
       },
       (error) => {
@@ -62,4 +56,4 @@ const ButtonsOfTypeM = ({ checkList }: IProps) => {
   );
 };
 
-export default ButtonsOfTypeM;
+export default ButtonOfMap;

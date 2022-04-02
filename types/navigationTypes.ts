@@ -9,7 +9,6 @@ export type OnBoardingStackParamsList = {
   login: undefined;
   onBoarding: undefined;
   map: { activeType: boolean; address?: string | undefined; lat?: number; long?: number }; // undefined에서 수정했는데 또 다시 수정해도 됨
-
 };
 export type OnBoardingStackProps = NativeStackScreenProps<OnBoardingStackParamsList, 'landing'>;
 
@@ -17,6 +16,7 @@ export type OnBoardingStackProps = NativeStackScreenProps<OnBoardingStackParamsL
 export type CheckListStackParamsList = {
   basicCheckList: undefined;
   profileSetting: undefined;
+  map: undefined;
 };
 
 export type CheckListStackProps = NativeStackScreenProps<
@@ -28,7 +28,7 @@ export type CheckListStackProps = NativeStackScreenProps<
 export type BottomTabParams = {
   home: undefined;
   checkList: any;
-  map: undefined;
+  bottomMap: undefined;
 };
 
 export type BottomTabProps = BottomTabScreenProps<BottomTabParams, 'home'>; // 혹시 props 쓸일 있을까봐 만들어둠

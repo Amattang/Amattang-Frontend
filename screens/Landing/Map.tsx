@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import axios from 'axios';
-import AddressItem from '../../components/Map/AddressItem';
+import AddressItem from '../../components/Onboarding/AddressItem';
 import GoNowPosition from '../../components/Map/GoNowPosition';
 import MapTemplate from '../../components/Map/MapTemplate';
 import { DefaultText } from '../../CustomText';
@@ -91,27 +91,6 @@ function Map({ route }: any) {
       ) : (
         <DefaultText>Loading...</DefaultText>
       )}
-      {/* 아래코드 왜 버그 존재? */}
-      {/* <MapTemplate
-        lat={
-          params.activeType ? (
-            params.lat
-          ) : location ? (
-            location.latitude
-          ) : (
-            <DefaultText>Loading...</DefaultText>
-          )
-        }
-        long={
-          params.activeType ? (
-            params.long
-          ) : location ? (
-            location.longitude
-          ) : (
-            <DefaultText>Loading...</DefaultText>
-          )
-        }
-      /> */}
       <GoNowPosition setLocation={setLocation} coordToAddress={coordToAddress} />
       <AddressItem address={doroAddress} />
     </View>

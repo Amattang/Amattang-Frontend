@@ -11,14 +11,17 @@ const ModalAddress = () => {
 
   // @brief 주소검색창 - 데이터 조회
   const [isModal, setModal] = useState<boolean>(false);
-  // const [fullAddress, setFullAddress] = useState<string>("");
 
   return (
     <>
       <Modal visible={isModal}>
         <View style={styles.header}>
-          <Pressable style={styles.close} onPress={() => {
-            setModal(false)}}>
+          <Pressable
+            style={styles.close}
+            onPress={() => {
+              setModal(false);
+            }}
+          >
             <Image source={require('../../assets/images/map/mapClose.png')} />
           </Pressable>
           <DefaultText style={styles.title}>주소 설정</DefaultText>
@@ -31,7 +34,7 @@ const ModalAddress = () => {
           }}
           onSelected={(data) => {
             setModal(false);
-            navigation.navigate('map', { activeType: false, address: data.address});
+            navigation.navigate('map', { activeType: false, address: data.address });
           }}
         />
       </Modal>

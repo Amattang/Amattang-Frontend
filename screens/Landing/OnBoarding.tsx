@@ -11,6 +11,7 @@ import { requestPermission } from '../../utils/LocationPermission';
 import ModalAddress from '../../components/Map/ModalAddress';
 import Geolocation from 'react-native-geolocation-service';
 import ButtonsOfTypeM from '../../components/CheckListComponent/ButtonsOfTypeM';
+import ButtonOfMap from '../../components/Onboarding/ButtonOfMap';
 
 function OnBoarding({ navigation }: OnBoardingStackProps) {
   const [checkLists, setCheckLists] = useState<checkListTypes[]>(response);
@@ -30,7 +31,7 @@ function OnBoarding({ navigation }: OnBoardingStackProps) {
         <ScrollView>
           <View style={styles.whiteCard}>
             <DefaultText style={styles.checkListMainTitle}>주소를 입력하세요</DefaultText>
-            <ButtonsOfTypeM navigation={navigation} />
+            <ButtonOfMap navigation={navigation} />
           </View>
           {checkLists.map((checkList, index) => (
             <CheckListComponent
