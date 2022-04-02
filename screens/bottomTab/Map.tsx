@@ -96,10 +96,7 @@ function Map({ route }: any) {
       <GoNowPosition setLocation={setLocation} coordToAddress={coordToAddress} />
       <AddressItem
         address={doroAddress}
-        isEdit={params.isEdit}
         checkList={params.checkList}
-        setCheckLists={params.setCheckLists}
-        checkLists={params.checkLists}
         latitude={latitude}
         longitude={longitude}
       />

@@ -8,23 +8,12 @@ import { styles } from './AddressItem.style';
 
 type Props = {
   address: string | undefined;
-  isEdit: boolean;
   checkList: checkListTypes;
-  checkLists: checkListTypes[];
-  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
   latitude: number;
   longitude: number;
 };
 
-const AddressItem = ({
-  address,
-  isEdit,
-  checkList,
-  setCheckLists,
-  checkLists,
-  latitude,
-  longitude,
-}: Props) => {
+const AddressItem = ({ address, checkList, latitude, longitude }: Props) => {
   const navigation = useNavigation();
 
   const [specificAddress, onChangeText] = useState<string>('');
@@ -35,49 +24,15 @@ const AddressItem = ({
     console.log('checklist야!');
     navigation.goBack();
 
-    isEdit &&
-      setCheckLists(
-        checkLists.map((questionItem) =>
-          questionItem.questionId === checkList.questionId
-            ? ({
-                ...questionItem,
-                questionId: checkList.questionId,
-                address: address,
-                latitude: 0,
-                longitude: 0,
-              } as checkListTypes)
-            : ({ ...questionItem } as checkListTypes)
-        )
-      );
-    (checkListContext?.choseCheckListByServer.typeM as choseCheckListItemByServerType[]).some(
-      (item) => item.questionId === checkList.questionId
-    )
-      ? isEdit &&
-        checkListContext?.setChoseCheckListByServer({
-          ...checkListContext?.choseCheckListByServer,
-          typeM: [
-            ...(checkListContext?.choseCheckListByServer.typeM as choseCheckListItemByServerType[]),
-            {
-              questionId: checkList.questionId,
-              address: address,
-              latitude: 0,
-              longitude: 0,
-            },
-          ],
-        })
-      : isEdit &&
-        checkListContext?.setChoseCheckListByServer({
-          ...checkListContext?.choseCheckListByServer,
-          typeM: [
-            ...(checkListContext?.choseCheckListByServer.typeM as choseCheckListItemByServerType[]),
-            {
-              questionId: checkList.questionId,
-              address: address,
-              latitude: 0,
-              longitude: 0,
-            },
-          ],
-        });
+    checkListContext?.setChoseCheckListByServer({
+      ...checkListContext?.choseCheckListByServer,
+      typeM: {
+        questionId: checkList.questionId,
+        address,
+        latitude,
+        longitude,
+      },
+    });
 
     console.log(checkListContext?.choseCheckListByServer);
   };

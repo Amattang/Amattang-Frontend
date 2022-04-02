@@ -5,18 +5,14 @@ import ModalAddress from '../Map/ModalAddress';
 import styles from '../../screens/Landing/styles';
 import { requestPermission } from '../../utils/LocationPermission';
 import Geolocation from 'react-native-geolocation-service';
-import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { useNavigation } from '@react-navigation/native';
 import { checkListTypes } from '../../types/checkListTypes';
 
 interface IProps {
-  isEdit: boolean;
   checkList: checkListTypes;
-  checkLists: checkListTypes[];
-  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
 }
 
-const ButtonsOfTypeM = ({ isEdit, checkList, setCheckLists, checkLists }: IProps) => {
+const ButtonsOfTypeM = ({ checkList }: IProps) => {
   // 현재위치 찾기
   const navigation = useNavigation();
 
@@ -27,10 +23,7 @@ const ButtonsOfTypeM = ({ isEdit, checkList, setCheckLists, checkLists }: IProps
           activeType: true,
           lat: position.coords.latitude,
           long: position.coords.longitude,
-          isEdit,
           checkList,
-          setCheckLists,
-          checkLists,
         });
       },
       (error) => {
