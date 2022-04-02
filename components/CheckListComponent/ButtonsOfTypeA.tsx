@@ -78,7 +78,6 @@ function ButtonsOfTypeA({ isEdit, checkList, setCheckLists, checkLists }: IProps
             },
           ],
         });
-    console.log(checkListContext?.choseCheckListByServer);
   };
 
   return (
