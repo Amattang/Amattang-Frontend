@@ -4,7 +4,7 @@ import { useNavigation } from '@react-navigation/native';
 import { Image, Pressable, Text, View } from 'react-native';
 
 import Home from '../../../screens/bottomTab/Home';
-import Map from '../../../screens/bottomTab/Map';
+import BottomMap from '../../../screens/bottomTab/BottomMap';
 import { BottomTabParams, NestedProps } from '../../../types/navigationTypes';
 import styles from './styles';
 import { checkListCtx } from '../../../Context/CheckListByServer';
@@ -82,8 +82,8 @@ function BottomNavigation() {
         }}
       />
       <Tab.Screen
-        name={'map'}
-        component={Map}
+        name={'bottomMap'}
+        component={BottomMap}
         options={{
           headerTransparent: true,
           title: '',

@@ -25,7 +25,7 @@ const AddressItem = ({ address }: Props) => {
       />
       <Pressable
         onPress={() => {
-          console.log('checklist야!');
+          console.log('onboarding이야!');
           navigation.goBack();
         }}
         style={[styles.addressBtn, styles.bottomBtn]}

@@ -14,6 +14,7 @@ import {
 import { checkListCtx } from '../../../Context/CheckListByServer';
 import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
+import Map from '../../../screens/bottomTab/Map';
 
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
@@ -115,6 +116,21 @@ function CheckListStackNav({ setIsLogin }: IProps) {
                 </Pressable>
               ),
           })}
+        />
+        <NativeStack.Screen
+          name="map"
+          component={Map}
+          options={{
+            animation: 'slide_from_bottom',
+            title: '지도에서 위치 확인',
+            headerTitleAlign: 'center',
+            headerTintColor: '#22232B',
+            headerLeft: () => (
+              <Pressable onPress={() => navigation.goBack()}>
+                <Image source={require('../../../assets/images/common/leftArrow.png')} />
+              </Pressable>
+            ),
+          }}
         />
       </NativeStack.Navigator>
     </>

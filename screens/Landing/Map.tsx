@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { View } from 'react-native';
 import axios from 'axios';
-import AddressItem from '../../components/Map/AddressItem';
+import AddressItem from '../../components/Onboarding/AddressItem';
 import GoNowPosition from '../../components/Map/GoNowPosition';
 import MapTemplate from '../../components/Map/MapTemplate';
 import { DefaultText } from '../../CustomText';
