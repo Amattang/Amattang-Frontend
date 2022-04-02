@@ -2,7 +2,7 @@ import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Image, Pressable, Share } from 'react-native';
 
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
-import { CheckListStackParamsList, CheckListStackProps } from '../../../types/navigationTypes';
+import { CheckListStackParamsList } from '../../../types/navigationTypes';
 import styles from './styles';
 import ProfileSetting from '../../../screens/ProfileSetting/ProfileSetting';
 import { mainLightBlue } from '../../../color';
@@ -29,7 +29,7 @@ function CheckListStackNav({ setIsLogin }: IProps) {
   const onShare = async () => {
     try {
       const result = await Share.share({
-        message: 'https://www.naver.com',
+        message: `https://amattang.netlify.app/${checkListContext?.checkListId}`,
       });
       if (result.action === Share.sharedAction) {
         if (result.activityType) {
@@ -46,26 +46,26 @@ function CheckListStackNav({ setIsLogin }: IProps) {
   };
 
   const onSubmitHandler = async () => {
-    await axios
+    axios
       .put(
         `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
         checkListContext?.deletedCheckListByServer
       )
       .then(() => checkListContext?.setDeletedCheckListByServer({ question: [] }));
 
-    await axios
+    axios
       .put(
         `/api/check-list/${checkListContext?.checkListId}/common/question`,
         checkListContext?.choseCheckListByServer
       )
-      .then(() =>
+      .then(() => {
         checkListContext?.setChoseCheckListByServer({
           typeA: [],
           typeB: [],
           typeD: [],
           typeM: {},
-        })
-      );
+        });
+      });
 
     setIsEdit(false);
   };
@@ -99,7 +99,13 @@ function CheckListStackNav({ setIsLogin }: IProps) {
         />
         <NativeStack.Screen
           name="basicCheckList"
-          children={() => <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />}
+          children={() => (
+            <BasicCheckList
+              isEdit={isEdit}
+              setIsEdit={setIsEdit}
+              onSubmitHandler={onSubmitHandler}
+            />
+          )}
           options={() => ({
             animationTypeForReplace: 'pop',
             animation: 'slide_from_bottom',

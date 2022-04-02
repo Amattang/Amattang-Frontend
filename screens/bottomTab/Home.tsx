@@ -31,7 +31,7 @@ function Home() {
 
   useEffect(() => {
     getHomeDataHandler();
-  });
+  }, []);
 
   return (
     <>

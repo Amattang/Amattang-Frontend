@@ -40,6 +40,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const [checkListSummary, setCheckListSummary] = useState<any>({});
 
   const getServerData = async () => {
+    console.log(checkListContext?.checkListId);
     try {
       const serverResponse = await axios.get(
         `/api/check-list/${checkListContext?.checkListId}/common?mainCategory=기본정보`
