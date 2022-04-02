@@ -158,9 +158,10 @@ function CheckListComponent({
               ) : null}
               {checkList.type === 'M' ? (
                 <ButtonsOfTypeM
-                // checkList={checkList}
-                // setCheckLists={setCheckLists}
-                // checkLists={checkLists}
+                  isEdit={isEdit}
+                  checkList={checkList}
+                  setCheckLists={setCheckLists}
+                  checkLists={checkLists}
                 />
               ) : null}
             </View>

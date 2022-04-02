@@ -81,6 +81,8 @@ function Map({ route }: any) {
       addressToCoords(params.address);
     }
   }, []);
+  const latitude = params.activeType ? params.lat : location?.latitude;
+  const longitude = params.activeType ? params.long : location?.longitude;
 
   return (
     <View style={{ flex: 1 }}>
@@ -92,7 +94,15 @@ function Map({ route }: any) {
         <DefaultText>Loading...</DefaultText>
       )}
       <GoNowPosition setLocation={setLocation} coordToAddress={coordToAddress} />
-      <AddressItem address={doroAddress} />
+      <AddressItem
+        address={doroAddress}
+        isEdit={params.isEdit}
+        checkList={params.checkList}
+        setCheckLists={params.setCheckLists}
+        checkLists={params.checkLists}
+        latitude={latitude}
+        longitude={longitude}
+      />
     </View>
   );
 }

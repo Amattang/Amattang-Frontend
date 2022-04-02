@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { Dispatch, SetStateAction } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import ModalAddress from '../Map/ModalAddress';
@@ -7,8 +7,16 @@ import { requestPermission } from '../../utils/LocationPermission';
 import Geolocation from 'react-native-geolocation-service';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { useNavigation } from '@react-navigation/native';
+import { checkListTypes } from '../../types/checkListTypes';
 
-const ButtonsOfTypeM = () => {
+interface IProps {
+  isEdit: boolean;
+  checkList: checkListTypes;
+  checkLists: checkListTypes[];
+  setCheckLists: Dispatch<SetStateAction<checkListTypes[]>>;
+}
+
+const ButtonsOfTypeM = ({ isEdit, checkList, setCheckLists, checkLists }: IProps) => {
   // 현재위치 찾기
   const navigation = useNavigation();
 
@@ -19,6 +27,10 @@ const ButtonsOfTypeM = () => {
           activeType: true,
           lat: position.coords.latitude,
           long: position.coords.longitude,
+          isEdit,
+          checkList,
+          setCheckLists,
+          checkLists,
         });
       },
       (error) => {
