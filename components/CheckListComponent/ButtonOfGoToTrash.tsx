@@ -36,18 +36,18 @@ function ButtonOfGoToTrash({
       isEdit &&
       deletedCheckLists &&
       setTimeout(async () => {
-        await checkListContext?.setDeletedCheckListByServer({
+        await checkListContext?.onDeleteCheckListHandler({
           question: [
             ...checkListContext?.deletedCheckListByServer.question,
             { questionId: checkList.questionId, visibility: false },
           ],
         });
-        await setCheckLists(
+        setCheckLists(
           checkLists.map((item) =>
             item.questionId === checkList.questionId ? { ...item, visibility: false } : { ...item }
           )
         );
-        await setDeletedCheckLists([...deletedCheckLists, { ...checkList, visibility: false }]);
+        setDeletedCheckLists([...deletedCheckLists, { ...checkList, visibility: false }]);
       }, 500);
   };
 

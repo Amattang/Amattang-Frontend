@@ -1,6 +1,7 @@
 import React, {
   Dispatch,
   SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -24,6 +25,7 @@ import { ActivityIndicator, View } from 'react-native';
 import { checkListCtx } from '../../Context/CheckListByServer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CheckListSummaryComponenet from '../../components/CheckListComponent/CheckListSummaryComponenet';
+import { useFocusEffect } from '@react-navigation/native';
 
 interface IProps {
   isEdit: boolean;
@@ -40,7 +42,6 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const [checkListSummary, setCheckListSummary] = useState<any>({});
 
   const getServerData = async () => {
-    console.log(checkListContext?.checkListId);
     try {
       const serverResponse = await axios.get(
         `/api/check-list/${checkListContext?.checkListId}/common?mainCategory=기본정보`
@@ -63,6 +64,11 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   useEffect(() => {
     getServerData();
   }, [modal]);
+  useFocusEffect(
+    useCallback(() => {
+      getServerData();
+    }, [modal])
+  );
   // setCheckLists(response.data);
   // 바텀시트 동작을 위한 코드
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);

@@ -20,7 +20,7 @@ function CheckListSummaryComponenet({ checkListSummary }: IProps) {
   return (
     <>
       <View style={styles.summaryWrapper}>
-        <Pressable onPress={pinCheckListHandler}>
+        <Pressable onPress={pinCheckListHandler} style={styles.summaryImageWrapper}>
           <Image
             style={styles.summaryPinImg}
             source={
@@ -35,7 +35,7 @@ function CheckListSummaryComponenet({ checkListSummary }: IProps) {
             source={
               checkListSummary.imgUri
                 ? { uri: checkListSummary.imgUri }
-                : require('../../assets/images/home/homeMainImg.png')
+                : require('../../assets/images/checkList/checkLIstDefaultImg.png')
             }
           />
         </Pressable>

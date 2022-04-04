@@ -26,11 +26,9 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
     await axios
       .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
       .then((e) => {
-        console.log('t');
         console.log(e);
       })
       .catch((e) => {
-        console.log('c');
         console.log(e);
       });
   };

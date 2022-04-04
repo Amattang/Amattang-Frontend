@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
 import { Image, Pressable, Share } from 'react-native';
 
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
@@ -12,7 +12,6 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { checkListCtx } from '../../../Context/CheckListByServer';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import Map from '../../../screens/bottomTab/Map';
 
@@ -47,27 +46,7 @@ function CheckListStackNav({ setIsLogin }: IProps) {
   };
 
   const onSubmitHandler = async () => {
-    axios
-      .put(
-        `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
-        checkListContext?.deletedCheckListByServer
-      )
-      .then(() => checkListContext?.setDeletedCheckListByServer({ question: [] }));
-
-    axios
-      .put(
-        `/api/check-list/${checkListContext?.checkListId}/common/question`,
-        checkListContext?.choseCheckListByServer
-      )
-      .then(() => {
-        checkListContext?.setChoseCheckListByServer({
-          typeA: [],
-          typeB: [],
-          typeD: [],
-          typeM: {},
-        });
-      });
-
+    checkListContext?.onChoseCheckListHandler();
     setIsEdit(false);
   };
 
@@ -87,6 +66,12 @@ function CheckListStackNav({ setIsLogin }: IProps) {
     headerShadowVisible: false,
   };
 
+  useEffect(() => {
+    setInterval(() => {
+      onSubmitHandler();
+    }, 100000);
+  }, []);
+
   return (
     <>
       <NativeStack.Navigator screenOptions={screenOptions}>
@@ -100,13 +85,7 @@ function CheckListStackNav({ setIsLogin }: IProps) {
         />
         <NativeStack.Screen
           name="basicCheckList"
-          children={() => (
-            <BasicCheckList
-              isEdit={isEdit}
-              setIsEdit={setIsEdit}
-              onSubmitHandler={onSubmitHandler}
-            />
-          )}
+          children={() => <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />}
           options={() => ({
             animationTypeForReplace: 'pop',
             animation: 'slide_from_bottom',

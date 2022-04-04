@@ -24,8 +24,9 @@ function CheckListHome({ homeCheckList, refreshing, onRefresh }: IProps) {
         <ScrollView
           refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
         >
-          <DefaultText style={[styles.pinnedText]}>📌 고정된 리스트</DefaultText>
-
+          {homeCheckList.some((item) => item.pinned) ? (
+            <DefaultText style={[styles.pinnedText]}>📌 고정된 리스트</DefaultText>
+          ) : null}
           <ScrollView horizontal={true}>
             {homeCheckList
               .filter((item) => item.pinned)

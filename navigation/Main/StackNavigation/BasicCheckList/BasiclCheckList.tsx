@@ -14,23 +14,18 @@ const Tab = createMaterialTopTabNavigator();
 interface IProps {
   setIsEdit: Dispatch<SetStateAction<boolean>>;
   isEdit: boolean;
-  onSubmitHandler: () => void;
 }
 
-function BasicCheckList({ setIsEdit, isEdit, onSubmitHandler }: IProps) {
+function BasicCheckList({ setIsEdit, isEdit }: IProps) {
   const [isBottomSheet, setIsBottomSheet] = useState(true);
   const [onModal, setOnModal] = useState(false);
-  const onEditHandler = () => {
+  const onEditHandler = async () => {
     setIsEdit(true);
   };
 
   const onCameraHandler = () => {
     setOnModal(!onModal);
   };
-
-  setInterval(() => {
-    onSubmitHandler();
-  }, 100000);
 
   return (
     <>
