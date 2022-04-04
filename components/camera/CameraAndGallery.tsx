@@ -14,6 +14,26 @@ interface IProps {
 
 function CameraAndGallery({ setOnModal, onModal }: IProps) {
   const checkListContext = useContext(checkListCtx);
+  const onPostCameraDataHandler = async (image: any) => {
+    const imageData = new FormData();
+
+    imageData.append('image', {
+      uri: Platform.OS === 'android' ? image.path : image.path.replace('file://', ''),
+      type: image.mime,
+      name: image.filename,
+    });
+
+    await axios
+      .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
+      .then((e) => {
+        console.log('t');
+        console.log(e);
+      })
+      .catch((e) => {
+        console.log('c');
+        console.log(e);
+      });
+  };
 
   const onPostImageDataHandler = async (images: any) => {
     const imageData = new FormData();
@@ -28,9 +48,11 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
     await axios
       .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
       .then((e) => {
+        console.log('t');
         console.log(e);
       })
       .catch((e) => {
+        console.log('c');
         console.log(e);
       });
   };
@@ -46,8 +68,8 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
   const onCamera = () =>
     ImagePicker.openCamera({
       cropping: true,
-    }).then((images: any) => {
-      onPostImageDataHandler(images);
+    }).then((image: any) => {
+      onPostCameraDataHandler(image);
       setOnModal(!onModal);
     });
 
