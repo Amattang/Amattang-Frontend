@@ -5,7 +5,6 @@ import {
   checkListTypes,
   choseCheckListItemByServerType,
 } from '../../types/checkListTypes';
-import produce from 'immer';
 
 import styles from './styles';
 import { DefaultText } from '../../CustomText';
@@ -96,7 +95,7 @@ function ButtonsOfTypeB({ isEdit, checkList, setCheckLists, checkLists }: IProps
             autoCorrect={false}
             onChangeText={onChangeText}
             onEndEditing={() => onEndEditing(answer)}
-            placeholder={answer.type ? answer.type : '직접 입력'}
+            placeholder={answer.type ? answer.type : answer.setting}
             placeholderTextColor={'#D6D4D4'}
             style={[styles.typeDBtnWrapper]}
           />

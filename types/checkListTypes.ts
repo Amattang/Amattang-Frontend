@@ -7,6 +7,7 @@ export interface answerButtonType {
   main?: boolean;
   url?: string;
   order?: number;
+  setting?: string;
 }
 
 export interface answerListType {
