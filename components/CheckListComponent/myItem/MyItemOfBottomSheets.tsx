@@ -4,7 +4,7 @@ import {
   BottomSheetModal,
   BottomSheetTextInput,
 } from '@gorhom/bottom-sheet';
-import { ScrollView, View } from 'react-native';
+import { ScrollView, TextInput, View } from 'react-native';
 
 import { myItemType } from '../../../types/checkListTypes';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -78,7 +78,7 @@ function MyItemOfBottomSheets({
       onChange={handleSheetChanges}
     >
       <View style={[styles.myItemBottomSheetWrapper]}>
-        <BottomSheetTextInput
+        <TextInput
           style={styles.myItemCategoryName}
           value={clickedMyItem?.categoryName}
           placeholderTextColor={'#D6D4D4'}
@@ -96,7 +96,7 @@ function MyItemOfBottomSheets({
               clickedMyItemElements={clickedMyItemElements}
             />
           ))}
-          <BottomSheetTextInput
+          <TextInput
             style={styles.addMyItemEachElementOfBottomSheets}
             placeholder={'+ 항목 추가'}
             placeholderTextColor={'#999999'}
