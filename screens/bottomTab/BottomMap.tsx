@@ -76,7 +76,7 @@ const BottomMap = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {locations && locations?.length !== 0 ? (
+      {locations ? (
         <MapView
           style={{ flex: 1 }}
           provider={PROVIDER_GOOGLE}
@@ -104,7 +104,18 @@ const BottomMap = () => {
           ))}
         </MapView>
       ) : (
-        <EmptyHome />
+        <MapView
+          style={{ flex: 1 }}
+          provider={PROVIDER_GOOGLE}
+          region={{
+            latitude: 37.498095,
+            longitude: 127.027610,
+            latitudeDelta: 0.0122,
+            longitudeDelta: 0.0021,
+          }}
+          zoomEnabled={true}
+          showsScale={true}
+        />
       )}
       {locations && locations?.length !== 0 && (
         <View style={styles.carContainer}>

@@ -10,7 +10,7 @@ import CheckListStore from './Context/CheckListByServer';
 import axios from 'axios';
 
 function App() {
-  const [isLogin, setIsLogin] = useState(false);
+  const [isLogin, setIsLogin] = useState(true);
 
   // splash screen
   useEffect(() => {
