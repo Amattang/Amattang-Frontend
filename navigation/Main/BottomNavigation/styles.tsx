@@ -4,7 +4,7 @@ import { mainBlue, mainLightBlue } from '../../../color';
 const styles = StyleSheet.create({
   activeColor: { color: mainBlue },
   inactiveColor: { color: mainLightBlue },
-  title: { fontSize: 12, fontWeight: 'normal' },
+  title: { fontSize: 12, fontFamily: 'AppleSDGothicNeoB00' },
   btnWrapper: {
     position: 'absolute',
     width: 55,

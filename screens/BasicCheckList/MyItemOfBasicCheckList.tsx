@@ -8,7 +8,7 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { ActivityIndicator, ScrollView, View } from 'react-native';
+import { ActivityIndicator, ScrollView, TextInput, View } from 'react-native';
 
 import BlankedMyItem from '../../components/CheckListComponent/myItem/BlankedMyItem';
 import ButtonOfAddMyItem from '../../components/CheckListComponent/myItem/ButtonOfAddMyItem';
@@ -133,6 +133,7 @@ function MyItemOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
                   />
                 ))}
               </ScrollView>
+
               {myItems.length === 0 && <BlankedMyItem />}
             </KeyboardAwareScrollView>
             <MyItemOfBottomSheets

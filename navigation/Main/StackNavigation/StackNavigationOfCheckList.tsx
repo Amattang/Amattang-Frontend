@@ -68,7 +68,7 @@ function CheckListStackNav({ setIsLogin }: IProps) {
 
   useEffect(() => {
     setInterval(() => {
-      onSubmitHandler();
+      checkListContext?.onChoseCheckListHandler();
     }, 100000);
   }, []);
 
