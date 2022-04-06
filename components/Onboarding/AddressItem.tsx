@@ -6,13 +6,15 @@ import { styles } from './AddressItem.style';
 
 type Props = {
   address: string | undefined;
-  // setFullAddress :  Dispatch<SetStateAction<string>>;
+  setFullAddress: Dispatch<SetStateAction<String>>;
+  activeType: boolean;
 };
 
-const AddressItem = ({ address }: Props) => {
+const AddressItem = ({ address, setFullAddress, activeType }: Props) => {
   const navigation = useNavigation();
 
   const [specificAddress, onChangeText] = useState<string>('');
+  const fullAddress = `${address} ${specificAddress}`;
 
   return (
     <View style={styles.container}>
@@ -25,8 +27,8 @@ const AddressItem = ({ address }: Props) => {
       />
       <Pressable
         onPress={() => {
-          console.log('onboarding이야!');
           navigation.goBack();
+          !activeType && setFullAddress(fullAddress);
         }}
         style={[styles.addressBtn, styles.bottomBtn]}
       >

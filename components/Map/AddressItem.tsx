@@ -1,4 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
+import axios from 'axios';
 import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
 import { Pressable, TextInput, View } from 'react-native';
 import { checkListCtx } from '../../Context/CheckListByServer';
@@ -11,30 +12,55 @@ type Props = {
   checkList: checkListTypes;
   latitude: number;
   longitude: number;
+  setFullAddress: Dispatch<SetStateAction<string>>;
+  activeType: boolean;
 };
 
-const AddressItem = ({ address, checkList, latitude, longitude }: Props) => {
+const AddressItem = ({
+  address,
+  checkList,
+  latitude,
+  longitude,
+  setFullAddress,
+  activeType,
+}: Props) => {
   const navigation = useNavigation();
 
   const [specificAddress, onChangeText] = useState<string>('');
+  const fullAddress = `${address} ${specificAddress}`;
 
   const checkListContext = useContext(checkListCtx);
 
   const onPressHandler = () => {
-    console.log('checklist야!');
-    navigation.goBack();
-
     checkListContext?.setChoseCheckListByServer({
       ...checkListContext?.choseCheckListByServer,
       typeM: {
         questionId: checkList?.questionId,
-        address,
+        address: fullAddress,
         latitude,
         longitude,
       },
     });
 
-    console.log(checkListContext?.choseCheckListByServer);
+    !activeType && setFullAddress(fullAddress);
+    // const data = {
+    //   ...checkListContext?.choseCheckListByServer,
+    //   typeM: {
+    //     questionId: checkList?.questionId,
+    //     address: fullAddress,
+    //     latitude,
+    //     longitude,
+    //   },
+    // };
+
+    // console.log(`data : ${JSON.stringify(data)}`);
+
+    // axios
+    //   .put(`/api/check-list/${checkListContext?.checkListId}/common/question`, data)
+    //   .then((res) => console.log(res))
+    //   .catch((err) => console.log(err));
+
+    navigation.goBack();
   };
 
   return (
