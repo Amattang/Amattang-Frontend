@@ -33,11 +33,12 @@ function PinnedCheckList({ pinnedCheckList }: iProps) {
               resizeMode="cover"
             />
           ) : (
-            <Image
-              style={[styles.pinnedChecklistImg]}
-              source={require('../../assets/images/home/mainLogo.png')}
-              resizeMode="contain"
-            />
+            <View style={styles.pinnedDefaultImgWrapper}>
+              <Image
+                style={styles.pinnedDefaultImg}
+                source={require('../../assets/images/checkList/checkLIstDefaultImg.png')}
+              />
+            </View>
           )}
           <View style={styles.pinnedChecklistSummaryCard}>
             <View>

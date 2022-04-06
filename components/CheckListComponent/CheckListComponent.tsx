@@ -94,8 +94,8 @@ function CheckListComponent({
         <Animated.View style={[rStyle]}>
           <Pressable style={styles.whiteCard} key={checkList.questionId}>
             <View style={styles.textWrapWrapper}>
-              {checkList.question.split(' ').map((word) => (
-                <DefaultText style={[styles.checkListMainTitle, styles.textWrap]}>
+              {checkList.question.split(' ').map((word, index) => (
+                <DefaultText key={index} style={[styles.checkListMainTitle, styles.textWrap]}>
                   {word}{' '}
                 </DefaultText>
               ))}
@@ -106,8 +106,8 @@ function CheckListComponent({
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>📘 </DefaultText>
                   <View style={styles.textWrapWrapper}>
-                    {checkList.rule.split(' ').map((word) => (
-                      <DefaultText style={[styles.checkListGrayText, styles.textWrap]}>
+                    {checkList.rule.split(' ').map((word, index) => (
+                      <DefaultText key={index} style={[styles.checkListGrayText, styles.textWrap]}>
                         {word}&nbsp;
                       </DefaultText>
                     ))}
@@ -119,8 +119,8 @@ function CheckListComponent({
                   <DefaultText style={styles.emoji}>👀 </DefaultText>
 
                   <View style={styles.textWrapWrapper}>
-                    {checkList.description.split(' ').map((word) => (
-                      <DefaultText style={[styles.checkListGrayText, styles.textWrap]}>
+                    {checkList.description.split(' ').map((word, index) => (
+                      <DefaultText key={index} style={[styles.checkListGrayText, styles.textWrap]}>
                         {word}&nbsp;
                       </DefaultText>
                     ))}

@@ -1,10 +1,10 @@
-import React, { Dispatch, RefObject, SetStateAction, useState } from 'react';
+import React, { createRef, Dispatch, RefObject, SetStateAction, useState } from 'react';
 import {
   BottomSheetBackgroundProps,
   BottomSheetModal,
   BottomSheetTextInput,
 } from '@gorhom/bottom-sheet';
-import { ScrollView, View } from 'react-native';
+import { KeyboardAvoidingViewComponent, ScrollView, Text, TextInput, View } from 'react-native';
 
 import { myItemType } from '../../../types/checkListTypes';
 import { BottomSheetModalMethods } from '@gorhom/bottom-sheet/lib/typescript/types';
@@ -12,6 +12,7 @@ import styles from '../styles';
 import CreateMyItemButtonOfBottomSheets from './CreateMyItemButtonOfBottomSheets';
 import DeleteMyItemButtonOfBottomSheets from './DeleteMyItemButtonOfBottomSheets';
 import MyItemElementOfBottomSheets from './MyItemElementOfBottomSheets';
+import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 
 interface IProps {
   onDismissHandler: () => void;
@@ -40,30 +41,27 @@ function MyItemOfBottomSheets({
   handleSheetChanges,
   clickedMyItem,
 }: IProps) {
-  const [newElement, setNewElement] = useState('');
-
-  const onCategoryNameHandler = (newCategoryName: string) => {
-    setClickedMyItem({
+  const [newCategory, setNewCategory] = useState('');
+  const onCategoryNameHandler = async () => {
+    await setClickedMyItem({
       ...clickedMyItem,
-      categoryName: newCategoryName,
+      categoryName: newCategory,
     } as myItemType);
+    setNewCategory('');
   };
 
+  const [newElement, setNewElement] = useState('');
   const onCreateQuestionElementHandler = async () => {
-    newElement && clickedMyItem?.questions
-      ? setClickedMyItem({
+    clickedMyItem?.questions
+      ? await setClickedMyItem({
           ...clickedMyItem,
           questions: [...clickedMyItem?.questions, { content: newElement, checked: false }],
         } as myItemType)
-      : setClickedMyItem({
+      : await setClickedMyItem({
           ...clickedMyItem,
           questions: [{ content: newElement, checked: false }],
         } as myItemType);
-    setNewElement('');
-  };
-
-  const onCreateQuestionElementTextHandler = (elementText: string) => {
-    setNewElement(elementText);
+    return null;
   };
 
   return (
@@ -80,11 +78,11 @@ function MyItemOfBottomSheets({
       <View style={[styles.myItemBottomSheetWrapper]}>
         <BottomSheetTextInput
           style={styles.myItemCategoryName}
-          value={clickedMyItem?.categoryName}
+          placeholder={clickedMyItem?.categoryName || '새 그룹'}
           placeholderTextColor={'#D6D4D4'}
-          placeholder={'새 그룹'}
           editable={isEdit}
-          onChangeText={(newCategoryName) => onCategoryNameHandler(newCategoryName)}
+          onChangeText={(newCategoryName) => setNewCategory(newCategoryName)}
+          onEndEditing={onCategoryNameHandler}
         />
         <ScrollView>
           {clickedMyItem?.questions?.map((clickedMyItemElements) => (
@@ -96,15 +94,26 @@ function MyItemOfBottomSheets({
               clickedMyItemElements={clickedMyItemElements}
             />
           ))}
-          <BottomSheetTextInput
-            style={styles.addMyItemEachElementOfBottomSheets}
-            placeholder={'+ 항목 추가'}
-            placeholderTextColor={'#999999'}
-            value={newElement}
-            editable={isEdit}
-            onChangeText={(elementText) => onCreateQuestionElementTextHandler(elementText)}
-            onEndEditing={onCreateQuestionElementHandler}
-          />
+          {newElement ? (
+            <BottomSheetTextInput
+              style={styles.addMyItemEachElementOfBottomSheets}
+              placeholder={'+ 항목 추가'}
+              placeholderTextColor={'#999999'}
+              editable={isEdit}
+              onChangeText={(elementText) => setNewElement(elementText)}
+              onEndEditing={onCreateQuestionElementHandler}
+            />
+          ) : (
+            <BottomSheetTextInput
+              style={styles.addMyItemEachElementOfBottomSheets}
+              placeholder={'+ 항목 추가'}
+              placeholderTextColor={'#999999'}
+              editable={isEdit}
+              value={''}
+              onChangeText={(elementText) => setNewElement(elementText)}
+              onEndEditing={onCreateQuestionElementHandler}
+            />
+          )}
         </ScrollView>
         <CreateMyItemButtonOfBottomSheets
           clickedMyItem={clickedMyItem}

@@ -1,5 +1,6 @@
 import React, { createContext, Dispatch, SetStateAction, useState } from 'react';
 import { choseCheckListByServerType, deletedCheckListByServerType } from '../types/checkListTypes';
+import axios from 'axios';
 
 interface contextType {
   deletedCheckListByServer: deletedCheckListByServerType;
@@ -8,6 +9,8 @@ interface contextType {
   setChoseCheckListByServer: Dispatch<SetStateAction<choseCheckListByServerType>>;
   checkListId: number | false;
   setCheckListId: Dispatch<SetStateAction<number | false>>;
+  onChoseCheckListHandler: () => void;
+  onDeleteCheckListHandler: (data: deletedCheckListByServerType) => void;
 }
 
 export const checkListCtx = createContext<contextType | null>(null);
@@ -22,6 +25,21 @@ const CheckListStore: React.FC = (props) => {
     typeM: {},
   });
   const [checkListId, setCheckListId] = useState<number | false>(false);
+  const onDeleteCheckListHandler = (data: deletedCheckListByServerType) => {
+    axios
+      .put(`/api/check-list/${checkListId}/common/question/status`, data)
+      .then(() => setDeletedCheckListByServer({ question: [] }));
+  };
+  const onChoseCheckListHandler = () => {
+    axios.put(`/api/check-list/${checkListId}/common/question`, choseCheckListByServer).then(() => {
+      setChoseCheckListByServer({
+        typeA: [],
+        typeB: [],
+        typeD: [],
+        typeM: {},
+      });
+    });
+  };
 
   return (
     <checkListCtx.Provider
@@ -32,6 +50,8 @@ const CheckListStore: React.FC = (props) => {
         setChoseCheckListByServer,
         checkListId,
         setCheckListId,
+        onChoseCheckListHandler,
+        onDeleteCheckListHandler,
       }}
     >
       {props.children}

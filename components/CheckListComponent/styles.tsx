@@ -4,13 +4,23 @@ import { mainBlue, mainLightBlue, mainOrange } from '../../color';
 const windowWidth = Dimensions.get('window').width;
 
 const styles = StyleSheet.create({
+  summaryImageWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    backgroundColor: '#CFCFCF',
+    width: windowWidth - 34,
+    height: 260,
+    borderRadius: 10,
+    marginTop: 15,
+    marginBottom: 15,
+  },
   textWrap: {
     flexDirection: 'row',
     flexWrap: 'wrap',
   },
   textWrapWrapper: { flexDirection: 'row', flexWrap: 'wrap' },
   summaryPinImg: { position: 'absolute', zIndex: 1000, top: 30, right: 15 },
-  summaryMainImg: { width: windowWidth - 34, height: 260, borderRadius: 10, marginTop: 15 },
+  summaryMainImg: { marginBottom: 25 },
   summaryContentImg: { marginRight: 5 },
   distanceImg: { marginRight: 9 },
   summaryRightContents: { flexDirection: 'row' },
