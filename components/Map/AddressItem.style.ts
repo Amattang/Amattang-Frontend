@@ -17,7 +17,7 @@ export const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 5,
     width: 200,
-    lineHeight: 29,
+    height: 29,
     padding: 0,
     marginBottom: 25,
     paddingLeft: 12,

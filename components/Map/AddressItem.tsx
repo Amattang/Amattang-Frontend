@@ -12,10 +12,18 @@ type Props = {
   checkList: checkListTypes;
   latitude: number;
   longitude: number;
-  setFullAddress: Dispatch<SetStateAction<String>>;
+  setFullAddress: Dispatch<SetStateAction<string>>;
+  activeType: boolean;
 };
 
-const AddressItem = ({ address, checkList, latitude, longitude, setFullAddress }: Props) => {
+const AddressItem = ({
+  address,
+  checkList,
+  latitude,
+  longitude,
+  setFullAddress,
+  activeType,
+}: Props) => {
   const navigation = useNavigation();
 
   const [specificAddress, onChangeText] = useState<string>('');
@@ -34,7 +42,7 @@ const AddressItem = ({ address, checkList, latitude, longitude, setFullAddress }
       },
     });
 
-    setFullAddress(fullAddress);
+    !activeType && setFullAddress(fullAddress);
     // const data = {
     //   ...checkListContext?.choseCheckListByServer,
     //   typeM: {
