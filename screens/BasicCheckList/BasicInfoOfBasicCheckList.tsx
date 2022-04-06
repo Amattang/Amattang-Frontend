@@ -21,11 +21,12 @@ import BottomSheetsOfDeletedCheckList from '../../components/CheckListComponent/
 import { checkListTypes } from '../../types/checkListTypes';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 import axios from 'axios';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Dimensions, SafeAreaView, View } from 'react-native';
 import { checkListCtx } from '../../Context/CheckListByServer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CheckListSummaryComponenet from '../../components/CheckListComponent/CheckListSummaryComponenet';
 import { useFocusEffect } from '@react-navigation/native';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 interface IProps {
   isEdit: boolean;
@@ -94,7 +95,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
         <View>
           <BottomSheetModalProvider>
             <KeyboardAwareScrollView extraHeight={150}>
-              <ScrollView contentContainerStyle={{ marginBottom: 80 }}>
+              <ScrollView>
                 <CheckListSummaryComponenet checkListSummary={checkListSummary} />
                 {checkLists
                   .filter((item) => item.visibility)

@@ -14,15 +14,17 @@ interface IProps {
 
 function CameraAndGallery({ setOnModal, onModal }: IProps) {
   const checkListContext = useContext(checkListCtx);
-  const onPostCameraDataHandler = async (image: any) => {
-    const imageData = new FormData();
 
-    imageData.append('image', {
-      uri: Platform.OS === 'android' ? image.path : image.path.replace('file://', ''),
-      type: image.mime,
-      name: image.filename,
-    });
+  const onPostCameraDataHandler = async (images: any) => {
+    const imageData = await new FormData();
 
+    await images.map((image: any) =>
+      imageData.append('image', {
+        uri: Platform.OS === 'android' ? image.path : image.path.replace('file://', ''),
+        type: image.mime,
+        name: image.filename,
+      })
+    );
     await axios
       .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
       .then((e) => {
@@ -32,6 +34,13 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
         console.log(e);
       });
   };
+  const onCamera = () =>
+    ImagePicker.openCamera({
+      cropping: true,
+    }).then((images: any) => {
+      onPostCameraDataHandler([images]);
+      setOnModal(!onModal);
+    });
 
   const onPostImageDataHandler = async (images: any) => {
     const imageData = new FormData();
@@ -46,11 +55,9 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
     await axios
       .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
       .then((e) => {
-        console.log('t');
         console.log(e);
       })
       .catch((e) => {
-        console.log('c');
         console.log(e);
       });
   };
@@ -63,23 +70,15 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
       setOnModal(!onModal);
     });
 
-  const onCamera = () =>
-    ImagePicker.openCamera({
-      cropping: true,
-    }).then((image: any) => {
-      onPostCameraDataHandler(image);
-      setOnModal(!onModal);
-    });
-
   return (
     <Modal isVisible={true} onBackdropPress={() => setOnModal(!onModal)}>
       <Pressable style={styles.modalWrapper} onPress={() => setOnModal(!onModal)}>
         <View style={styles.cameraModalElementBtnWrapper}>
-          <Pressable style={styles.cameraModalEachBtn} onPress={onCamera}>
-            <DefaultText style={styles.cameraModalInnerText}>카메라</DefaultText>
-          </Pressable>
+          {/*<Pressable style={styles.cameraModalEachBtn} onPress={onCamera}>*/}
+          {/*  <DefaultText style={styles.cameraModalInnerText}>카메라</DefaultText>*/}
+          {/*</Pressable>*/}
 
-          <View style={styles.horizantalLine} />
+          {/*<View style={styles.horizantalLine} />*/}
 
           <Pressable style={styles.cameraModalEachBtn} onPress={onGallery}>
             <DefaultText style={styles.cameraModalInnerText}>앨범</DefaultText>

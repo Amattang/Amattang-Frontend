@@ -8,6 +8,8 @@ import MyItemOfBasicCheckList from '../../../../screens/BasicCheckList/MyItemOfB
 import { mainLightBlue } from '../../../../color';
 import FloatingBtn from '../../../../components/CheckListComponent/FloatingBtn';
 import CameraAndGallery from '../../../../components/camera/CameraAndGallery';
+import { Dimensions, SafeAreaView } from 'react-native';
+import { useHeaderHeight } from 'react-native-screens/native-stack';
 
 const Tab = createMaterialTopTabNavigator();
 

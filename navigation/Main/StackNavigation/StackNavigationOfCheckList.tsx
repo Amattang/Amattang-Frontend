@@ -1,5 +1,5 @@
 import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
-import { Image, Pressable, Share } from 'react-native';
+import { Dimensions, Image, Pressable, SafeAreaView, Share } from 'react-native';
 
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
 import { CheckListStackParamsList } from '../../../types/navigationTypes';
@@ -14,6 +14,7 @@ import {
 import { checkListCtx } from '../../../Context/CheckListByServer';
 import { useNavigation } from '@react-navigation/native';
 import Map from '../../../screens/bottomTab/Map';
+import { useHeaderHeight } from 'react-native-screens/native-stack';
 
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
@@ -49,6 +50,7 @@ function CheckListStackNav({ setIsLogin }: IProps) {
     checkListContext?.onChoseCheckListHandler();
     setIsEdit(false);
   };
+  const height = Dimensions.get('window').height;
 
   const screenOptions: NativeStackNavigationOptions = {
     animation: 'slide_from_bottom',
@@ -85,7 +87,11 @@ function CheckListStackNav({ setIsLogin }: IProps) {
         />
         <NativeStack.Screen
           name="basicCheckList"
-          children={() => <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />}
+          children={() => (
+            <SafeAreaView style={{ height: height - 55 }}>
+              <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />
+            </SafeAreaView>
+          )}
           options={() => ({
             animationTypeForReplace: 'pop',
             animation: 'slide_from_bottom',
