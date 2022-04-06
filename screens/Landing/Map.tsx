@@ -92,7 +92,11 @@ function Map({ route }: any) {
         <DefaultText>Loading...</DefaultText>
       )}
       <GoNowPosition setLocation={setLocation} coordToAddress={coordToAddress} />
-      <AddressItem address={doroAddress} />
+      <AddressItem
+        address={doroAddress}
+        setFullAddress={params.setFullAddress}
+        activeType={params.activeType}
+      />
     </View>
   );
 }

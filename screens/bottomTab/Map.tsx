@@ -99,6 +99,7 @@ function Map({ route }: any) {
         checkList={params.checkList}
         latitude={latitude}
         longitude={longitude}
+        setFullAddress={params.setFullAddress}
       />
     </View>
   );

@@ -22,6 +22,7 @@ function Home() {
     try {
       const response = await axios.get('/api/check-list');
       setHomeCheckList(response.data.data);
+      console.log(response.data.data);
       if (response.data.data.length !== 0) setIsCheckList(true);
     } catch (error) {
       console.error(error);

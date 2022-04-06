@@ -62,10 +62,11 @@ const BottomMap = () => {
       .get(`./api/check-list`)
       .then((res) => {
         console.log(res.data.data);
-        setLocations(res.data.data);
+        const newData = res.data.data.filter((list: any) => list.address !== null);
+        setLocations(newData);
         requestPermission().then((result) => {
           if (result === 'granted') {
-            setPick(res.data.data[0].location);
+            setPick(newData[0].location);
           }
         });
       })
@@ -109,7 +110,7 @@ const BottomMap = () => {
           provider={PROVIDER_GOOGLE}
           region={{
             latitude: 37.498095,
-            longitude: 127.027610,
+            longitude: 127.02761,
             latitudeDelta: 0.0122,
             longitudeDelta: 0.0021,
           }}

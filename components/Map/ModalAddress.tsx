@@ -1,16 +1,18 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { Alert, Image, Modal, Pressable, Text, View } from 'react-native';
 import Postcode from '@actbase/react-daum-postcode';
 import { DefaultText } from '../../CustomText';
 import { useNavigation } from '@react-navigation/native';
 import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { styles } from './Modal.style';
+import { checkListCtx } from '../../Context/CheckListByServer';
 
 const ModalAddress = () => {
   const navigation = useNavigation<OnBoardingStackProps>();
 
   // @brief 주소검색창 - 데이터 조회
   const [isModal, setModal] = useState<boolean>(false);
+  const [fullAddress, setFullAddress] = useState<String>('직접입력');
 
   return (
     <>
@@ -34,7 +36,10 @@ const ModalAddress = () => {
           }}
           onSelected={(data) => {
             setModal(false);
-            navigation.navigate('map', { activeType: false, address: data.address });
+            navigation.navigate('map', {
+              activeType: false,
+              address: data.address,
+            });
           }}
         />
       </Modal>
@@ -42,7 +47,7 @@ const ModalAddress = () => {
         onPress={() => setModal(true)}
         style={[styles.directInputOfAddress, styles.buttonOfCheckList]}
       >
-        <DefaultText style={styles.directInputTextOfAddress}>직접입력</DefaultText>
+        <DefaultText style={styles.directInputTextOfAddress}>{fullAddress}</DefaultText>
       </Pressable>
     </>
   );
