@@ -58,9 +58,9 @@ const KakaoLoginBtn = ({ setIsLogin }: Props) => {
     }
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     setIsLogin(true);
-    // const refreshToken = getRefreshToken().then((refreshToken) => console.log(refreshToken));
+    const refreshToken = getRefreshToken().then((refreshToken) => console.log(refreshToken));
     // accessToken 만료하기 1분 전에 로그인 연장
-    // setTimeout(() => requestRefresh(refreshToken), acessTokenExpiresIn - 60000);
+    setTimeout(() => requestRefresh(refreshToken), acessTokenExpiresIn - 60000);
   };
 
   const catchError = (err: any) => {

@@ -100,6 +100,7 @@ function Map({ route }: any) {
         latitude={latitude}
         longitude={longitude}
         setFullAddress={params.setFullAddress}
+        activeType={params.activeType}
       />
     </View>
   );
