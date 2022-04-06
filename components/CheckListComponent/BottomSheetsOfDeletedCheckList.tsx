@@ -47,7 +47,7 @@ function BottomSheetsOfDeletedCheckList({
         deletedCheckLists.filter((CheckLists: checkListTypes) => !CheckLists.visibility)
       );
       setCheckLists([...checkLists.filter((item) => item.visibility), ...deletedCheckLists]);
-      checkListContext?.setDeletedCheckListByServer({
+      checkListContext?.onDeleteCheckListHandler({
         question: [
           ...checkListContext?.deletedCheckListByServer.question,
           ...deletedCheckLists.map((item) => ({ questionId: item.questionId, visibility: true })),

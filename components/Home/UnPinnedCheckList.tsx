@@ -33,11 +33,13 @@ function UnPinnedCheckList({ unPinnedCheckList }: iProps) {
               resizeMode="cover"
             />
           ) : (
-            <Image
-              style={[styles.unpinnedChecklistImg]}
-              source={require('../../assets/images/home/mainLogo.png')}
-              resizeMode="contain"
-            />
+            <View style={styles.unpinnedDefaultImgWrapper}>
+              <Image
+                style={[styles.unpinnedChecklistImg]}
+                source={require('../../assets/images/checkList/checkLIstDefaultImg.png')}
+                resizeMode="contain"
+              />
+            </View>
           )}
           <View style={styles.unpinnedChecklistSummaryCard}>
             <View>
@@ -66,10 +68,14 @@ function UnPinnedCheckList({ unPinnedCheckList }: iProps) {
                 </View>
               )}
               <View style={[styles.bottomElement]}>
-                <Image source={require('../../assets/images/home/distanceImg.png')} />
-                <DefaultText style={[styles.blueText, styles.bottomElementText]}>
-                  {unPinnedCheckList.distance && unPinnedCheckList.distance}
-                </DefaultText>
+                {unPinnedCheckList.distance && (
+                  <>
+                    <Image source={require('../../assets/images/home/distanceImg.png')} />
+                    <DefaultText style={[styles.blueText, styles.bottomElementText]}>
+                      {unPinnedCheckList.distance}
+                    </DefaultText>
+                  </>
+                )}
               </View>
             </View>
           </View>

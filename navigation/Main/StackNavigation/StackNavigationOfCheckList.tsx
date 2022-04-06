@@ -1,5 +1,5 @@
-import React, { Dispatch, SetStateAction, useContext, useState } from 'react';
-import { Image, Pressable, Share } from 'react-native';
+import React, { Dispatch, SetStateAction, useContext, useEffect, useState } from 'react';
+import { Dimensions, Image, Pressable, SafeAreaView, Share } from 'react-native';
 
 import BasicCheckList from './BasicCheckList/BasiclCheckList';
 import { CheckListStackParamsList } from '../../../types/navigationTypes';
@@ -12,9 +12,9 @@ import {
   NativeStackNavigationOptions,
 } from '@react-navigation/native-stack';
 import { checkListCtx } from '../../../Context/CheckListByServer';
-import axios from 'axios';
 import { useNavigation } from '@react-navigation/native';
 import Map from '../../../screens/bottomTab/Map';
+import { useHeaderHeight } from 'react-native-screens/native-stack';
 
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
@@ -47,29 +47,10 @@ function CheckListStackNav({ setIsLogin }: IProps) {
   };
 
   const onSubmitHandler = async () => {
-    axios
-      .put(
-        `/api/check-list/${checkListContext?.checkListId}/common/question/status`,
-        checkListContext?.deletedCheckListByServer
-      )
-      .then(() => checkListContext?.setDeletedCheckListByServer({ question: [] }));
-
-    axios
-      .put(
-        `/api/check-list/${checkListContext?.checkListId}/common/question`,
-        checkListContext?.choseCheckListByServer
-      )
-      .then(() => {
-        checkListContext?.setChoseCheckListByServer({
-          typeA: [],
-          typeB: [],
-          typeD: [],
-          typeM: {},
-        });
-      });
-
+    checkListContext?.onChoseCheckListHandler();
     setIsEdit(false);
   };
+  const height = Dimensions.get('window').height;
 
   const screenOptions: NativeStackNavigationOptions = {
     animation: 'slide_from_bottom',
@@ -87,6 +68,12 @@ function CheckListStackNav({ setIsLogin }: IProps) {
     headerShadowVisible: false,
   };
 
+  useEffect(() => {
+    setInterval(() => {
+      checkListContext?.onChoseCheckListHandler();
+    }, 100000);
+  }, []);
+
   return (
     <>
       <NativeStack.Navigator screenOptions={screenOptions}>
@@ -101,11 +88,9 @@ function CheckListStackNav({ setIsLogin }: IProps) {
         <NativeStack.Screen
           name="basicCheckList"
           children={() => (
-            <BasicCheckList
-              isEdit={isEdit}
-              setIsEdit={setIsEdit}
-              onSubmitHandler={onSubmitHandler}
-            />
+            <SafeAreaView style={{ height: height - 55 }}>
+              <BasicCheckList isEdit={isEdit} setIsEdit={setIsEdit} />
+            </SafeAreaView>
           )}
           options={() => ({
             animationTypeForReplace: 'pop',

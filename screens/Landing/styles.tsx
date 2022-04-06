@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderRadius: 55,
     position: 'absolute',
     right: 20,
-    bottom: 50,
+    bottom: 70,
   },
 
   emoji: { lineHeight: 24, fontSize: 12 },

@@ -4,6 +4,7 @@ import EmptyHome from '../../components/Home/EmptyHome';
 import CheckListHome from '../../components/Home/CheckListHome';
 import axios from 'axios';
 import { ActivityIndicator, RefreshControl, ScrollView } from 'react-native';
+import { useFocusEffect } from '@react-navigation/native';
 
 function Home() {
   const [loading, setLoading] = useState(false);
@@ -33,7 +34,11 @@ function Home() {
   useEffect(() => {
     getHomeDataHandler();
   }, []);
-
+  useFocusEffect(
+    useCallback(() => {
+      getHomeDataHandler();
+    }, [])
+  );
   return (
     <>
       {loading ? (

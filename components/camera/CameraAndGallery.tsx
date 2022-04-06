@@ -15,6 +15,33 @@ interface IProps {
 function CameraAndGallery({ setOnModal, onModal }: IProps) {
   const checkListContext = useContext(checkListCtx);
 
+  const onPostCameraDataHandler = async (images: any) => {
+    const imageData = await new FormData();
+
+    await images.map((image: any) =>
+      imageData.append('image', {
+        uri: Platform.OS === 'android' ? image.path : image.path.replace('file://', ''),
+        type: image.mime,
+        name: image.filename,
+      })
+    );
+    await axios
+      .post(`/api/check-list/${checkListContext?.checkListId}/image`, imageData)
+      .then((e) => {
+        console.log(e);
+      })
+      .catch((e) => {
+        console.log(e);
+      });
+  };
+  const onCamera = () =>
+    ImagePicker.openCamera({
+      cropping: true,
+    }).then((images: any) => {
+      onPostCameraDataHandler([images]);
+      setOnModal(!onModal);
+    });
+
   const onPostImageDataHandler = async (images: any) => {
     const imageData = new FormData();
     images.map((image: any) =>
@@ -43,23 +70,15 @@ function CameraAndGallery({ setOnModal, onModal }: IProps) {
       setOnModal(!onModal);
     });
 
-  const onCamera = () =>
-    ImagePicker.openCamera({
-      cropping: true,
-    }).then((images: any) => {
-      onPostImageDataHandler(images);
-      setOnModal(!onModal);
-    });
-
   return (
     <Modal isVisible={true} onBackdropPress={() => setOnModal(!onModal)}>
       <Pressable style={styles.modalWrapper} onPress={() => setOnModal(!onModal)}>
         <View style={styles.cameraModalElementBtnWrapper}>
-          <Pressable style={styles.cameraModalEachBtn} onPress={onCamera}>
-            <DefaultText style={styles.cameraModalInnerText}>카메라</DefaultText>
-          </Pressable>
+          {/*<Pressable style={styles.cameraModalEachBtn} onPress={onCamera}>*/}
+          {/*  <DefaultText style={styles.cameraModalInnerText}>카메라</DefaultText>*/}
+          {/*</Pressable>*/}
 
-          <View style={styles.horizantalLine} />
+          {/*<View style={styles.horizantalLine} />*/}
 
           <Pressable style={styles.cameraModalEachBtn} onPress={onGallery}>
             <DefaultText style={styles.cameraModalInnerText}>앨범</DefaultText>

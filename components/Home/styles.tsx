@@ -2,6 +2,17 @@ import { Platform, StyleSheet } from 'react-native';
 import { mainBlue, mainLightBlue } from '../../color';
 
 const styles = StyleSheet.create({
+  unpinnedDefaultImgWrapper: { backgroundColor: '#F1F1F6', borderRadius: 6 },
+  pinnedDefaultImg: { width: 150, height: 100 },
+  pinnedDefaultImgWrapper: {
+    justifyContent: 'center',
+    alignItems: 'center',
+    paddingBottom: 45,
+    backgroundColor: '#CFCFCF',
+    width: 240,
+    height: 180,
+    borderRadius: 10,
+  },
   fullScreenWrapper: { flex: 1, backgroundColor: 'white' },
   welcomeTitle:
     Platform.OS === 'ios'
@@ -31,7 +42,7 @@ const styles = StyleSheet.create({
 
   pinnedChecklistWrapper: { height: 260, marginLeft: 17 },
   pinnedChecklistCard: { marginRight: 14 },
-  pinnedChecklistImg: { width: 240, height: 180, borderRadius: 10 },
+  pinnedChecklistImg: {},
   pinnedChecklistSummaryCard: {
     width: 240,
     height: 110,

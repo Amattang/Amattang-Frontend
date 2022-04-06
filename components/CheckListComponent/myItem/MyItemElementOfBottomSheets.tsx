@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { myItemElementType, myItemType } from '../../../types/checkListTypes';
 import { Image, View } from 'react-native';
 import styles from '../styles';
@@ -18,7 +18,8 @@ function MyItemElementOfBottomSheets({
   isEdit,
   clickedMyItemElements,
 }: IProps) {
-  const onChangeQuestionElementHandler = (onChangedQuestionElement: string) => {
+  const [onChangedQuestionElement, setOnChangedQuestionElement] = useState('');
+  const onChangeQuestionElementHandler = () => {
     onChangedQuestionElement === ''
       ? setClickedMyItem({
           ...clickedMyItem,
@@ -37,7 +38,7 @@ function MyItemElementOfBottomSheets({
         } as myItemType);
   };
   return (
-    <View style={styles.myItemElementsOfBottomSheets}>
+    <View key={clickedMyItem.categoryId} style={styles.myItemElementsOfBottomSheets}>
       {clickedMyItemElements.checked ? (
         <Image source={require('../../../assets/images/checkList/checkedCheckBox.png')} />
       ) : (
@@ -46,11 +47,11 @@ function MyItemElementOfBottomSheets({
       {clickedMyItemElements && (
         <BottomSheetTextInput
           editable={isEdit}
+          placeholder={clickedMyItemElements.content || '+ 항목 추가'}
+          placeholderTextColor={'#999999'}
           style={styles.myItemEachElementOfBottomSheets}
-          value={clickedMyItemElements.content}
-          onChangeText={(onChangedQuestionElement) =>
-            onChangeQuestionElementHandler(onChangedQuestionElement)
-          }
+          onChangeText={(onChangText: string) => setOnChangedQuestionElement(onChangText)}
+          onEndEditing={onChangeQuestionElementHandler}
         />
       )}
     </View>

@@ -1,6 +1,7 @@
 import React, {
   Dispatch,
   SetStateAction,
+  useCallback,
   useContext,
   useEffect,
   useMemo,
@@ -20,10 +21,12 @@ import BottomSheetsOfDeletedCheckList from '../../components/CheckListComponent/
 import { checkListTypes } from '../../types/checkListTypes';
 import ButtonOfBringBackDeletedCheckList from '../../components/CheckListComponent/ButtonOfBringBackDeletedCheckList';
 import axios from 'axios';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, Dimensions, SafeAreaView, View } from 'react-native';
 import { checkListCtx } from '../../Context/CheckListByServer';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import CheckListSummaryComponenet from '../../components/CheckListComponent/CheckListSummaryComponenet';
+import { useFocusEffect } from '@react-navigation/native';
+import { useHeaderHeight } from '@react-navigation/elements';
 
 interface IProps {
   isEdit: boolean;
@@ -40,7 +43,6 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   const [checkListSummary, setCheckListSummary] = useState<any>({});
 
   const getServerData = async () => {
-    console.log(checkListContext?.checkListId);
     try {
       const serverResponse = await axios.get(
         `/api/check-list/${checkListContext?.checkListId}/common?mainCategory=기본정보`
@@ -63,6 +65,11 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
   useEffect(() => {
     getServerData();
   }, [modal]);
+  useFocusEffect(
+    useCallback(() => {
+      getServerData();
+    }, [modal])
+  );
   // setCheckLists(response.data);
   // 바텀시트 동작을 위한 코드
   const bottomSheetModalRef = useRef<BottomSheetModal>(null);
@@ -88,7 +95,7 @@ function BasicInfoOfBasicCheckList({ isEdit, setIsBottomSheet }: IProps) {
         <View>
           <BottomSheetModalProvider>
             <KeyboardAwareScrollView extraHeight={150}>
-              <ScrollView contentContainerStyle={{ marginBottom: 80 }}>
+              <ScrollView>
                 <CheckListSummaryComponenet checkListSummary={checkListSummary} />
                 {checkLists
                   .filter((item) => item.visibility)
