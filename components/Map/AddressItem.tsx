@@ -53,6 +53,8 @@ const AddressItem = ({
       },
     };
 
+    console.log(`data : ${JSON.stringify(data)}`);
+
     axios
       .put(`/api/check-list/${checkListContext?.checkListId}/common/question`, data)
       .then((res) => console.log(res))
