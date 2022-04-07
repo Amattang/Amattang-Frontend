@@ -96,7 +96,7 @@ function CheckListComponent({
             <View style={styles.textWrapWrapper}>
               {checkList.question.split(' ').map((word, index) => (
                 <DefaultText key={index} style={[styles.checkListMainTitle, styles.textWrap]}>
-                  {word}{' '}
+                  {word}
                 </DefaultText>
               ))}
             </View>
