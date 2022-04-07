@@ -12,7 +12,7 @@ const ModalAddress = () => {
 
   // @brief 주소검색창 - 데이터 조회
   const [isModal, setModal] = useState<boolean>(false);
-  const [fullAddress, setFullAddress] = useState<String>('직접입력');
+  const [fullAddress, setFullAddress] = useState<string>('직접입력');
 
   return (
     <>
@@ -39,6 +39,7 @@ const ModalAddress = () => {
             navigation.navigate('map', {
               activeType: false,
               address: data.address,
+              setFullAddress: setFullAddress,
             });
           }}
         />
