@@ -61,7 +61,6 @@ const BottomMap = () => {
     axios
       .get(`./api/check-list`)
       .then((res) => {
-        console.log(res.data.data);
         const newData = res.data.data.filter((list: any) => list.address !== null);
         setLocations(newData);
         requestPermission().then((result) => {
@@ -77,7 +76,7 @@ const BottomMap = () => {
 
   return (
     <View style={{ flex: 1 }}>
-      {locations ? (
+      {locations?.length !== 0 ? (
         <MapView
           style={{ flex: 1 }}
           provider={PROVIDER_GOOGLE}
@@ -90,7 +89,7 @@ const BottomMap = () => {
           zoomEnabled={true}
           showsScale={true}
         >
-          {locations.map((marker, idx) => (
+          {locations?.map((marker, idx) => (
             <Marker
               coordinate={marker.location}
               title={marker.mainTitle}
@@ -118,7 +117,7 @@ const BottomMap = () => {
           showsScale={true}
         />
       )}
-      {locations && locations?.length !== 0 && (
+      {locations?.length !== 0 && (
         <View style={styles.carContainer}>
           <Carousel
             data={locations}
@@ -128,7 +127,7 @@ const BottomMap = () => {
             layout={'default'}
             onSnapToItem={(index) => {
               setLocations(
-                locations.map((marker) =>
+                locations?.map((marker) =>
                   marker.order === index
                     ? (setPick(marker.location), { ...marker, center: true })
                     : { ...marker, center: false }
