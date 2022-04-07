@@ -1,16 +1,17 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import ModalAddress from '../Map/ModalAddress';
 import styles from '../../screens/Landing/styles';
 import { requestPermission } from '../../utils/LocationPermission';
 import Geolocation from 'react-native-geolocation-service';
-import { OnBoardingStackProps } from '../../types/navigationTypes';
 import { useNavigation } from '@react-navigation/native';
 
 const ButtonOfMap = () => {
+  const [fullAddress, setFullAddress] = useState<string>('');
+
   // 현재위치 찾기
-  const navigation = useNavigation();
+  const navigation = useNavigation<any>();
 
   const goGeoLocation = (): void => {
     Geolocation.getCurrentPosition(
@@ -19,6 +20,7 @@ const ButtonOfMap = () => {
           activeType: true,
           lat: position.coords.latitude,
           long: position.coords.longitude,
+          setFullAddress,
         });
       },
       (error) => {
@@ -39,8 +41,9 @@ const ButtonOfMap = () => {
 
   return (
     <>
+      <DefaultText style={{ top: 30 }}>{fullAddress}</DefaultText>
       <View style={styles.buttonsOfCheckList}>
-        <ModalAddress />
+        <ModalAddress setFullAddress={setFullAddress} />
         <Pressable
           onPress={onMapHandler}
           style={[styles.mapInputOfAddress, styles.buttonOfCheckList]}
