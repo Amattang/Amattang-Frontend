@@ -133,6 +133,12 @@ def googleMapApiKey = properties.getProperty('google.map.key')
 // kakao login api key
 def kakaoLoginApiKey = properties.getProperty('KAKAO_NATIVE_APP_KEY')
 
+def keystoreProperties = new Properties()
+def keystorePropertiesFile = rootProject.file('amattang.properties')
+if (keystorePropertiesFile.exists()) {
+    keystoreProperties.load(new FileInputStream(keystorePropertiesFile))
+}
+
 android {
     ndkVersion rootProject.ext.ndkVersion
 
@@ -188,6 +194,7 @@ android {
             }
         }
         release {
+            minifyEnabled true
             // Caution! In production, you need to generate your own keystore file.
             // see https://reactnative.dev/docs/signed-apk-android.
             signingConfig signingConfigs.release

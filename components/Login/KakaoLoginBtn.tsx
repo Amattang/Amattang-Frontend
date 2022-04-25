@@ -50,9 +50,8 @@ const KakaoLoginBtn = ({ setIsLogin }: Props) => {
       setAccessToken(accessToken);
     } else {
       // 처음 호출
-      accessToken = res_data.accessToken;
       setAuthTokens({
-        accessToken: accessToken,
+        accessToken: res_data.accessToken,
         refreshToken: res_data.refreshToken,
       });
     }
