@@ -96,13 +96,13 @@ function CheckListComponent({
             <View style={styles.textWrapWrapper}>
               {checkList.question.split(' ').map((word, index) => (
                 <DefaultText key={index} style={[styles.checkListMainTitle, styles.textWrap]}>
-                  {word}{' '}
+                  {word}
                 </DefaultText>
               ))}
             </View>
 
             <View style={styles.subTitles}>
-              {checkList.rule ? (
+              {checkList.rule !== null && (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>📘 </DefaultText>
                   <View style={styles.textWrapWrapper}>
@@ -113,8 +113,8 @@ function CheckListComponent({
                     ))}
                   </View>
                 </View>
-              ) : null}
-              {checkList.description ? (
+              )}
+              {checkList.description !== null && (
                 <View style={styles.checkListSubTitle}>
                   <DefaultText style={styles.emoji}>👀 </DefaultText>
 
@@ -126,37 +126,37 @@ function CheckListComponent({
                     ))}
                   </View>
                 </View>
-              ) : null}
+              )}
             </View>
             <View style={styles.buttonsOfCheckList}>
-              {checkList.type === 'A' ? (
+              {checkList.type === 'A' && (
                 <ButtonsOfTypeA
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              ) : null}
-              {checkList.type === 'B' ? (
+              )}
+              {checkList.type === 'B' && (
                 <ButtonsOfTypeB
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              ) : null}
-              {checkList.type === 'C' ? (
+              )}
+              {checkList.type === 'C' && (
                 <ButtonsOfTypeC setModal={setModal} modal={modal} checkList={checkList} />
-              ) : null}
-              {checkList.type === 'D' ? (
+              )}
+              {checkList.type === 'D' && (
                 <ButtonsOfTypeD
                   isEdit={isEdit}
                   checkList={checkList}
                   setCheckLists={setCheckLists}
                   checkLists={checkLists}
                 />
-              ) : null}
-              {checkList.type === 'M' ? <ButtonsOfTypeM checkList={checkList} /> : null}
+              )}
+              {checkList.type === 'M' && <ButtonsOfTypeM checkList={checkList} />}
             </View>
           </Pressable>
         </Animated.View>

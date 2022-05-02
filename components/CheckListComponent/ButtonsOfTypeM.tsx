@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction } from 'react';
+import React, { Dispatch, SetStateAction, useState } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import ModalAddress from '../Map/ModalAddress';
@@ -14,6 +14,8 @@ interface IProps {
 }
 
 const ButtonsOfTypeM = ({ checkList }: IProps) => {
+  const [fullAddress, setFullAddress] = useState<string>('');
+
   // 현재위치 찾기
   const navigation = useNavigation<CheckListStackProps>();
 
@@ -25,6 +27,7 @@ const ButtonsOfTypeM = ({ checkList }: IProps) => {
           lat: position.coords.latitude,
           long: position.coords.longitude,
           checkList,
+          setFullAddress,
         });
       },
       (error) => {
@@ -45,8 +48,9 @@ const ButtonsOfTypeM = ({ checkList }: IProps) => {
 
   return (
     <>
+      <DefaultText style={{ top: 30 }}>{fullAddress}</DefaultText>
       <View style={styles.buttonsOfCheckList}>
-        <ModalAddress />
+        <ModalAddress setFullAddress={setFullAddress} />
         <Pressable
           onPress={onMapHandler}
           style={[styles.mapInputOfAddress, styles.buttonOfCheckList]}

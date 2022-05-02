@@ -33,7 +33,7 @@ const KakaoLoginBtn = ({ setIsLogin }: Props) => {
   const requestRefresh = (refreshToken: any) => {
     axios
       .post(`/issue/re`, {
-        request: 'access / refresh',
+        request: 'access',
         token: `Bearer ${refreshToken}`,
       })
       .then(onLoginSuccess)
@@ -50,17 +50,16 @@ const KakaoLoginBtn = ({ setIsLogin }: Props) => {
       setAccessToken(accessToken);
     } else {
       // 처음 호출
-      accessToken = res_data.accessToken;
       setAuthTokens({
-        accessToken: accessToken,
+        accessToken: res_data.accessToken,
         refreshToken: res_data.refreshToken,
       });
     }
     axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
     setIsLogin(true);
-    const refreshToken = getRefreshToken().then((refreshToken) => console.log(refreshToken));
+    // const refreshToken = getRefreshToken();
     // accessToken 만료하기 1분 전에 로그인 연장
-    setTimeout(() => requestRefresh(refreshToken), acessTokenExpiresIn - 60000);
+    // setTimeout(() => requestRefresh(refreshToken), acessTokenExpiresIn - 60000);
   };
 
   const catchError = (err: any) => {

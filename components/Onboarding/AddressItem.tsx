@@ -6,7 +6,7 @@ import { styles } from './AddressItem.style';
 
 type Props = {
   address: string | undefined;
-  setFullAddress: Dispatch<SetStateAction<String>>;
+  setFullAddress: Dispatch<SetStateAction<string>>;
   activeType: boolean;
 };
 
@@ -28,7 +28,7 @@ const AddressItem = ({ address, setFullAddress, activeType }: Props) => {
       <Pressable
         onPress={() => {
           navigation.goBack();
-          !activeType && setFullAddress(fullAddress);
+          setFullAddress(fullAddress);
         }}
         style={[styles.addressBtn, styles.bottomBtn]}
       >

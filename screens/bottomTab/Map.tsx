@@ -10,8 +10,6 @@ import { NativeStackScreenProps } from '@react-navigation/native-stack';
 import { OnBoardingStackParamsList } from '../../types/navigationTypes';
 import { KAKAO_COORD_TO_ADDRESS_API_KEY } from 'react-native-dotenv';
 
-// type Props = NativeStackScreenProps<OnBoardingStackParamsList, 'map'>;
-
 // 에라이 타입 에러
 function Map({ route }: any) {
   const { params } = route;
@@ -40,10 +38,10 @@ function Map({ route }: any) {
           setDoroAddress(location ? location.address.address_name : 'undefined');
         })
         .catch((err) => {
-          console.error(`error1 : ${err}`);
+          console.error(err);
         });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 
@@ -66,8 +64,8 @@ function Map({ route }: any) {
         .catch((err) => {
           console.error(err);
         });
-    } catch (error) {
-      console.error(error);
+    } catch (err) {
+      console.error(err);
     }
   };
 

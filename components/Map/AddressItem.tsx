@@ -32,18 +32,8 @@ const AddressItem = ({
   const checkListContext = useContext(checkListCtx);
 
   const onPressHandler = () => {
-    checkListContext?.setChoseCheckListByServer({
-      ...checkListContext?.choseCheckListByServer,
-      typeM: {
-        questionId: checkList?.questionId,
-        address: fullAddress,
-        latitude,
-        longitude,
-      },
-    });
-
-    !activeType && setFullAddress(fullAddress);
-    // const data = {
+    setFullAddress(fullAddress);
+    // checkListContext?.setChoseCheckListByServer({
     //   ...checkListContext?.choseCheckListByServer,
     //   typeM: {
     //     questionId: checkList?.questionId,
@@ -51,14 +41,24 @@ const AddressItem = ({
     //     latitude,
     //     longitude,
     //   },
-    // };
+    // });
 
-    // console.log(`data : ${JSON.stringify(data)}`);
+    const data = {
+      ...checkListContext?.choseCheckListByServer,
+      typeM: {
+        questionId: checkList?.questionId,
+        address: fullAddress,
+        latitude,
+        longitude,
+      },
+    };
 
-    // axios
-    //   .put(`/api/check-list/${checkListContext?.checkListId}/common/question`, data)
-    //   .then((res) => console.log(res))
-    //   .catch((err) => console.log(err));
+    console.log(`data : ${JSON.stringify(data)}`);
+
+    axios
+      .put(`/api/check-list/${checkListContext?.checkListId}/common/question`, data)
+      .then((res) => console.log(res))
+      .catch((err) => console.log(err));
 
     navigation.goBack();
   };
