@@ -155,7 +155,7 @@ android {
         applicationId "com.amattang"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10
+        versionCode 11
         versionName "1.0"
         manifestPlaceholders = [GOOGLE_MAP_API_KEY:googleMapApiKey, KAKAO_NATIVE_APP_KEY:kakaoLoginApiKey]
         // manifestPlaceholders = [KAKAO_NATIVE_APP_KEY:kakaoLoginApiKey]
