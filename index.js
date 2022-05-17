@@ -8,7 +8,7 @@ import App from './App';
 import { name as appName } from './app.json';
 
 // default
-axios.defaults.baseURL = 'https://www.amattang.shop';
+axios.defaults.baseURL = 'https://amattang.shop';
 
 axios.defaults.withCredentials = true;
 axios.defaults.headers.post['Content-Type'] = 'application/json';

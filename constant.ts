@@ -1,1 +1,1 @@
-export const API_HOST = 'https://www.amattang.shop';
+export const API_HOST = 'https://amattang.shop';
