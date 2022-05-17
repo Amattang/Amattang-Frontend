@@ -1,6 +1,6 @@
 import { appleAuth } from '@invertase/react-native-apple-authentication';
 
-import React from 'react';
+import React, { Dispatch, FC, SetStateAction } from 'react';
 import { Image, Pressable, View } from 'react-native';
 import { DefaultText } from '../../CustomText';
 import styles from '../../screens/Landing/styles';
@@ -24,7 +24,11 @@ interface tokenType {
   sub: string;
 }
 
-const AppleLoginBtn = ({ setIsLogin }: any) => {
+interface Props {
+  setIsLogin: Dispatch<SetStateAction<boolean>>;
+}
+
+const AppleLoginBtn: FC<Props> = ({ setIsLogin }: any) => {
   const onAppleLoginHandler = async () => {
     const onLoginSuccess = (res: any) => {
       const res_data = res.data.data;
@@ -44,6 +48,7 @@ const AppleLoginBtn = ({ setIsLogin }: any) => {
       axios.defaults.headers.common['Authorization'] = `Bearer ${accessToken}`;
       setIsLogin(true);
     };
+
     try {
       // performs login request
       const appleAuthRequestResponse = await appleAuth.performRequest({
@@ -55,22 +60,26 @@ const AppleLoginBtn = ({ setIsLogin }: any) => {
       const credentialState = await appleAuth.getCredentialStateForUser(
         appleAuthRequestResponse.user
       );
-      console.log('try');
+
       // use credentialState response to ensure the user is authenticated
       if (credentialState === appleAuth.State.AUTHORIZED) {
         const { identityToken, user } = appleAuthRequestResponse;
         const decodedToken: tokenType = jwtDecode(identityToken!);
-        // user is authenticated
 
-        axios
-          .post(`${API_HOST}/login/apple`, {
+        // user is authenticated
+        if (decodedToken.email) {
+          const response = await axios.post(`${API_HOST}/login/apple`, {
             email: decodedToken.email,
             user: user,
-          })
-          .then(onLoginSuccess)
-          .catch((e) => {
-            console.log(e);
           });
+
+          onLoginSuccess(response);
+        } else {
+          const response = await axios.post(`${API_HOST}/login/apple`, {
+            user: user,
+          });
+          onLoginSuccess(response);
+        }
       }
     } catch (error: any) {
       if (error.code === appleAuth.Error.CANCELED) {

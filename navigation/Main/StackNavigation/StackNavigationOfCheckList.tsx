@@ -14,7 +14,6 @@ import {
 import { checkListCtx } from '../../../Context/CheckListByServer';
 import { useNavigation } from '@react-navigation/native';
 import Map from '../../../screens/bottomTab/Map';
-import { useHeaderHeight } from 'react-native-screens/native-stack';
 
 const NativeStack = createNativeStackNavigator<CheckListStackParamsList>();
 
